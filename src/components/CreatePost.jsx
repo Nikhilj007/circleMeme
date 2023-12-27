@@ -1,6 +1,6 @@
 import { IoMdCreate, IoIosCloudDone } from "react-icons/io";
 import { MdCancelPresentation } from "react-icons/md";
-import profile from "../assets/user-8.png";
+import profile from "../assets/user-8.jpg";
 import { useRef, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { FaImage } from "react-icons/fa6";
@@ -13,7 +13,7 @@ function CreatePost() {
   const [text, setText] = useState("");
   return (
     <>
-      <div className="max-w-lg bg-white rounded-lg text-lg p-10 mb-3">
+      <div className="max-w-[24rem] fixed top-1/3 left-6 sm:left-[35%]  z-1 bg-white rounded-lg text-lg p-5 mb-3">
         <div className="flex justify-start items-center gap-3 font-bold text-gray-500">
           <IoMdCreate />
           Create Post
@@ -23,6 +23,7 @@ function CreatePost() {
             <img width={"40px"} height={"40px"} src={profile} alt="fsdf" />
           </div>
           <textarea
+            id="post"
             value={text}
             onChange={(e) => setText(e.target.value)}
             className="outline-none resize-none mt-1"
@@ -31,8 +32,8 @@ function CreatePost() {
             rows="5"
           ></textarea>
         </div>
-        <input type="file" ref={imgFileRef} style={{display:"none" }}/>
-        <input type="file" ref={videoFileRef} style={{display:"none" }}/>
+        <input id="img" type="file" ref={imgFileRef} style={{display:"none" }}/>
+        <input id="video" type="file" ref={videoFileRef} style={{display:"none" }}/>
         <div className="flex justify-between px-2 text-2xl">
           <div  className="flex gap-3">
             <button onClick={() => setText("")}>

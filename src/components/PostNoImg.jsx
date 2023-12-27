@@ -1,5 +1,5 @@
 import { useState } from "react";
-import profile from "../assets/user-8.png";
+import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 
@@ -50,6 +50,7 @@ function PostNoImg() {
                 <button onClick={()=>setShowComment(!showComment)} 
                  className="flex items-center gap-2">
                   <MdComment/>
+                  <span>12</span>
                 </button>
               </div>
             </div>

@@ -5,7 +5,7 @@ function TopNav() {
     const location= useLocation();
     const isMemesPage = location.pathname === "/memes";
     const isCollegePage = location.pathname === "/college";
-    const isForYouPage = location.pathname === "/foryou";
+    const isForYouPage = location.pathname === "/";
     const navigate = useNavigate();
 
     console.log(isMemesPage);

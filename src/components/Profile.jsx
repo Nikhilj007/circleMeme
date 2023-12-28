@@ -29,7 +29,8 @@ function Profile() {
       <div className="flex justify-around text-base font-thin py-3">
         <div>{likeCount}</div>
         <div>Kolkata</div>
-        <div>St. Joseph's college, Darjeeling</div>
+        {// eslint-disable-next-line react/no-unescaped-entities
+        }<div>St. Joseph's college, Darjeeling</div>
       </div>
     </div>
   );

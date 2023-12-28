@@ -8,7 +8,7 @@ function Memes() {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   return (
-    <div className="flex relative pb-10 flex-col items-center pt-20 bg-[#ECF6FB] p-0">
+    <div className="flex relative pb-10 flex-col items-center pt-14 bg-[#ECF6FB] p-0">
       <Post />
       <Post />
       {isComponentVisible && (

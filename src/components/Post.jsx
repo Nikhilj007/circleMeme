@@ -13,8 +13,8 @@ function Post() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam voluptatum consequuntur quas quidem fugiat! Minima officia perspiciatis vel aspernatur amet veniam. Voluptas vitae quam quaerat aspernatur eveniet! Quasi repudiandae porro quaerat numquam explicabo eveniet neque quisquam, soluta nostrum nesciunt illum!";
   return (
     <>
-      <div className="max-w-lg rounded-lg text-lg px-0  sm:p-5 mb-2">
-        <div className="flex justify-between p-5 items-center mb-2">
+      <div className="max-w-lg rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
+        <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3">
             <div className="rounded-full overflow-hidden h-[60px]">
               <img width={"60px"} height={"45px"} src={profile} alt="fsdf" />
@@ -30,7 +30,7 @@ function Post() {
         </div>
         
         <div className="flex justify-center">
-          <img className="rounded-sm w-full h-96" src="https://www.circle.net.in/rework_files/m1.jpg" alt="" />
+          <img className="rounded-sm w-full " src="https://help.apple.com/assets/65382CE37BB3E2BCF80ADABA/65382CE57BB3E2BCF80ADAC0/en_US/dbb0631358aad57b8b57484c2a476c7e.png" alt="" />
         </div>
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
@@ -66,7 +66,7 @@ function Post() {
             </button>
           </div>
         </div>
-        <div className="text-gray-400 px-4 text-start text-sm mb-2">
+        {/* <div className="text-gray-400 px-4 text-start text-sm mb-2">
           {showMore ? text : text.substring(0, 150)}
           <button
             onClick={() => setShowMore(!showMore)}
@@ -74,7 +74,7 @@ function Post() {
           >
             {showMore ? "show less" : "show more"}
           </button>
-        </div>
+        </div> */}
         <div className="flex justify-start gap-4 p-6">
           <div className="rounded-full  overflow-hidden h-[30px]">
             <img width={"30px"} height={"22px"} src={profile} alt="fsdf" />
@@ -82,17 +82,8 @@ function Post() {
           <input className="outline-none " type="text" placeholder="write a comment"/>
         </div>
         {showComment && (
-          <div className="bg-gray-300 p-2 rounded-sm">
-            <div className="flex justify-around ">
-              <input
-                className="outline-none w-5/6"
-                type="text"
-                placeholder="Leave your thoughts here"
-              />
-              <button className="bg-blue-500 text-white rounded-full p-2">
-                <IoMdSend />
-              </button>
-            </div>
+          <div>
+            nice
           </div>
         )}
       </div>

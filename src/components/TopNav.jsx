@@ -14,13 +14,13 @@ function TopNav() {
       <div className="w-1/2 flex justify-center items-center bg-white">
          <div className="text-3xl font-bold cursor-pointer"><IoMdSearch/></div> circle
         </div>
-        <div onClick={()=>{navigate('/')}} className={"w-1/2 cursor-pointer flex justify-center items-center bg-white " + (isForYouPage ? "border-b-4 border-gray-700" : "")}>
+        <div onClick={()=>{navigate('/')}} className={"w-1/3 cursor-pointer pb-1 flex justify-center items-center bg-white " + (isForYouPage ? "border-b-4 border-gray-700" : "")}>
           For you
         </div>
-        <div onClick={()=>navigate('/memes')} className={"w-1/2 flex cursor-pointer justify-center items-center bg-white " + (isMemesPage ? "border-b-4 border-gray-700" : "")}>
+        <div onClick={()=>navigate('/memes')} className={"w-1/3 flex cursor-pointer pb-1 justify-center items-center bg-white " + (isMemesPage ? "border-b-4 border-gray-700" : "")}>
           Memes
         </div>
-        <div onClick={()=>navigate('/college')} className={"w-1/2 cursor-pointer flex justify-center items-center bg-white " + (isCollegePage ? "border-b-4 border-gray-700" : "")}>
+        <div onClick={()=>navigate('/college')} className={"w-1/3 cursor-pointer pb-1 flex justify-center items-center bg-white " + (isCollegePage ? "border-b-4 border-gray-700" : "")}>
           College
         </div>
       </div>

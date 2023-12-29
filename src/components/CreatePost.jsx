@@ -18,7 +18,7 @@ function CreatePost() {
           <IoMdCreate />
           Create Post
         </div>
-        <div className="flex border-[1px] border-black text-sm rounded-md p-1 pb-0 pr-0 gap-2 my-3">
+        <div className="flex text-sm rounded-md p-1 pb-0 pr-0 gap-2">
           <div className="rounded-full overflow-hidden  h-[40px]">
             <img width={"40px"} height={"40px"} src={profile} alt="fsdf" />
           </div>

@@ -15,9 +15,9 @@ function Post() {
     <>
       <div className="max-w-lg rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
         <div className="flex justify-between p-3 items-center mb-0">
-          <div className="flex gap-3">
-            <div className="rounded-full overflow-hidden h-[60px]">
-              <img width={"60px"} height={"45px"} src={profile} alt="fsdf" />
+          <div className="flex gap-3 items-center">
+            <div className="rounded-full overflow-hidden h-[48px]">
+              <img width={"48px"} height={"36px"} src={profile} alt="fsdf" />
             </div>
             <div className="text-start">
               <div className="font-bold">Subrata Singha</div>

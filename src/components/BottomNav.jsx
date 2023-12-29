@@ -1,6 +1,6 @@
 import { FaHome } from "react-icons/fa";
-import { AiOutlineMessage } from "react-icons/ai";
-import { IoIosNotifications } from "react-icons/io";
+import { BiSolidMessageRoundedDetail } from "react-icons/bi";
+import { FaCirclePlus } from "react-icons/fa6";import { IoIosNotifications } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 
 function BottomNav() {
@@ -10,9 +10,12 @@ function BottomNav() {
           <FaHome />
         </div>
         <div className="w-1/2 flex justify-center items-center bg-white font-bold">
-          < AiOutlineMessage/>
+          < BiSolidMessageRoundedDetail/>
         </div>
-        <div className="w-1/2 flex justify-center items-center bg-white font-bold">
+        <div className="w-1/2 text-2xl flex justify-center items-center bg-white font-bold">
+          < FaCirclePlus/>
+        </div>
+        <div className="w-1/2 flex text-4xl justify-center items-center bg-white font-bold">
           < IoIosNotifications/>
         </div>
         <div className="w-1/2 flex justify-center items-center bg-white font-bold">

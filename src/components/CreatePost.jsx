@@ -13,7 +13,7 @@ function CreatePost() {
   const [text, setText] = useState("");
   return (
     <>
-      <div className="max-w-[24rem] fixed top-1/3 left-6 sm:left-[35%]  z-1 bg-white rounded-lg text-lg p-5 mb-3">
+      <div className="max-w-[24rem] fixed left-6 sm:left-[35%]  z-1 bg-white rounded-lg text-lg p-5 mb-3">
         <div className="flex justify-start items-center gap-3 font-bold text-gray-500">
           <IoMdCreate />
           Create Post

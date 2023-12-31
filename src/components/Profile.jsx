@@ -5,8 +5,8 @@ function Profile() {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(3);
   return (
-    <div className="max-w-lg rounded-lg text-lg px-0 shadow-xl mb-4">
-      <div className="flex justify-center">
+    <div className="w-full rounded-lg text-lg px-0 shadow-xl mb-4">
+      <div className="flex w-full justify-center">
         <img
           className="rounded-sm w-full h-96"
           src="https://www.circle.net.in/upload/647c7322c4841.jpg"

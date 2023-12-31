@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function BottomNav() {
     return ( 
-        <div className="fixed bg-white text-3xl px-4 py-3 bottom-0 z-10 w-full flex">
+        <div className="fixed max-w-lg bg-white text-3xl px-4 py-3 bottom-0 z-10 w-full flex">
         <div className="w-1/2 flex justify-center items-center bg-white font-bold">
           <FaHome />
         </div>

@@ -25,7 +25,7 @@ function Post() {
             </div>
           </div>
           <div>
-            <button className="text-gray-500">...</button>
+            <button className="text-gray-500 -mt-4 text-3xl">...</button>
           </div>
         </div>
         

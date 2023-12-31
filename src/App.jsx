@@ -10,7 +10,7 @@ import {useLocation} from "react-router-dom"
 function App() {
   const path = useLocation().pathname;
   return (
-    <>
+    <div className="flex justify-center">
     {path!='/create'?<TopNav/>:<></>}
      <Routes>
         <Route path="/memes" element={<Memes/>}/>
@@ -18,7 +18,7 @@ function App() {
         <Route path="/create" element={<CreatePost/>}/>
      </Routes>
      {path!='/create'?<BottomNav/>:<></>}
-    </>
+    </div>
   );
 }
 

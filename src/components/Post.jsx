@@ -3,6 +3,8 @@ import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
 import { FaShareNodes } from "react-icons/fa6";
+import LazyLoad from 'react-lazy-load';
+
 
 function Post() {
   // const [showMore, setShowMore] = useState(false);
@@ -30,7 +32,9 @@ function Post() {
         </div>
         
         <div className="flex justify-center">
+        <LazyLoad offsetVertical={300}>
           <img className="rounded-sm w-full " src="https://help.apple.com/assets/65382CE37BB3E2BCF80ADABA/65382CE57BB3E2BCF80ADAC0/en_US/dbb0631358aad57b8b57484c2a476c7e.png" alt="" />
+        </LazyLoad>
         </div>
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">

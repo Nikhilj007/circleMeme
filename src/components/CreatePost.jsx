@@ -5,26 +5,42 @@ import useWindowDimensions from "../hooks/useWindowDimension";
 import { FaImage } from "react-icons/fa6";
 import { FaVideo } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
-import {motion} from 'framer-motion'
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
 
 function CreatePost() {
   const { width } = useWindowDimensions();
   const imgFileRef = useRef(null);
   const videoFileRef = useRef(null);
   const [text, setText] = useState("");
+  const navigate = useNavigate();
+  const [shouldAnimate, setShouldAnimate] = useState(true);
+  const [tag,setTag] = useState(false);
+
+  const handleCrossClick = () => {
+    setShouldAnimate(false); // Disable animation
+    setTimeout(() => {
+      navigate(-1);
+    }, 300); 
+  };
   return (
     <>
       <motion.div
         initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5,type:'spring',stiffness: 200,damping: 12 }}
         exit={{ opacity: 0, y: 100 }}
         style={{
-          boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)', // Add a shadow at the top
+          boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)", // Add a shadow at the top
         }}
-       className="w-full top-3 relative max-w-lg rounded-3xl shadow-2xl bg-white p-4 text-lg mb-3">
+        className="w-full top-3 relative max-w-lg rounded-3xl shadow-2xl bg-white p-4 text-lg mb-3"
+      >
         <div className="flex items-center text-xl justify-between font-bold">
-          <div className="text-2xl">
+          <div
+            onClick={handleCrossClick}
+            className="text-2xl"
+          >
             <RxCross2 />
           </div>
           <div>Create New Post</div>
@@ -57,7 +73,7 @@ function CreatePost() {
           ref={videoFileRef}
           style={{ display: "none" }}
         />
-        <div className="flex justify-between px-2 text-2xl">
+        <div className="flex justify-between px-2 text-xl">
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
@@ -65,17 +81,26 @@ function CreatePost() {
             onClick={() => imgFileRef.current.click()}
             className="text-purple-800 flex items-center gap-1"
           >
-            <FaImage /><span className="text-lg">Photo</span> 
+            <FaImage />
+            <span className="text-base">Photo</span>
           </button>
           <button
             onClick={() => videoFileRef.current.click()}
             className="text-blue-800 flex items-center gap-1"
           >
-            <FaVideo /> <span className="text-lg">Video</span> 
+            <FaVideo /> <span className="text-base">Video</span>
           </button>
-          <button className="text-xl">
-            Add Tag
-          </button>
+          <button className="text-sm shadow-md">Post anonymously</button>
+          <button  onClick={()=>setTag(!tag)} className="text-sm shadow-md">Add Tag</button>
+          {tag &&<motion.div className="fixed bottom-0 rounded-3xl border-t-4 font-semibold left-0 right-0 bg-white p-3"
+              initial={{ opacity: 0, y: '100%' }}
+              animate={tag?{ opacity: 1, y: 0 }:{}}
+              exit={{ opacity: 0, y: '100%' }}
+              transition={{ duration: 0.3,type:'spring',stiffness: 200,damping: 12 }}
+            >
+              <div className="pb-2 ">Sharing Moments</div>
+              <div className="pb-2 ">Publishing Memes</div>
+            </motion.div>}
         </div>
       </motion.div>
     </>

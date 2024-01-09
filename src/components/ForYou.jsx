@@ -31,7 +31,7 @@ function ForYou() {
           "workplaceCollage": "St. Joseph's college, Darjeeling",
           "cityTown": "Kolkata",
           "num_likes": 5,
-          "profile_image": "https://circle.net.in/upload/6487e7b6892dd.jpg",
+          "profile_image": "https://circle.net.in/upload/647c7322c4841.jpg",
           "like": true
         },
         {
@@ -51,7 +51,7 @@ function ForYou() {
           "workplaceCollage": "St. Joseph college ",
           "cityTown": "Darjeeling ",
           "num_likes": 9,
-          "profile_image": "647c6da578269.jpg",
+          "profile_image": "https://circle.net.in/upload/defaultProfileImg.jpg",
           "like": true
         },
         {
@@ -61,7 +61,7 @@ function ForYou() {
           "workplaceCollage": "St Joseph's College",
           "cityTown": "Darjeeling",
           "num_likes": 3,
-          "profile_image": "defaultProfileImg.jpg",
+          "profile_image": "https://circle.net.in/upload/defaultProfileImg.jpg",
           "like": true
         },
         {
@@ -71,7 +71,7 @@ function ForYou() {
           "workplaceCollage": "St. Joseph's College, Darjeeling",
           "cityTown": "Darjeeling ",
           "num_likes": 1,
-          "profile_image": "defaultProfileImg.jpg",
+          "profile_image": "https://circle.net.in/upload/defaultProfileImg.jpg",
           "like": false
         },
         {
@@ -81,7 +81,7 @@ function ForYou() {
           "workplaceCollage": "City College",
           "cityTown": "Kalimpong",
           "num_likes": 6,
-          "profile_image": "647cbb9f510eb.jpg",
+          "profile_image": "https://circle.net.in/upload/defaultProfileImg.jpg",
           "like": true
         },
         {

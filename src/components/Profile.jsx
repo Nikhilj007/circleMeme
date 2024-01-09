@@ -8,6 +8,7 @@ function Profile() {
     <div className="w-full rounded-lg text-lg px-0 shadow-xl mb-4">
       <div className="flex w-full justify-center">
         <img
+          loading="lazy"
           className="rounded-sm w-full h-96"
           src="https://www.circle.net.in/upload/647c7322c4841.jpg"
           alt=""

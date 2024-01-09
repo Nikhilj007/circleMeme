@@ -1,5 +1,5 @@
 import { FaSearch } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LuSettings2 } from "react-icons/lu";
 import logo from "../assets/circleLogo.png";
 import { motion } from "framer-motion";
@@ -11,22 +11,25 @@ function TopNav() {
   const isCollegePage = location.pathname === "/college";
   const isForYouPage = location.pathname === "/";
   const [settings, setSettings] = useState(false);
-  const [search,setSearch] = useState(false);
+  const [search, setSearch] = useState(false);
   const navigate = useNavigate();
   return (
-    <div className="fixed max-w-lg ml-auto bg-white px-4 py-3 -top-1 z-10 w-full flex shadow-md">
+    <div className="fixed max-w-lg ml-auto justify-around bg-white px-4 py-3 -top-1 z-10 w-full flex shadow-md">
       <div className="w-1/2 flex justify-center items-center bg-white">
-        <div onClick={() => setSearch(!search)} className="text-2xl z-10 font-bold cursor-pointer">
-          <FaSearch  />
+        <div
+          onClick={() => setSearch(!search)}
+          className="text-2xl -translate-x-2 z-10 font-bold cursor-pointer"
+        >
+          <FaSearch />
         </div>{" "}
-        circle
+        <div className="-mt-1 -translate-x-[0.3rem]">circle</div>
       </div>
       <div
         onClick={() => {
           navigate("/");
         }}
         className={
-          "w-1/3 cursor-pointer pb-1 flex justify-center items-center bg-white " +
+          "w-1/3 cursor-pointer -translate-x-2 pb-1 flex justify-center items-center bg-white " +
           (isForYouPage ? "border-b-4 border-gray-700" : "")
         }
       >
@@ -35,7 +38,7 @@ function TopNav() {
       <div
         onClick={() => navigate("/memes")}
         className={
-          "w-1/3 flex cursor-pointer pb-1 justify-center items-center bg-white " +
+          "w-1/3 flex cursor-pointer -translate-x-2 pb-1 justify-center items-center bg-white " +
           (isMemesPage ? "border-b-4 border-gray-700" : "")
         }
       >
@@ -44,7 +47,7 @@ function TopNav() {
       <div
         onClick={() => navigate("/college")}
         className={
-          "w-1/3 cursor-pointer pb-1 flex justify-center items-center bg-white " +
+          "w-1/3 cursor-pointer pb-1 -translate-x-2 flex justify-center items-center bg-white " +
           (isCollegePage ? "border-b-4 border-gray-700" : "")
         }
       >
@@ -53,13 +56,13 @@ function TopNav() {
       <div
         onClick={() => setSettings(!settings)}
         className={
-          "w-1/4 flex cursor-pointer pb-1 justify-center items-center bg-white "
+          "w-1/4 flex text-2xl cursor-pointer pb-1 -mb-1 justify-center items-center bg-white "
         }
       >
         <LuSettings2 />
       </div>
       <div>
-        <img height={"60px"} width={"60px"} src={logo} alt="" />
+        <img height={"80px"} width={"80px"} src={logo} alt="" />
       </div>
       {
         <motion.div
@@ -74,14 +77,20 @@ function TopNav() {
             damping: 12,
           }}
         >
-          <div className="pb-2 border-b-2 ">logout</div>
-          <div className="pb-2 border-b-2 ">Settings</div>
-          <div className="pb-2 ">Gig work</div>
+          <Link to={"/gossip"} className="pb-2">Gossip</Link>
+          <div className="pb-2">Privacy and security</div>
+          <div className="pb-2 ">Logout</div>
         </motion.div>
       }
-      {search &&<div className="fixed left-6 w-full ">
-        <input className="w-10/12 p-2" type="text" placeholder="search something" />
-      </div>}
+      {search && (
+        <div className="fixed left-6 w-full ">
+          <input
+            className="w-11/12 p-3 focus:outline-none"
+            type="text"
+            placeholder="search something"
+          />
+        </div>
+      )}
     </div>
   );
 }

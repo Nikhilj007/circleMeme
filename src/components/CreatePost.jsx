@@ -92,7 +92,7 @@ function CreatePost() {
           </button>
           <button className="text-sm shadow-md">Post anonymously</button>
           <button  onClick={()=>setTag(!tag)} className="text-sm shadow-md">Add Tag</button>
-          {tag &&<motion.div className="fixed bottom-0 rounded-3xl border-t-4 font-semibold left-0 right-0 bg-white p-3"
+          {tag &&<motion.div className="fixed bottom-0 rounded-3xl border-t-4 left-0 right-0 bg-white p-3"
               initial={{ opacity: 0, y: '100%' }}
               animate={tag?{ opacity: 1, y: 0 }:{}}
               exit={{ opacity: 0, y: '100%' }}

@@ -11,13 +11,12 @@ function TopNav() {
   const isCollegePage = location.pathname === "/college";
   const isForYouPage = location.pathname === "/";
   const [settings, setSettings] = useState(false);
-  const [search, setSearch] = useState(false);
   const navigate = useNavigate();
   return (
     <div className="fixed max-w-lg ml-auto justify-around bg-white px-4 py-3 -top-1 z-10 w-full flex shadow-md">
       <div className="w-1/2 flex justify-center items-center bg-white">
         <div
-          onClick={() => setSearch(!search)}
+          onClick={() => navigate("/search")}
           className="text-2xl -translate-x-2 z-10 font-bold cursor-pointer"
         >
           <FaSearch />
@@ -82,15 +81,6 @@ function TopNav() {
           <div className="pb-2 ">Logout</div>
         </motion.div>
       }
-      {search && (
-        <div className="fixed left-6 w-full ">
-          <input
-            className="w-11/12 p-3 focus:outline-none"
-            type="text"
-            placeholder="search something"
-          />
-        </div>
-      )}
     </div>
   );
 }

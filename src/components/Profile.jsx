@@ -4,7 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 function Profile({user}) {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(3);
-  const {profile_image,username,cityTown,workplaceCollege, num_likes}=user
+  const {profile_image,username,cityTown, workplaceCollage, num_likes}=user
   return (
     <div className="w-full rounded-lg text-lg px-0 shadow-xl mb-4">
       <div className="flex w-full justify-center">
@@ -32,7 +32,7 @@ function Profile({user}) {
         <div>{likeCount}</div>
         <div>{cityTown}</div>
         {// eslint-disable-next-line react/no-unescaped-entities
-        }<div>{workplaceCollege}</div>
+        }<div>{workplaceCollage}</div>
       </div>
     </div>
   );

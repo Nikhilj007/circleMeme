@@ -3,9 +3,8 @@ import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
 import { FaShareNodes } from "react-icons/fa6";
-import postx from "../assets/postx.png"
 
-function Post() {
+function Post({meme}) {
   // const [showMore, setShowMore] = useState(false);
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(3);
@@ -31,7 +30,7 @@ function Post() {
         </div>
         
         <div className="flex justify-center">
-          <img className="rounded-sm w-full " src={postx} alt="" />
+          <img className="rounded-sm w-full " src={meme} alt="" />
         </div>
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">

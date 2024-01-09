@@ -3,7 +3,6 @@ import { FaSearch } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineLocationOn } from "react-icons/md";
-import profile from "../assets/user-8.jpg"
 
 function Search() {
   const navigate = useNavigate();
@@ -14,8 +13,8 @@ function Search() {
   };
 
   return (
-    <div className="p-2">
-      <div className="fixed left-6 w-[97%] flex items-center border-2 border-black -ml-[1.15rem] px-1">
+    <div className="p-2 py-0">
+      <div className="fixed left-6 w-[97%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1">
         <button onClick={() => navigate(-1)} className="text-3xl">
           <MdArrowBack />
         </button>
@@ -41,11 +40,11 @@ function Search() {
       </Link>
       }
       {showResults && <Link to='/gossip' className=" text-left w-full flex items-center mt-5 gap-4 ">
-        <div className="border-2 border-gray-300 rounded-full"><div className="rounded-full overflow-hidden h-[48px]">
-              <img width={"48px"} height={"36px"} src={profile} alt="fsdf" />
+        <div className="border-2 border-gray-300 rounded-full"><div className="rounded-full overflow-hidden h-[36px]">
+              <img width={"36px"} height={"27px"} src="https://www.circle.net.in/upload/647c7322c4841.jpg" alt="fsdf" />
             </div></div>
         <div className="text-sm font-semibold flex justify-start flex-col">
-            Rishabh Baptish
+            Niharika Rai
             <div className="text-gray-500 w-full">
             St. Joseph's College, Darjeeling
         </div>

@@ -5,12 +5,14 @@ import { BiSearchAlt } from "react-icons/bi";
 import profile from "../assets/user-8.jpg";
 import { AiFillLike } from "react-icons/ai";
 import { MdModeComment } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 function Gossips() {
+  const navigate= useNavigate();
   return (
     <div className="bg-zinc-300 w-full">
       <div className="flex items-center bg-white py-3 justify-around w-full">
         <div className="flex gap-3">
-          <button className="text-3xl">
+          <button onClick={()=>navigate(-1)} className="text-3xl">
             <MdArrowBack />
           </button>
           <div className="bg-green-600 px-3 py-1 rounded-sm text-white flex items-center">

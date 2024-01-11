@@ -4,6 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 function Profile({user}) {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(3);
+  // eslint-disable-next-line react/prop-types
   const {profile_image,username,cityTown, workplaceCollage, num_likes}=user
   return (
     <div className="w-full rounded-lg text-lg px-0 shadow-xl mb-4">
@@ -11,7 +12,7 @@ function Profile({user}) {
         <img
           loading="lazy"
           className="rounded-sm w-full h-96"
-          src={profile_image}
+          src={`https://circle.net.in/upload/${profile_image}`}
           alt=""
         />
       </div>

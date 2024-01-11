@@ -13,11 +13,14 @@ const User = () => {
       <div className="h-96 w-full bg-white">
         <img className="h-96 w-full" src={profile} alt="" />
       </div>
-      <div className="w-[97%] rounded-md text-start p-4 bg-white mx-auto">
+      <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
         <div className="font-bold">About</div>
         <div className="text-gray-500">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam saepe, accusantium blanditiis sed numquam quas. Error expedita et dolore obcaecati autem deleniti reiciendis velit eius!
         </div>
+      </div>
+      <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
+        
       </div>
     </div>
   );

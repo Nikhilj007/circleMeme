@@ -31,7 +31,7 @@ function Search() {
       {showResults && <Link to='/gossip' className=" text-left w-full flex items-center mt-20 gap-4 ">
         <div className="p-2 border-2 border-gray-300 rounded-full"> <MdOutlineLocationOn /></div>
         <div className="text-sm font-semibold flex justify-start flex-col">
-            St. Joseph's College, Darjeeling
+            St. {"Joseph's"} College, Darjeeling
             <div className="text-gray-500 w-full">
             read more about college gossips, reviews, etc.
         </div>
@@ -46,7 +46,7 @@ function Search() {
         <div className="text-sm font-semibold flex justify-start flex-col">
             Niharika Rai
             <div className="text-gray-500 w-full">
-            St. Joseph's College, Darjeeling
+            St. {"Joseph's"} College, Darjeeling
         </div>
         </div>
         

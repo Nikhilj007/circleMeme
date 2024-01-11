@@ -13,7 +13,7 @@ function TopNav() {
   const [settings, setSettings] = useState(false);
   const navigate = useNavigate();
   return (
-    <div className="fixed max-w-lg ml-auto justify-around bg-white px-4 py-3 -top-1 z-10 w-full flex shadow-md">
+    <div className="fixed max-w-lg ml-auto justify-around bg-white px-4 py-2 -top-1 z-10 w-full flex shadow-md">
       <div className="w-1/2 flex justify-center items-center bg-white">
         <div
           onClick={() => navigate("/search")}

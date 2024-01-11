@@ -14,7 +14,7 @@ function Gossips() {
           <button onClick={()=>navigate(-1)} className="text-3xl">
             <MdArrowBack />
           </button>
-          <div className="bg-green-600 px-3 py-1 rounded-sm text-white flex items-center">
+          <div className="bg-gray-600 px-3 py-1 rounded-sm text-white flex items-center">
             <div className="text-xl">
               <BiSearchAlt />
             </div>
@@ -33,6 +33,9 @@ function Gossips() {
           </div>
         </div>
       </div>
+      <Question/>
+      <Question/>
+      <Question/>
       <Question/>
       <Question/>
       

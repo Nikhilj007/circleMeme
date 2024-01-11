@@ -14,7 +14,7 @@ function Search() {
 
   return (
     <div className="p-2 py-0">
-      <div className="fixed left-6 w-[97%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1">
+      <div className="fixed left-6 w-[97%] max-w-lg mx-auto flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1">
         <button onClick={() => navigate(-1)} className="text-3xl">
           <MdArrowBack />
         </button>

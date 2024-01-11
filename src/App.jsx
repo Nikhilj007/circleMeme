@@ -9,12 +9,13 @@ import {useLocation} from "react-router-dom"
 import College from "./components/college";
 import Gossips from "./components/Gossips";
 import Search from "./components/Search";
+import User from "./components/User";
 
 function App() {
   const path = useLocation().pathname;
   return (
     <div className="flex justify-center">
-    {path!='/create'  && path!='/gossip' && path!='/search'?<TopNav/>:<></>}
+    {path!='/create'  && path!='/gossip' && path!='/search' &&path!=='/user'?<TopNav/>:<></>}
      <Routes>
         <Route path="/memes" element={<Memes/>}/>
         <Route path="/gossip" element={<Gossips/>}/>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/create" element={<CreatePost/>}/>
         <Route path="/college" element={<College/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/user" element={<User/>}/>
      </Routes>
      {path!='/create'?<BottomNav/>:<></>}
     </div>

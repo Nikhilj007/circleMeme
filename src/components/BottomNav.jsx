@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function BottomNav() {
     return ( 
-        <div className="fixed max-w-lg bg-white text-3xl px-4 py-3 bottom-0 z-10 w-full flex">
+        <div className="fixed max-w-lg bg-white text-3xl px-4 py-1 bottom-0 z-10 w-full flex">
         <Link to={'/'} className="w-1/2 flex justify-center items-center bg-white font-bold">
           <FaHome />
         </Link>
@@ -19,9 +19,9 @@ function BottomNav() {
         <a href="https://circle.net.in/like&notification.php" className="w-1/2 flex text-4xl justify-center items-center bg-white font-bold">
           < IoIosNotifications/>
         </a>
-        <div className="w-1/2 flex justify-center items-center bg-white font-bold">
+        <Link to="/user" className="w-1/2 flex justify-center items-center bg-white font-bold">
           < CgProfile/>
-        </div>
+        </Link>
       </div>
      );
 }

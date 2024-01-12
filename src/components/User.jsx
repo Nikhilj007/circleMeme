@@ -13,22 +13,22 @@ import { MdOutlineDownloadDone } from "react-icons/md";
 const User = () => {
   const [show, setShow] = useState(true);
   const [userData, setUserData] = useState({
-     about: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam saepe, accusantium blanditiis sed numquam quas. Error expedita et dolore obcaecati autem deleniti reiciendis velit eius! " ,
-     college: "St. Joseph's College, Darjeeling" ,
-     location: "Kolkata, India" ,
-     department: "Master's of Communication and Journalism" ,
-     email: "amryap@gmail.com" ,
-});
+    about:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam saepe, accusantium blanditiis sed numquam quas. Error expedita et dolore obcaecati autem deleniti reiciendis velit eius! ",
+    college: "St. Joseph's College, Darjeeling",
+    location: "Kolkata, India",
+    department: "Master's of Communication and Journalism",
+    email: "amryap@gmail.com",
+  });
   const [editAbout, setEditAbout] = useState(false);
   const [editCollege, setEditCollege] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editDepartment, setEditDepartment] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
 
-  const handleChange=(e)=>{
-    setUserData({...userData,[e.target.id]:e.target.value})
-  }
-
+  const handleChange = (e) => {
+    setUserData({ ...userData, [e.target.id]: e.target.value });
+  };
 
   const handleOverlayClick = () => {
     setShow(false);
@@ -58,13 +58,25 @@ const User = () => {
         <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
           <div className="font-bold flex justify-between items-center">
             About
-            <div onClick={()=>setEditAbout(!editAbout)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+            <div
+              onClick={() => setEditAbout(!editAbout)}
+              className="text-2xl border-[1px] border-black rounded-full p-1"
+            >
+              {editAbout ? <MdOutlineDownloadDone /> : <GrFormEdit />}
+            </div>
           </div>
-          <div className="text-gray-500">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam
-            saepe, accusantium blanditiis sed numquam quas. Error expedita et
-            dolore obcaecati autem deleniti reiciendis velit eius!
-          </div>
+          {editAbout ? (
+            <textarea
+              type="text"
+              id="about"
+              cols={40}
+              value={userData.about}
+              onChange={(e) => handleChange(e)}
+              className="border-[1px] border-black rounded-md p-1"
+            />
+          ) : (
+            <div className="text-gray-500 text-sm">{userData.about}</div>
+          )}
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
@@ -73,21 +85,46 @@ const User = () => {
             </div>
             <div>
               <div className="font-bold ">College</div>
-              <div className="text-gray-500 text-sm">
-                St. {"Joseph's"} College, Darjeeling{" "}
-              </div>
+              {editCollege ? (
+                <input
+                  type="text"
+                  id="college"
+                  value={userData.college}
+                  onChange={(e) => handleChange(e)}
+                  className="border-[1px] border-black rounded-md p-1"
+                />
+              ) : (
+                <div className="text-gray-500 text-sm">{userData.college}</div>
+              )}
             </div>
-            <div onClick={()=>setEditCollege(!editCollege)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+            <div
+              onClick={() => setEditCollege(!editCollege)}
+              className="text-2xl border-[1px] border-black rounded-full p-1"
+            >
+              {editCollege ? <MdOutlineDownloadDone /> : <GrFormEdit />}
+            </div>
           </div>
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
               <IoLocationOutline />
             </div>
-            <div>
-              <div className="font-bold ">Kolkata, India</div>
+            {editLocation ? (
+              <input
+                type="text"
+                id="location"
+                value={userData.location}
+                onChange={(e) => handleChange(e)}
+                className="border-[1px] border-black rounded-md p-1"
+              />
+            ) : (
+              <div className="font-bold ">{userData.location}</div>
+            )}
+            <div
+              onClick={() => setEditLocation(!editLocation)}
+              className="text-2xl border-[1px] border-black rounded-full p-1"
+            >
+              {editLocation ? <MdOutlineDownloadDone /> : <GrFormEdit />}
             </div>
-            <div onClick={()=>setEditLocation(!editLocation)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
-
           </div>
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
@@ -95,22 +132,51 @@ const User = () => {
             </div>
             <div>
               <div className="font-bold  w-full">Department</div>
-              <div className="text-gray-500 text-sm">
-                {"Master's"} of Communication and Journalism
-              </div>
+              {editDepartment ? (
+                <input
+                  type="text"
+                  id="department"
+                  value={userData.department}
+                  onChange={(e) => handleChange(e)}
+                  className="border-[1px] border-black rounded-md p-1"
+                />
+              ) : (
+                <div className="text-gray-500 text-sm">
+                  {userData.department}
+                </div>
+              )}
             </div>
-            <div onClick={()=>setEditDepartment(!editDepartment)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+            <div
+              onClick={() => setEditDepartment(!editDepartment)}
+              className="text-2xl border-[1px] border-black rounded-full p-1"
+            >
+              {editDepartment ? <MdOutlineDownloadDone /> : <GrFormEdit />}
+            </div>
           </div>
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
               <GoPeople />
             </div>
             <div>
-              {editEmail?<input type="text" id="email" value={userData.email}  onChange={(e)=>handleChange(e)} className="border-[1px] border-black rounded-md p-1" />:<div className="font-bold ">{userData.email}</div>}
+              {editEmail ? (
+                <input
+                  type="text"
+                  id="email"
+                  value={userData.email}
+                  onChange={(e) => handleChange(e)}
+                  className="border-[1px] border-black rounded-md p-1"
+                />
+              ) : (
+                <div className="font-bold ">{userData.email}</div>
+              )}
             </div>
-          <div onClick={()=>setEditEmail(!editEmail)} className="text-2xl border-[1px] border-black rounded-full p-1">{editEmail?<MdOutlineDownloadDone />:<GrFormEdit />}</div>
+            <div
+              onClick={() => setEditEmail(!editEmail)}
+              className="text-2xl border-[1px] border-black rounded-full p-1"
+            >
+              {editEmail ? <MdOutlineDownloadDone /> : <GrFormEdit />}
+            </div>
           </div>
-
         </div>
         <div className="fixed "></div>
         <motion.div

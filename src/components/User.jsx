@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import profile from "../assets/user-8.jpg";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import { GoPeople } from "react-icons/go";
+import { motion } from "framer-motion";
 
 const User = () => {
   const [show, setShow] = useState(true);
@@ -80,13 +81,22 @@ const User = () => {
         </div>
       </div>
         <div className="fixed "></div>
-        {show && (
-          <div className="w-full text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3">
+          <motion.div
+           className="w-full border-t-8 border-gray-600 text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3"
+           initial={{ opacity: 0, y: "100%" }}
+          animate={show ? { opacity: 1, y: 0 } : {}}
+          exit={{ opacity: 0, y: "100%" }}
+          transition={{
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+            damping: 12,
+          }}
+           >
             <div>Follow</div>
             <div>Drop Message</div>
             <div>Send Crush</div>
-          </div>
-        )}
+          </motion.div>
       </div>
     </div>
   );

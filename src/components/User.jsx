@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import profile from "../assets/user-8.jpg";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
@@ -6,15 +7,28 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GoPeople } from "react-icons/go";
 
 const User = () => {
+  const [show, setShow] = useState(true);
+
+  const handleOverlayClick = () => {
+    setShow(false);
+  };
+
   return (
-    <div className="w-full max-w-lg bg-red-100 mb-14">
-      <div className="flex text-lg bg-white p-3 justify-start gap-14 font-semibold items-center">
-        <div className="text-2xl">
-          <MdArrowBack />
+    <div className="relative w-full max-w-lg mb-14">
+      {show && (
+        <div
+          className="fixed inset-0 bg-black opacity-50"
+          onClick={handleOverlayClick}
+        ></div>
+      )}
+      <div className={`w-full bg-red-100 mb-14 `}>
+        <div className="flex text-lg bg-white p-3 justify-start gap-14 font-semibold items-center">
+          <div className="text-2xl">
+            <MdArrowBack />
+          </div>
+          <div>Amarya Paul</div>
         </div>
-        <div>Amarya Paul</div>
-      </div>
-      <div className="h-96 w-full bg-white">
+        <div className="h-96 w-full bg-white">
         <img className="h-96 w-full" src={profile} alt="" />
       </div>
       <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
@@ -31,8 +45,8 @@ const User = () => {
             <FiLock />
           </div>
           <div>
-            <div className="font-bold text-lg">College</div>
-            <div className="text-gray-500">
+            <div className="font-bold ">College</div>
+            <div className="text-gray-500 text-sm">
               St. {"Joseph's"} College, Darjeeling{" "}
             </div>
           </div>
@@ -42,7 +56,7 @@ const User = () => {
             <IoLocationOutline />
           </div>
           <div>
-            <div className="font-bold text-lg">Kolkata, India</div>
+            <div className="font-bold ">Kolkata, India</div>
           </div>
         </div>
         <div className="flex justify-start gap-3 items-center">
@@ -50,8 +64,8 @@ const User = () => {
             <IoEyeOutline />
           </div>
           <div>
-            <div className="font-bold text-lg">Department</div>
-            <div className="text-gray-500">
+            <div className="font-bold  w-full">Department</div>
+            <div className="text-gray-500 text-sm">
               {"Master's"} of Communication and Journalism
             </div>
           </div>
@@ -61,9 +75,18 @@ const User = () => {
             <GoPeople />
           </div>
           <div>
-            <div className="font-bold text-lg">amryap@gmail.com</div>
+            <div className="font-bold ">amryap@gmail.com</div>
           </div>
         </div>
+      </div>
+        <div className="fixed "></div>
+        {show && (
+          <div className="w-full text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3">
+            <div>Follow</div>
+            <div>Drop Message</div>
+            <div>Send Crush</div>
+          </div>
+        )}
       </div>
     </div>
   );

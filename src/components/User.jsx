@@ -8,9 +8,27 @@ import { GoPeople } from "react-icons/go";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GrFormEdit } from "react-icons/gr";
+import { MdOutlineDownloadDone } from "react-icons/md";
 
 const User = () => {
   const [show, setShow] = useState(true);
+  const [userData, setUserData] = useState({
+     about: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam saepe, accusantium blanditiis sed numquam quas. Error expedita et dolore obcaecati autem deleniti reiciendis velit eius! " ,
+     college: "St. Joseph's College, Darjeeling" ,
+     location: "Kolkata, India" ,
+     department: "Master's of Communication and Journalism" ,
+     email: "amryap@gmail.com" ,
+});
+  const [editAbout, setEditAbout] = useState(false);
+  const [editCollege, setEditCollege] = useState(false);
+  const [editLocation, setEditLocation] = useState(false);
+  const [editDepartment, setEditDepartment] = useState(false);
+  const [editEmail, setEditEmail] = useState(false);
+
+  const handleChange=(e)=>{
+    setUserData({...userData,[e.target.id]:e.target.value})
+  }
+
 
   const handleOverlayClick = () => {
     setShow(false);
@@ -40,7 +58,7 @@ const User = () => {
         <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
           <div className="font-bold flex justify-between items-center">
             About
-            <div className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+            <div onClick={()=>setEditAbout(!editAbout)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
           </div>
           <div className="text-gray-500">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam
@@ -59,7 +77,7 @@ const User = () => {
                 St. {"Joseph's"} College, Darjeeling{" "}
               </div>
             </div>
-            <div className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+            <div onClick={()=>setEditCollege(!editCollege)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
           </div>
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
@@ -68,7 +86,7 @@ const User = () => {
             <div>
               <div className="font-bold ">Kolkata, India</div>
             </div>
-            <div className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+            <div onClick={()=>setEditLocation(!editLocation)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
 
           </div>
           <div className="flex justify-start gap-3 items-center">
@@ -81,17 +99,16 @@ const User = () => {
                 {"Master's"} of Communication and Journalism
               </div>
             </div>
-            <div className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
-
+            <div onClick={()=>setEditDepartment(!editDepartment)} className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
           </div>
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
               <GoPeople />
             </div>
             <div>
-              <div className="font-bold ">amryap@gmail.com</div>
+              {editEmail?<input type="text" id="email" value={userData.email}  onChange={(e)=>handleChange(e)} className="border-[1px] border-black rounded-md p-1" />:<div className="font-bold ">{userData.email}</div>}
             </div>
-          <div className="text-2xl border-[1px] border-black rounded-full p-1"><GrFormEdit /></div>
+          <div onClick={()=>setEditEmail(!editEmail)} className="text-2xl border-[1px] border-black rounded-full p-1">{editEmail?<MdOutlineDownloadDone />:<GrFormEdit />}</div>
           </div>
 
         </div>

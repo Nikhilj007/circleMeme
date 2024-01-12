@@ -28,7 +28,7 @@ const User = () => {
           <div className="text-2xl">
             <MdArrowBack />
           </div>
-          <div>Amarya Paul</div>
+          <div className="-translate-x-20" >Amarya Paul</div>
           <div onClick={()=>setShow(!show)} className="text-xl">
             <BsThreeDotsVertical />
           </div>
@@ -97,6 +97,7 @@ const User = () => {
             damping: 12,
           }}
            >
+            <div>Change Picture</div>
             <div>Follow</div>
             <div>Drop Message</div>
             <div>Send Crush</div>

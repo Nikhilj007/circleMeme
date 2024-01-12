@@ -6,6 +6,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import { GoPeople } from "react-icons/go";
 import { motion } from "framer-motion";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const User = () => {
   const [show, setShow] = useState(true);
@@ -18,16 +19,19 @@ const User = () => {
     <div className="relative w-full max-w-lg mb-14">
       {show && (
         <div
-          className="fixed inset-0 bg-black opacity-50"
+          className="fixed inset-0 bg-black opacity-60"
           onClick={handleOverlayClick}
         ></div>
       )}
       <div className={`w-full bg-red-100 mb-14 `}>
-        <div className="flex text-lg bg-white p-3 justify-start gap-14 font-semibold items-center">
+        <div className="flex text-lg bg-white p-3 justify-between font-semibold items-center">
           <div className="text-2xl">
             <MdArrowBack />
           </div>
           <div>Amarya Paul</div>
+          <div onClick={()=>setShow(!show)} className="text-xl">
+            <BsThreeDotsVertical />
+          </div>
         </div>
         <div className="h-96 w-full bg-white">
         <img className="h-96 w-full" src={profile} alt="" />
@@ -40,7 +44,7 @@ const User = () => {
           dolore obcaecati autem deleniti reiciendis velit eius!
         </div>
       </div>
-      <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-3 p-4 bg-white mx-auto">
+      <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
         <div className="flex justify-start gap-3 items-center">
           <div className="text-3xl">
             <FiLock />
@@ -82,7 +86,7 @@ const User = () => {
       </div>
         <div className="fixed "></div>
           <motion.div
-           className="w-full border-t-8 border-gray-600 text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3"
+           className="w-full text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3"
            initial={{ opacity: 0, y: "100%" }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}

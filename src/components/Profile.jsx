@@ -2,10 +2,10 @@ import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 function Profile({user}) {
-  const [like, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(3);
   // eslint-disable-next-line react/prop-types
-  const {profile_image,username,cityTown, workplaceCollage, num_likes}=user
+  const {profile_image,username,cityTown, workplaceCollage, num_likes,like}=user
+  const [liked, setLike] = useState(like);
+  const [likeCount, setLikeCount] = useState(3);
   return (
     <div className="w-full rounded-lg text-lg px-0 shadow-xl mb-4">
       <div className="flex w-full justify-center">
@@ -22,15 +22,15 @@ function Profile({user}) {
         <button
           className="text-red-600 text-3xl active:scale-75 transition-all duration-150"
           onClick={() => {
-            setLike(!like);
-            like ? setLikeCount(likeCount + 1) : setLikeCount(likeCount - 1);
+            setLike(!liked);
+            liked ? setLikeCount(likeCount + 1) : setLikeCount(likeCount - 1);
           }}
         >
-          {like ? <AiOutlineHeart /> : <AiFillHeart />}
+          {liked ? <AiOutlineHeart /> : <AiFillHeart />}
         </button>
       </div>
       <div className="flex justify-around text-base font-thin py-3">
-        <div>{likeCount}</div>
+        <div>{num_likes}</div>
         <div>{cityTown}</div>
         {// eslint-disable-next-line react/no-unescaped-entities
         }<div>{workplaceCollage}</div>

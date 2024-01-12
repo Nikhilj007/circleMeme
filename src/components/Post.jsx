@@ -10,8 +10,7 @@ function Post({meme}) {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(3);
   const [showComment, setShowComment] = useState(false);
-  // const text =
-  //   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam voluptatum consequuntur quas quidem fugiat! Minima officia perspiciatis vel aspernatur amet veniam. Voluptas vitae quam quaerat aspernatur eveniet! Quasi repudiandae porro quaerat numquam explicabo eveniet neque quisquam, soluta nostrum nesciunt illum!";
+
   return (
     <>
       <div className="max-w-lg rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">

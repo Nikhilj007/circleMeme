@@ -1,13 +1,24 @@
 import { MdArrowBack } from "react-icons/md";
 import { BsQuestionCircle } from "react-icons/bs";
-import { GoTriangleUp } from "react-icons/go";
-import { BiSearchAlt } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import Question from "./Questions";
 import bgimage from "../assets/gossipsBackground.jpg";
+import { useState } from "react";
+import Modal from "./Modal";
+
 function Gossips() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="bg-zinc-300 w-full mb-14">
       <div
@@ -34,7 +45,7 @@ function Gossips() {
             <div className="text-black bg-white rounded-full text-lg">
               <BsQuestionCircle />
             </div>
-            <div className="text-white text-sm">Ask a question</div>
+            <div onClick={openModal} className="text-white text-sm">Ask a question</div>
           </div>
           <div className="bg-black px-4 py-2 rounded-lg">
             <div className="text-white text-sm">Read Questions</div>
@@ -48,6 +59,8 @@ function Gossips() {
         <Question />
         <Question />
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
+
     </div>
   );
 }

@@ -41,11 +41,11 @@ function Gossips() {
       <div className="mt-12 relative">
         <img src={bgimage} alt="" />
         <div className="absolute bottom-2 flex justify-around w-full">
-          <div className="flex bg-black items-center gap-2 px-4 py-2 rounded-lg">
+          <div onClick={openModal} className="flex bg-black items-center gap-2 px-4 py-2 rounded-lg">
             <div className="text-black bg-white rounded-full text-lg">
               <BsQuestionCircle />
             </div>
-            <div onClick={openModal} className="text-white text-sm">Ask a question</div>
+            <div  className="text-white text-sm">Ask a question</div>
           </div>
           <div className="bg-black px-4 py-2 rounded-lg">
             <div className="text-white text-sm">Read Questions</div>

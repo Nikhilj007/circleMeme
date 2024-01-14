@@ -2,10 +2,14 @@ import PropTypes from "prop-types";
 import { RxCross2 } from "react-icons/rx";
 import { TiFlag } from "react-icons/ti";
 import { FaDotCircle } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Modal = ({ isOpen, onClose }) => {
     const [show,setShow]=useState(false)
+    useEffect(()=>{ 
+        if(isOpen)setShow(false)
+    }
+    ,[isOpen])
   return (
     <>
       <div

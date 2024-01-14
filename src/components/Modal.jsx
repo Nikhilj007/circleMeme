@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 import { RxCross2 } from "react-icons/rx";
 import { TiFlag } from "react-icons/ti";
+import { FaDotCircle } from "react-icons/fa";
+import { useState } from "react";
 
 const Modal = ({ isOpen, onClose }) => {
+    const [show,setShow]=useState(false)
   return (
     <>
       <div
@@ -26,12 +29,28 @@ const Modal = ({ isOpen, onClose }) => {
             </div>
             <input
               className="w-full bg-transparent placeholder:text-white outline-none text-lg focus:outline-none"
-             type="text" placeholder="Write your question here" />
+              type="text"
+              placeholder="Write your question here"
+            />
           </div>
-          <div className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm">
-            <div  className="text-white text-sm">Ask a question</div>
+          <div onClick={()=>setShow(!show)} className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm">
+            <div className="text-white text-sm">Ask a question</div>
           </div>
         </div>
+        {show && <div className="relative w-9/12 h-fit p-7 bg-white top-32 text-start z-50">
+          <div className="flex gap-4">
+            <div className="text-2xl">
+              <FaDotCircle />
+            </div>
+            Post anonymously
+          </div>
+          <div className="flex gap-4">
+            <div className="text-2xl">
+              <FaDotCircle />
+            </div>
+            Post as yourself
+          </div>
+        </div>}
       </div>
     </>
   );

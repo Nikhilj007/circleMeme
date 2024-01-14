@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,11 +6,16 @@ import { MdOutlineLocationOn } from "react-icons/md";
 
 function Search() {
   const navigate = useNavigate();
+  const input= useRef(null)
   const [showResults, setShowResults] = useState(false);
   const handlechange = (e) => {
     if(e.target.value==="St. Joseph's College, Darjeeling")setShowResults(true);
     else setShowResults(false);
   };
+  useEffect(()=>{
+    input.current.focus()
+  }
+  ,[])
 
   return (
     <div className="p-2 py-0 bg-white ">
@@ -19,6 +24,7 @@ function Search() {
           <MdArrowBack />
         </button>
         <input
+          ref={input}
           onChange={(e)=>handlechange(e)}
           className="w-11/12 p-3 focus:outline-none"
           type="text"

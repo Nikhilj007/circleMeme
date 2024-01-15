@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import profile from "../assets/user-8.jpg";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
@@ -20,11 +20,14 @@ const User = () => {
     department: "Master's of Communication and Journalism",
     email: "amryap@gmail.com",
   });
+  const profileRef = useRef(null);
+  const [img, setImg] = useState(null); 
   const [editAbout, setEditAbout] = useState(false);
   const [editCollege, setEditCollege] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editDepartment, setEditDepartment] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
+  const [imgLink, setImgLink] = useState(null);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
@@ -53,7 +56,7 @@ const User = () => {
           </div>
         </div>
         <div className="h-96 w-full bg-white">
-          <img className="h-96 w-full" src={profile} alt="" />
+          <img className="h-96 w-full" src={img?img:profile} alt="" />
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
           <div className="font-bold flex justify-between items-center">
@@ -180,7 +183,7 @@ const User = () => {
         </div>
         <div className="fixed "></div>
         <motion.div
-          className="w-full text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3"
+          className="w-full hover:cursor-pointer text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}
@@ -191,11 +194,22 @@ const User = () => {
             damping: 12,
           }}
         >
-          <div>Change Picture</div>
+          <div
+            onClick={() => profileRef.current.click()}
+            className="flex justify-center items-center gap-2"
+          >Change Picture</div>
           <div>Follow</div>
           <div>Drop Message</div>
           <div>Send Crush</div>
         </motion.div>
+        <input type="file" 
+         onChange={(e) => 
+          {
+            setImg(URL.createObjectURL(e.target.files[0]));
+            setImgLink(e.target.files[0]);
+          }
+        }
+         ref={profileRef} style={{ display: "none" }} />
       </div>
     </div>
   );

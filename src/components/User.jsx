@@ -55,8 +55,8 @@ const User = () => {
             <BsThreeDotsVertical />
           </div>
         </div>
-        <div className="h-96 w-full bg-white">
-          <img className="h-96 w-full" src={img?img:profile} alt="" />
+        <div className="h-96 overflow-hidden w-full bg-white">
+          <img className=" w-full" src={img?img:profile} alt="" />
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
           <div className="font-bold flex justify-between items-center">

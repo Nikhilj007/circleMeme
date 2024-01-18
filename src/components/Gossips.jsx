@@ -23,7 +23,7 @@ function Gossips() {
     <div className="bg-zinc-300 w-full mb-14">
       <div
         to={"/search"}
-        className="fixed bg-white left-6 w-[97%] max-w-lg mx-auto flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
+        className="fixed z-50 bg-white left-6 w-[97%] max-w-lg mx-auto flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
       >
         <button onClick={() => navigate(-1)} className="text-3xl">
           <MdArrowBack />

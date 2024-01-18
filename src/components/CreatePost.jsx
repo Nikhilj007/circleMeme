@@ -58,7 +58,7 @@ function CreatePost() {
           onChange={(e) => setText(e.target.value)}
           className="outline-none resize-none mt-1"
           placeholder="What's on your mind?"
-          cols={width > 570 ? "60" : `40`}
+          cols={width > 570 ? "60" : `30`}
           rows="5"
         ></textarea>
         <input

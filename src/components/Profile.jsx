@@ -31,7 +31,7 @@ function Profile({user}) {
           {liked ? <AiOutlineHeart /> : <AiFillHeart />}
         </button>
       </div>
-      <div className="flex gap-2 justify-center text-base px-2  items-center py-3">
+      <div className="flex justify-around text-base font-thin py-3">
         <div>{num_likes}</div>
         <div className="text-3xl">
           <LuDot />

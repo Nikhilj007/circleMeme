@@ -12,8 +12,18 @@ function TopNav() {
   const isForYouPage = location.pathname === "/";
   const [settings, setSettings] = useState(false);
   const navigate = useNavigate();
+
+  const handleOverlayClick = () => {
+    setSettings(false);
+  };
   return (
     <div className="fixed max-w-lg ml-auto justify-around bg-white px-4 py-2 -top-1 z-10 w-full flex shadow-md">
+      {settings && (
+        <div
+          className="fixed inset-0 z-20 bg-black opacity-60"
+          onClick={handleOverlayClick}
+        ></div>
+      )}
       <div className="w-1/2 flex justify-center items-center bg-white">
         <div
           onClick={() => navigate("/search")}
@@ -65,7 +75,7 @@ function TopNav() {
       </div>
       {
         <motion.div
-          className="fixed z-40 bottom-10 rounded-3xl border-t-4 font-semibold left-0 right-0 bg-white p-3"
+          className="fixed z-40 max-w-lg bottom-10 rounded-3xl border-t-4 font-semibold left-0 lg:left-1/3 translate-x-1/2 right-0 bg-white p-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={settings ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}
@@ -77,7 +87,7 @@ function TopNav() {
           }}
         >
           <Link to={"/gossip"} className="pb-2">Gossip</Link>
-          <div className="pb-2">Privacy and security</div>
+          <div className="pb-1">Privacy and security</div>
           <div className="pb-2 ">Logout</div>
         </motion.div>
       }

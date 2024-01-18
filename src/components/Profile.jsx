@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { LuDot } from "react-icons/lu";
 
+  // eslint-disable-next-line react/prop-types
 function Profile({user}) {
   // eslint-disable-next-line react/prop-types
   const {profile_image,username,cityTown, workplaceCollage, num_likes,like}=user
@@ -29,9 +31,15 @@ function Profile({user}) {
           {liked ? <AiOutlineHeart /> : <AiFillHeart />}
         </button>
       </div>
-      <div className="flex justify-around text-base font-thin py-3">
+      <div className="flex gap-2 justify-center text-base px-2  items-center py-3">
         <div>{num_likes}</div>
+        <div className="text-3xl">
+          <LuDot />
+        </div>
         <div>{cityTown}</div>
+        <div className="text-3xl">
+          <LuDot />
+        </div>
         {// eslint-disable-next-line react/no-unescaped-entities
         }<div>{workplaceCollage}</div>
       </div>

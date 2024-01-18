@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { RxCross2 } from "react-icons/rx";
-import { TiFlag } from "react-icons/ti";
 import { FaDotCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
@@ -13,6 +12,7 @@ const Modal = ({ isOpen, onClose }) => {
   return (
     <>
       <div
+        onClick={onClose}
         className={`fixed inset-0 z-50 w-full flex mt-16 justify-center ${
           isOpen ? "visible" : "invisible"
         }`}
@@ -28,9 +28,6 @@ const Modal = ({ isOpen, onClose }) => {
         <div className="fixed inset-0  backdrop-filter backdrop-blur-sm w-full "></div>
         <div className="absolute bg-white p-3 rounded-md">
           <div className="w-full bg-gray-600 flex items-center  rounded-sm text-white p-4">
-            <div className="text-2xl translate-y-1">
-              <TiFlag />
-            </div>
             <input
               className="w-full bg-transparent placeholder:text-white outline-none text-lg focus:outline-none"
               type="text"

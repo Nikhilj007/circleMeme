@@ -19,7 +19,7 @@ function Gossips() {
     setIsModalOpen(false);
   };
 
-  
+
 
   return (
     <div className="bg-zinc-300 w-full mb-14">
@@ -48,9 +48,6 @@ function Gossips() {
               <BsQuestionCircle />
             </div>
             <div  className="text-white text-sm">Ask a question</div>
-          </div>
-          <div className="bg-black px-4 py-2 rounded-lg">
-            <div className="text-white text-sm">Read Questions</div>
           </div>
         </div>
       </div>

@@ -28,6 +28,7 @@ const User = () => {
   const [editDepartment, setEditDepartment] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [imgLink, setImgLink] = useState(null);
+  console.log(imgLink);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
@@ -183,7 +184,7 @@ const User = () => {
         </div>
         <div className="fixed "></div>
         <motion.div
-          className="w-full hover:cursor-pointer text-center text-blue-600 text-lg fixed bottom-0 rounded-[2.5rem] bg-white mb-3 pb-10 pt-3"
+          className="w-full hover:cursor-pointer text-center text-blue-600 text-lg fixed bottom-0 rounded-lg max-w-lg bg-white mb-3 pb-10 pt-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}

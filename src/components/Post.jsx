@@ -1,15 +1,37 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
 import { FaShareNodes } from "react-icons/fa6";
 
-// eslint-disable-next-line react/prop-types
 function Post({meme}) {
   // const [showMore, setShowMore] = useState(false);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(meme.like);
   const [likeCount, setLikeCount] = useState(meme.likes_count);
   const [showComment, setShowComment] = useState(false);
+  const [commentCount, setCommentCount] = useState(meme.comment_count);
+
+  function timeAgo(timeString) {
+    const currentTime = new Date();
+    const pastTime = new Date(timeString);
+    const timeDifference = currentTime - pastTime;
+  
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+  
+    if (seconds < 60) {
+      return `${seconds} second${seconds === 1 ? '' : 's'} ago`;
+    } else if (minutes < 60) {
+      return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+    } else if (hours < 24) {
+      return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+    } else {
+      return `${days} day${days === 1 ? '' : 's'} ago`;
+    }
+  }
 
   return (
     <>
@@ -21,7 +43,7 @@ function Post({meme}) {
             </div>
             <div className="text-start">
               <div className="font-bold">{meme.username}</div>
-              <div className="text-gray-500">2 hours ago</div>
+              <div className="text-gray-500">{timeAgo(meme.date_time)}</div>
             </div>
           </div>
           <div>
@@ -55,7 +77,7 @@ function Post({meme}) {
                   className="flex items-center gap-2"
                 >
                   <MdComment />
-                  <span>12</span>
+                  <span>{commentCount}</span>
                 </button>
               </div>
             </div>

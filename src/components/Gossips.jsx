@@ -19,6 +19,8 @@ function Gossips() {
     setIsModalOpen(false);
   };
 
+  
+
   return (
     <div className="bg-zinc-300 w-full mb-14">
       <div

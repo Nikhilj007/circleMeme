@@ -8,7 +8,7 @@ import { FaShareNodes } from "react-icons/fa6";
 function Post({meme}) {
   // const [showMore, setShowMore] = useState(false);
   const [like, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(3);
+  const [likeCount, setLikeCount] = useState(meme.likes_count);
   const [showComment, setShowComment] = useState(false);
 
   return (
@@ -17,10 +17,10 @@ function Post({meme}) {
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-center">
             <div className="rounded-full overflow-hidden h-[48px]">
-              <img width={"48px"} height={"36px"} src={profile} alt="fsdf" />
+              <img width={"48px"} height={"36px"} src={`https://circle.net.in/upload/${meme.profile_pic}`} alt="fsdf" />
             </div>
             <div className="text-start">
-              <div className="font-bold">Subrata Singha</div>
+              <div className="font-bold">{meme.username}</div>
               <div className="text-gray-500">2 hours ago</div>
             </div>
           </div>
@@ -30,7 +30,7 @@ function Post({meme}) {
         </div>
         
         <div className="flex justify-center">
-          <img className="rounded-sm w-full " src={meme} alt="" />
+          <img className="rounded-sm w-full " src={`https://circle.net.in/posts/${meme.post}`} alt="" />
         </div>
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">

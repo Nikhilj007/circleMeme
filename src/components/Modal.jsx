@@ -27,7 +27,7 @@ const Modal = ({ isOpen, onClose }) => {
         </div>
         <div className="fixed inset-0  backdrop-filter backdrop-blur-sm w-full "></div>
         <div className="absolute bg-white p-3 rounded-md">
-          <div className="w-full bg-yellow-400 flex items-center  rounded-sm text-white p-4">
+          <div className="w-full bg-gray-600 flex items-center  rounded-sm text-white p-4">
             <div className="text-2xl translate-y-1">
               <TiFlag />
             </div>

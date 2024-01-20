@@ -75,7 +75,7 @@ function TopNav() {
       </div>
       {
         <motion.div
-          className="fixed z-40 max-w-lg bottom-10 rounded-3xl border-t-4 font-semibold left-0 lg:left-1/3 translate-x-1/2 right-0 bg-white p-3"
+          className="fixed z-40 max-w-lg bottom-10 rounded-3xl border-t-4 font-semibold left-0 lg:left-[30%] translate-x-1/2 right-0 bg-white p-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={settings ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}

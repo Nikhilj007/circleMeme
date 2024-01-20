@@ -1,8 +1,4 @@
 import Post from "./Post";
-// import meme1 from "../assets/meme1.jpg";
-// import meme2 from "../assets/meme2.jpg";
-// import meme3 from "../assets/meme3.jpg";
-// import meme4 from "../assets/meme4.jpg";
 import { useEffect, useState } from "react";
 
 function Memes() {

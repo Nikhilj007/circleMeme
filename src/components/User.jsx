@@ -9,9 +9,11 @@ import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GrFormEdit } from "react-icons/gr";
 import { MdOutlineDownloadDone } from "react-icons/md";
+import { useNavigate } from "react-router-dom"; 
 
 const User = () => {
   const [show, setShow] = useState(true);
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     about:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam saepe, accusantium blanditiis sed numquam quas. Error expedita et dolore obcaecati autem deleniti reiciendis velit eius! ",
@@ -208,6 +210,7 @@ const User = () => {
           {
             setImg(URL.createObjectURL(e.target.files[0]));
             setImgLink(e.target.files[0]);
+            navigate("/upload");
           }
         }
          ref={profileRef} style={{ display: "none" }} />

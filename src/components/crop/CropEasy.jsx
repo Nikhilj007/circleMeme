@@ -1,131 +1,106 @@
-import { MdOutlineCancelPresentation } from "react-icons/md";
-import { IoCropOutline } from "react-icons/io5";
-import {
-  Box,
-  Button,
-  DialogActions,
-  DialogContent,
-  Slider,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import Cropper from 'react-easy-crop';
-import { useAuth } from '../../context/AuthContext';
-import getCroppedImg from './utils/cropImage';
+import { useState } from 'react'
+import Cropper from 'react-easy-crop'
+import Slider from '@material-ui/core/Slider'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import getCroppedImg from '../crop/utils/cropImage'
+import { styles } from './styles'
 
-const CropEasy = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
-  const { setAlert, setLoading } = useAuth();
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [rotation, setRotation] = useState(0);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+const dogImg =
+  'https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000'
 
-  const cropComplete = (croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  };
+const Demo = ({ classes, dogImg  }) => {
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [rotation, setRotation] = useState(0)
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const [croppedImage, setCroppedImage] = useState(null)
 
-  const cropImage = async () => {
-    setLoading(true);
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels)
+  }
+
+  const showCroppedImage = async () => {
     try {
-      const { file, url } = await getCroppedImg(
-        photoURL,
+      const croppedImage = await getCroppedImg(
+        dogImg,
         croppedAreaPixels,
         rotation
-      );
-      setPhotoURL(url);
-      setFile(file);
-      setOpenCrop(false);
-    } catch (error) {
-      setAlert({
-        isAlert: true,
-        severity: 'error',
-        message: error.message,
-        timeout: 5000,
-        location: 'modal',
-      });
-      console.log(error);
+      )
+      console.log('donee', { croppedImage })
+      setCroppedImage(croppedImage)
+    } catch (e) {
+      console.error(e)
     }
+  }
 
-    setLoading(false);
-  };
+  const onClose = () => {
+    setCroppedImage(null)
+  }
+
   return (
-    <>
-      <DialogContent
-        dividers
-        sx={{
-          background: '#333',
-          position: 'relative',
-          height: 400,
-          width: 'auto',
-          minWidth: { sm: 500 },
-        }}
-      >
+    <div>
+      <div className={`mt-12 w-full ${classes.cropContainer}`}>
         <Cropper
-          image={photoURL}
+          image={dogImg}
           crop={crop}
-          zoom={zoom}
           rotation={rotation}
-          aspect={1}
-          onZoomChange={setZoom}
-          onRotationChange={setRotation}
+          zoom={zoom}
+          aspect={4 / 3}
           onCropChange={setCrop}
-          onCropComplete={cropComplete}
+          onRotationChange={setRotation}
+          onCropComplete={onCropComplete}
+          onZoomChange={setZoom}
         />
-      </DialogContent>
-      <DialogActions sx={{ flexDirection: 'column', mx: 3, my: 2 }}>
-        <Box sx={{ width: '100%', mb: 1 }}>
-          <Box>
-            <Typography>Zoom: {zoomPercent(zoom)}</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              valueLabelFormat={zoomPercent}
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(e, zoom) => setZoom(zoom)}
-            />
-          </Box>
-          <Box>
-            <Typography>Rotation: {rotation + '°'}</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={360}
-              value={rotation}
-              onChange={(e, rotation) => setRotation(rotation)}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 2,
-            flexWrap: 'wrap',
-          }}
+      </div>
+      <div className={classes.controls}>
+        <div className={classes.sliderContainer}>
+          <Typography
+            variant="overline"
+            classes={{ root: classes.sliderLabel }}
+          >
+            Zoom
+          </Typography>
+          <Slider
+            value={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            classes={{ root: classes.slider }}
+            onChange={(e, zoom) => setZoom(zoom)}
+          />
+        </div>
+        <div className={classes.sliderContainer}>
+          <Typography
+            variant="overline"
+            classes={{ root: classes.sliderLabel }}
+          >
+            Rotation
+          </Typography>
+          <Slider
+            value={rotation}
+            min={0}
+            max={360}
+            step={1}
+            aria-labelledby="Rotation"
+            classes={{ root: classes.slider }}
+            onChange={(e, rotation) => setRotation(rotation)}
+          />
+        </div>
+        <Button
+          onClick={showCroppedImage}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.cropButton }}
         >
-          <Button
-            variant="outlined"
-            startIcon={<MdOutlineCancelPresentation />}
-            onClick={() => setOpenCrop(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<IoCropOutline />}
-            onClick={cropImage}
-          >
-            Crop
-          </Button>
-        </Box>
-      </DialogActions>
-    </>
-  );
-};
+          Show Result
+        </Button>
+      </div>
+    </div>
+  )
+}
 
-export default CropEasy;
+export const CropEasy = withStyles(styles)(Demo)
 
-const zoomPercent = (value) => {
-  return `${Math.round(value * 100)}%`;
-};

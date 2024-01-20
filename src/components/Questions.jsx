@@ -5,7 +5,7 @@ import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 
 function Question() {
     return ( 
-        <div className=" bg-white my-1 px-2 mx-auto">
+        <div className=" bg-white my-1 max-w-lg px-2 mx-auto">
         <div className="flex gap-2 items-center">
           <div className="w-fit flex flex-col items-center text-3xl">
             <GoTriangleUp />

@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { RxCross2 } from "react-icons/rx";
 import { FaDotCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimension";
@@ -19,14 +18,6 @@ const Modal = ({ isOpen, onClose }) => {
           isOpen ? "visible" : "invisible"
         }`}
       >
-        <div
-          className={`absolute -top-10 right-[10%] ${
-            isOpen ? "visible" : "invisible"
-          }`}
-          onClick={onClose}
-        >
-          <RxCross2 className="text-3xl " />
-        </div>
         <div
           onClick={onClose}
          className="fixed inset-0 backdrop-blur-sm w-full  "></div>

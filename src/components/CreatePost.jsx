@@ -8,7 +8,6 @@ import { RxCross2 } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-
 function CreatePost() {
   const { width } = useWindowDimensions();
   const imgFileRef = useRef(null);
@@ -16,20 +15,56 @@ function CreatePost() {
   const [text, setText] = useState("");
   const navigate = useNavigate();
   const [shouldAnimate, setShouldAnimate] = useState(true);
-  const [tag,setTag] = useState(false);
+  const [tag, setTag] = useState(false);
+  const [type, setType] = useState();
+  const [anonymous, setAnonymous] = useState();
+
+  const handleSubmit = () => {
+    if (text === "") {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("user_id", "2");
+    formData.append("description", text);
+    formData.append("anonymous", anonymous);
+    formData.append("type", type);
+
+    // Append the file (image or video)
+    if (imgFileRef.current.files[0]) {
+      formData.append("post", imgFileRef.current.files[0]);
+    } else if (videoFileRef.current.files[0]) {
+      formData.append("post", videoFileRef.current.files[0]);
+    }
+    console.log(formData);
+    fetch(`https://circle-backend-hw6e.onrender.com/api/create_post`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        navigate(-1);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleCrossClick = () => {
     setShouldAnimate(false); // Disable animation
     setTimeout(() => {
       navigate(-1);
-    }, 300); 
+    }, 300);
   };
   return (
     <>
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5,type:'spring',stiffness: 200,damping: 12 }}
+        transition={{
+          duration: 0.5,
+          type: "spring",
+          stiffness: 200,
+          damping: 12,
+        }}
         exit={{ opacity: 0, y: 100 }}
         style={{
           boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)", // Add a shadow at the top
@@ -37,14 +72,13 @@ function CreatePost() {
         className="w-full top-3 relative max-w-lg rounded-3xl shadow-2xl bg-white p-4 text-lg mb-3"
       >
         <div className="flex items-center text-xl justify-between font-bold">
-          <div
-            onClick={handleCrossClick}
-            className="text-2xl"
-          >
+          <div onClick={handleCrossClick} className="text-2xl">
             <RxCross2 />
           </div>
           <div>Create New Post</div>
-          <div className="text-orange-600">Post</div>
+          <div onClick={handleSubmit} className="text-orange-600">
+            Post
+          </div>
         </div>
         <div className="flex text-sm pt-11 gap-4 items-center rounded-md pb-0 pr-0">
           <div className="rounded-full overflow-hidden  h-[40px]">
@@ -90,17 +124,54 @@ function CreatePost() {
           >
             <FaVideo /> <span className="text-base">Video</span>
           </button>
-          <button className="text-sm shadow-md">Post anonymously</button>
-          <button  onClick={()=>setTag(!tag)} className="text-sm shadow-md">Add Tag</button>
-          {tag &&<motion.div className="fixed bottom-0 rounded-3xl border-t-4 left-0 right-0 bg-white p-3"
-              initial={{ opacity: 0, y: '100%' }}
-              animate={tag?{ opacity: 1, y: 0 }:{}}
-              exit={{ opacity: 0, y: '100%' }}
-              transition={{ duration: 0.3,type:'spring',stiffness: 200,damping: 12 }}
+          <button onClick={() => setAnonymous(1)} className="text-sm shadow-md">
+            Post anonymously
+          </button>
+          <button onClick={() => setTag(!tag)} className="text-sm shadow-md">
+            Add Tag
+          </button>
+          {
+            <motion.div
+              className="fixed bottom-0 rounded-3xl border-t-4 left-0 right-0 bg-white p-3"
+              initial={{ opacity: 0, y: "100%" }}
+              animate={tag ? { opacity: 1, y: 0 } : {}}
+              exit={{ opacity: 0, y: "100%" }}
+              transition={{
+                duration: 0.3,
+                type: "spring",
+                stiffness: 200,
+                damping: 12,
+              }}
             >
-              <div className="pb-2 ">Sharing Moments</div>
-              <div className="pb-2 ">Publishing Memes</div>
-            </motion.div>}
+              <div
+                onClick={() => {
+                  setType(0);
+                  setTag(!tag);
+                }}
+                className="pb-2 "
+              >
+                Sharing Moments
+              </div>
+              <div
+                onClick={() => {
+                  setType(1);
+                  setTag(!tag);
+                }}
+                className="pb-2 "
+              >
+                Publishing Memes
+              </div>
+              <div
+                onClick={() => {
+                  setType(2);
+                  setTag(!tag);
+                }}
+                className="pb-2 "
+              >
+                Both
+              </div>
+            </motion.div>
+          }
         </div>
       </motion.div>
     </>

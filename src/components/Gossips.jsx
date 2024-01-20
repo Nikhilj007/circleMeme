@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import Question from "./Questions";
 import bgimage from "../assets/gossipsBackground.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 
 function Gossips() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [gossips, setGossips] = useState(null); // [{},{}
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -19,13 +20,26 @@ function Gossips() {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    async function fetchdata() {
+      const res = await fetch(
+        "https://circle-backend-hw6e.onrender.com/api/gossips/2"
+      ).catch((err) => console.log(err));
+      const data = await res.json();
+      console.log(data);
+      setGossips(data.posts);
+    }
+    fetchdata();
+  }
+  , []);
+
 
 
   return (
     <div className="bg-zinc-300 w-full mb-14">
       <div
         to={"/search"}
-        className="fixed z-50 bg-white left-6 w-[97%] max-w-lg mx-auto flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
+        className="fixed z-50 bg-white left-6 w-[97%] max-w-lg lg:ml-[27%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
       >
         <button onClick={() => navigate(-1)} className="text-3xl">
           <MdArrowBack />
@@ -40,8 +54,8 @@ function Gossips() {
           <FaSearch />
         </div>
       </div>
-      <div className="mt-12 relative">
-        <img src={bgimage} alt="" />
+      <div className="mt-12 max-w-lg left-[29.1%] relative">
+        <img  src={bgimage} alt="" />
         <div className="absolute bottom-2 flex justify-around w-full">
           <div onClick={openModal} className="flex bg-black items-center gap-2 px-4 py-2 rounded-lg">
             <div className="text-black bg-white rounded-full text-lg">
@@ -52,11 +66,11 @@ function Gossips() {
         </div>
       </div>
       <div className="">
-        <Question />
-        <Question />
-        <Question />
-        <Question />
-        <Question />
+       {
+          gossips && gossips.map((gossip)=>(
+            <Question key={gossip.id} gossip={gossip}/>
+          ))
+       }
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} />
 

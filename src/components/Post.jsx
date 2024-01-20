@@ -12,15 +12,18 @@ function Post({ meme }) {
   const [comments, setComments] = useState([]); // [{},{}
   const [showComment, setShowComment] = useState(false);
   const [commentCount, setCommentCount] = useState(meme.comment_count);
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
-  const postComment = () => { 
-    const formData =new URLSearchParams({
+  const postComment = () => {
+    if (text === "") {
+      return;
+    }
+    const formData = new URLSearchParams({
       comment: text,
       post_id: meme.id,
       user_id: 2,
     });
-    console.log(formData)
+    console.log(formData);
     fetch(`https://circle-backend-hw6e.onrender.com/api/comment_post`, {
       method: "POST",
       headers: {
@@ -28,25 +31,28 @@ function Post({ meme }) {
       },
       body: formData.toString(),
     })
-
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setCommentCount(commentCount + 1);
+        setText("");
+        handleComment();
       })
       .catch((err) => console.log(err));
   };
-  
 
   const handleComment = () => {
     setShowComment(!showComment);
-    fetch(`https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme.id}/2`
-    ).then((res)=>res.json())
-    .then((data)=>{setCommentCount(data.comments.length)
-      setComments(data.comments)
-      console.log(data.comments)
-    })
-    .catch((err)=>console.log(err))
+    fetch(
+      `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme.id}/2`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setCommentCount(data.comments.length);
+        setComments(data.comments);
+        console.log(data.comments);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleClicked = () => {
@@ -60,7 +66,7 @@ function Post({ meme }) {
     )
       .then((res) => {
         console.log(res);
-        like?setLikeCount(likeCount - 1):setLikeCount(likeCount + 1);
+        like ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
         setLike(!like);
       })
       .catch((err) => console.log(err));
@@ -86,7 +92,6 @@ function Post({ meme }) {
       return `${days} day${days === 1 ? "" : "s"} ago`;
     }
   }
-  
 
   return (
     <>
@@ -132,7 +137,7 @@ function Post({ meme }) {
               </div>
               <div className="flex items-center mt-3">
                 <button
-                  onClick={handleComment }
+                  onClick={handleComment}
                   className="flex items-center gap-2"
                 >
                   <MdComment />
@@ -168,33 +173,36 @@ function Post({ meme }) {
           </div>
           <input
             value={text}
-            onChange={(e)=>setText(e.target.value)}
+            onChange={(e) => setText(e.target.value)}
             className="outline-none "
             type="text"
             placeholder="write a comment"
           />
           <button onClick={postComment}>submit</button>
         </div>
-        {showComment && <div>
-          {comments.map((comment,idx)=>(
-            <div key={idx} className="flex justify-start gap-4 p-6">
-            <div className="rounded-full  overflow-hidden h-[30px]">
-              <img
-                width={"30px"}
-                height={"22px"}
-                src={profile}
-                loading="lazy"
-                alt="fsdf"
-              />
-            </div>
-            <div className="flex flex-col">
-              <div className="text-gray-500 text-sm">{comment.username}</div>
-              <div className="text-sm">{timeAgo(comment.date_time)}</div>
-              <div className="text-sm">{comment.comment}</div>
-            </div>
+        {showComment && (
+          <div>
+            {comments.map((comment, idx) => (
+              <div key={idx} className="text-start">
+                <div className="flex justify-between">
+                <div className="flex gap-3"><div className="rounded-full  overflow-hidden h-[30px]">
+                  <img
+                    width={"30px"}
+                    height={"22px"}
+                    src={profile}
+                    loading="lazy"
+                    alt="fsdf"
+                  />
+                </div>
+                <div>{comment.username}</div>
+                </div>
+                <div className="text-sm">{timeAgo(comment.date_time)}</div>
+                </div>
+                <div className="ml-10 bg-slate-400 px-3 rounded-sm">{comment.comment}</div>
+              </div>
+            ))}
           </div>
-          ))}
-          </div>}
+        )}
       </div>
     </>
   );

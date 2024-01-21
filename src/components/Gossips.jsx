@@ -57,8 +57,8 @@ function Gossips() {
       <div className="mt-12 max-w-lg left-[29.1%] relative">
         <img  src={bgimage} alt="" />
         <div className="absolute bottom-2 flex justify-around w-full">
-          <div onClick={openModal} className="flex bg-black items-center gap-2 px-4 py-2 rounded-lg">
-            <div className="text-black bg-white rounded-full text-lg">
+          <div onClick={openModal} className="flex cursor-pointer bg-black items-center gap-2 px-4 py-2 rounded-lg">
+            <div className="text-black  bg-white rounded-full text-lg">
               <BsQuestionCircle />
             </div>
             <div  className="text-white text-sm">Ask a question</div>

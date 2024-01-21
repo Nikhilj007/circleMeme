@@ -43,6 +43,9 @@ function Post({ meme }) {
 
   const handleComment = () => {
     setShowComment(!showComment);
+    if (showComment) {
+      return;
+    }
     fetch(
       `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme.id}/2`
     )
@@ -174,31 +177,42 @@ function Post({ meme }) {
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="outline-none "
+            className="outline-none w-full "
             type="text"
             placeholder="write a comment"
           />
-          <button onClick={postComment}>submit</button>
+          <button className="text-end" onClick={postComment}>Post</button>
         </div>
         {showComment && (
           <div>
             {comments.map((comment, idx) => (
-              <div key={idx} className="text-start">
-                <div className="flex justify-between">
-                <div className="flex gap-3"><div className="rounded-full  overflow-hidden h-[30px]">
+              <div key={idx} className="text-start pl-4">
+                <div className="flex gap-3 ">
+                  <div className="rounded-full  overflow-hidden h-[39px] translate-y-1">
                   <img
-                    width={"30px"}
+                    width={"39px"}
                     height={"22px"}
-                    src={profile}
+                    src={`https://circle.net.in/upload/${comment.profile_pic}`}
                     loading="lazy"
                     alt="fsdf"
                   />
                 </div>
-                <div>{comment.username}</div>
+                <div className="rounded-xl bg-slate-200 p-2 m-1">
+                  <div className="flex justify-between gap-4 items-center">
+                    <div>
+                      {comment.username}
+                    </div>
+                    <div className="text-sm">
+                      {timeAgo(comment.date_time)}
+                    </div>
+                  </div>
+                  <div className="text-gray-600">
+                    {comment.comment}
+                  </div>
                 </div>
-                <div className="text-sm">{timeAgo(comment.date_time)}</div>
+                <div>Reply</div>
                 </div>
-                <div className="ml-10 bg-slate-400 px-3 rounded-sm">{comment.comment}</div>
+                
               </div>
             ))}
           </div>

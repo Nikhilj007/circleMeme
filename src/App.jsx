@@ -10,7 +10,6 @@ import College from "./components/college";
 import Gossips from "./components/Gossips";
 import Search from "./components/Search";
 import User from "./components/User";
-import {CropEasy} from "./components/crop/CropEasy";
 
 function App() {
   const path = useLocation().pathname;
@@ -25,7 +24,6 @@ function App() {
         <Route path="/college" element={<College/>}/>
         <Route path="/search" element={<Search/>}/>
         <Route path="/user" element={<User/>}/>
-        <Route path="/upload" element={<CropEasy/>}/>
      </Routes> 
      {path!='/create'?<BottomNav/>:<></>}
     </div>

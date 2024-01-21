@@ -174,7 +174,7 @@ function Post({ meme }) {
           </button>
         </div> */}
         <div className="flex justify-start gap-4 p-6">
-          <div className="rounded-full  overflow-hidden h-[30px]">
+          <div className="rounded-full  overflow-hidden h-[30px] w-[38px]">
             <img
               width={"30px"}
               height={"22px"}

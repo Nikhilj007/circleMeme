@@ -39,7 +39,7 @@ function Gossips() {
     <div className="bg-zinc-300 w-full mb-14">
       <div
         to={"/search"}
-        className="fixed z-50 bg-white left-6 w-[97%] max-w-lg lg:ml-[27%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
+        className="fixed z-50 bg-white left-6 w-[97%] max-w-lg lg:ml-[27.7%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
       >
         <button onClick={() => navigate(-1)} className="text-3xl">
           <MdArrowBack />
@@ -54,7 +54,7 @@ function Gossips() {
           <FaSearch />
         </div>
       </div>
-      <div className="mt-12 max-w-lg left-[29.1%] relative">
+      <div className="mt-12 max-w-lg lg:left-[29.7%] relative">
         <img  src={bgimage} alt="" />
         <div className="absolute bottom-2 flex justify-around w-full">
           <div onClick={openModal} className="flex cursor-pointer bg-black items-center gap-2 px-4 py-2 rounded-lg">

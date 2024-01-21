@@ -23,7 +23,7 @@ function College() {
 
   return (
     <div className="flex relative pb-10 flex-col items-center mt-16  p-0">
-      <Question/>
+      {/* <Question/> */}
       {arr?.map((meme,idx)=>(<Post key={idx} meme={meme}/>) )}
     </div>
   );

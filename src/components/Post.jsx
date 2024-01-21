@@ -13,6 +13,7 @@ function Post({ meme }) {
   const [showComment, setShowComment] = useState(false);
   const [commentCount, setCommentCount] = useState(meme.comment_count);
   const [text, setText] = useState("");
+  const [showReport, setShowReport] = useState(false);
 
   const postComment = () => {
     if (text === "") {
@@ -98,7 +99,13 @@ function Post({ meme }) {
 
   return (
     <>
-      <div className="max-w-lg w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
+      <div className="max-w-lg relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
+        {showReport && (
+          <div className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2">
+            Report
+          </div>
+        )}
+
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-center">
             <div className="rounded-full overflow-hidden h-[48px]">
@@ -115,7 +122,9 @@ function Post({ meme }) {
             </div>
           </div>
           <div>
-            <button className="text-gray-500 -mt-4 text-3xl">...</button>
+            <button
+              onClick={() => setShowReport(!showReport)}
+             className="text-gray-500 -mt-4 text-3xl">...</button>
           </div>
         </div>
 

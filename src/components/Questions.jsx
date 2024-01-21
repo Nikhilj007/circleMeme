@@ -1,4 +1,3 @@
-import profile from "../assets/user-8.jpg";
 import { AiFillLike } from "react-icons/ai";
 import { MdModeComment } from "react-icons/md";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";

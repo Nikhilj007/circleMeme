@@ -186,10 +186,14 @@ function Post({ meme }) {
           </button>
         </div> */}
         <div className="flex justify-start gap-4 p-6">
-          <div className="rounded-full  overflow-hidden h-[30px] w-[38px]">
-            {
-
-            }
+          <div className="rounded-full  overflow-hidden h-[30px] w-[43px]">
+            <img
+              width={"48px"}
+              height={"30px"}
+              src={profile}
+              loading="lazy"
+              alt="fsdf"
+            />
           </div>
           <input
             value={text}

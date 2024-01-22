@@ -4,6 +4,8 @@ import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
 import { PiShareFat } from "react-icons/pi";
+
+
 function Post({ meme }) {
   // const [showMore, setShowMore] = useState(false);
   const [like, setLike] = useState(meme.like);
@@ -16,6 +18,8 @@ function Post({ meme }) {
   const isImage = meme.post.split(".").pop() === "jpg";
   const [showMore, setShowMore] = useState(false);
   const desc= meme.description?meme.description:"";
+
+  
 
   const postComment = () => {
     if (text === "") {
@@ -179,7 +183,7 @@ function Post({ meme }) {
         </div>
         <div className="px-4 text-start text-sm mt-1"></div>
         <div className="px-4 text-start text-sm mt-1">
-          {showMore ? desc : desc.substring(0, 150)}
+          {showMore ? desc : desc.substring(0, 50)}
           {desc.length>50 &&<button
             onClick={() => setShowMore(!showMore)}
             className="text-blue-500"

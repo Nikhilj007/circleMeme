@@ -50,7 +50,7 @@ const User = () => {
       )}
       <div className={`w-full bg-red-100 mb-14 `}>
         <div className="flex text-lg bg-white p-3 justify-between font-semibold items-center">
-          <div className="text-2xl">
+          <div onClick={()=>navigate(-1)} className="text-2xl">
             <MdArrowBack />
           </div>
           <div className="-translate-x-20">Amarya Paul</div>
@@ -91,26 +91,11 @@ const User = () => {
             </div>
             <div>
               <div className="font-bold ">College</div>
-              {editCollege ? (
-                <input
-                  type="text"
-                  id="college"
-                  value={userData.college}
-                  onChange={(e) => handleChange(e)}
-                  className="border-[1px] border-black rounded-md p-1"
-                />
-              ) : (
                 <div className="text-gray-500 text-sm">{userData.college}</div>
-              )}
-            </div>
-            <div
-              onClick={() => setEditCollege(!editCollege)}
-              className="text-2xl border-[1px] border-black rounded-full p-1"
-            >
-              {editCollege ? <MdOutlineDownloadDone /> : <GrFormEdit />}
             </div>
           </div>
-          <div className="flex justify-start gap-3 items-center">
+          <div className="flex justify-between gap-3 items-center">
+            <div className="flex gap-3">
             <div className="text-3xl">
               <IoLocationOutline />
             </div>
@@ -125,6 +110,7 @@ const User = () => {
             ) : (
               <div className="font-bold ">{userData.location}</div>
             )}
+            </div>
             <div
               onClick={() => setEditLocation(!editLocation)}
               className="text-2xl border-[1px] border-black rounded-full p-1"
@@ -132,7 +118,8 @@ const User = () => {
               {editLocation ? <MdOutlineDownloadDone /> : <GrFormEdit />}
             </div>
           </div>
-          <div className="flex justify-start gap-3 items-center">
+          <div className="flex justify-between gap-3 items-center">
+            <div className="flex gap-3">
             <div className="text-3xl">
               <IoEyeOutline />
             </div>
@@ -152,6 +139,7 @@ const User = () => {
                 </div>
               )}
             </div>
+            </div>
             <div
               onClick={() => setEditDepartment(!editDepartment)}
               className="text-2xl border-[1px] border-black rounded-full p-1"
@@ -159,7 +147,8 @@ const User = () => {
               {editDepartment ? <MdOutlineDownloadDone /> : <GrFormEdit />}
             </div>
           </div>
-          <div className="flex justify-start gap-3 items-center">
+          <div className="flex justify-between gap-3 items-center">
+            <div className="flex gap-3">
             <div className="text-3xl">
               <GoPeople />
             </div>
@@ -175,6 +164,7 @@ const User = () => {
               ) : (
                 <div className="font-bold ">{userData.email}</div>
               )}
+            </div>
             </div>
             <div
               onClick={() => setEditEmail(!editEmail)}

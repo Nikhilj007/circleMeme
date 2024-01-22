@@ -80,7 +80,7 @@ function CreatePost() {
             <RxCross2 />
           </div>
           <div>Create New Post</div>
-          <div onClick={handleSubmit} className="text-orange-600">
+          <div  onClick={() => setTag(!tag)} className="text-orange-600">
             Post
           </div>
         </div>
@@ -140,7 +140,7 @@ function CreatePost() {
           </div>
         )}
             
-        <div className="flex justify-between px-2 mt-4 mb-10 text-xl">
+        <div className="flex justify-around px-2 mt-4 mb-10 text-xl">
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
@@ -156,12 +156,6 @@ function CreatePost() {
             className="text-blue-800 flex items-center gap-1"
           >
             <FaVideo /> <span className="text-base">Video</span>
-          </button>
-          <button onClick={() => setAnonymous(1)} className="text-sm shadow-md">
-            Post anonymously
-          </button>
-          <button onClick={() => setTag(!tag)} className="text-sm shadow-md">
-            Add Tag
           </button>
           {
             <motion.div
@@ -181,9 +175,9 @@ function CreatePost() {
                   setType(0);
                   setTag(!tag);
                   setModal(true);
-
+              
                 }}
-                className="pb-2 "
+                className="pb-2  cursor-pointer"
               >
                 Sharing Moments
               </div>
@@ -192,8 +186,9 @@ function CreatePost() {
                   setType(1);
                   setTag(!tag);
                   setModal(true);
+
                 }}
-                className="pb-2 "
+                className="pb-2  cursor-pointer"
               >
                 Publishing Memes
               </div>
@@ -202,8 +197,9 @@ function CreatePost() {
                   setType(2);
                   setTag(!tag);
                   setModal(true);
+
                 }}
-                className="pb-2 "
+                className="pb-2  cursor-pointer"
               >
                 Both
               </div>
@@ -211,13 +207,13 @@ function CreatePost() {
           }
         </div>
       </motion.div>
-      {modal&&<div>
+      {modal&&<div className="fixed top-0 left-0 w-full h-full flex gap-2 justify-center items-center z-50">
         <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-black opacity-50">
         </div>
-        <div className="z-50 bg-white">
+        <div onClick={() => {setAnonymous(1);handleSubmit()}} className="z-50 bg-white px-3 font-semibold rounded-lg py-1 cursor-pointer hover:bg-black hover:text-white transition-all duration-500">
           Post anonymously
         </div>
-        <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-black opacity-50">
+        <div onClick={() => {setAnonymous(0);handleSubmit()}} className="bg-white font-semibold px-3 rounded-lg py-1 cursor-pointer hover:bg-black hover:text-white transition-all duration-500 z-50">
           Post as yourself
         </div>
 

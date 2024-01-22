@@ -6,6 +6,32 @@ const Modal = ({ isOpen, onClose }) => {
   const [show, setShow] = useState(true);
   const [question, setQuestion] = useState("");
   const { width } = useWindowDimensions();
+  const [anonymous, setAnonymous] = useState();
+
+  const postGossip = () => {
+    if (question === "") {
+      return;
+    }
+    const formData =new URLSearchParams({
+      question: question,
+      user_id: 2,
+      anonymous: anonymous,
+    });
+    console.log(formData);
+    fetch(`https://circle-backend-hw6e.onrender.com/api/new_gossip`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString()
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        onClose();
+      })
+      .catch((err) => console.log(err));
+  }
   useEffect(() => {
     if (isOpen) setShow(false);
   }, [isOpen]);
@@ -34,13 +60,13 @@ const Modal = ({ isOpen, onClose }) => {
           </div>
           <div className="flex justify-between">
             <div
-              onClick={() => setShow(!show)}
+              onClick={() => { setAnonymous(0); postGossip()}}
               className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm"
             >
               <div className="text-white text-sm">Ask as yourself</div>
             </div>
             <div
-              onClick={() => setShow(!show)}
+              onClick={() => {setAnonymous(1); postGossip()}}
               className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm"
             >
               <div className="text-white text-sm">Ask anonymously</div>

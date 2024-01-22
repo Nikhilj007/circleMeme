@@ -14,6 +14,7 @@ function Post({ meme }) {
   const [commentCount, setCommentCount] = useState(meme.comment_count);
   const [text, setText] = useState("");
   const [showReport, setShowReport] = useState(false);
+  const isImage = meme.post.split(".").pop() === "jpg";
 
   const postComment = () => {
     if (text === "") {
@@ -109,12 +110,14 @@ function Post({ meme }) {
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-center">
             <div className="rounded-full overflow-hidden h-[48px]">
-              <img
+               <img 
                 width={"48px"}
-                height={"36px"}
+                height={"48px"} 
                 src={`https://circle.net.in/upload/${meme.profile_pic}`}
+                loading="lazy"
                 alt="fsdf"
               />
+
             </div>
             <div className="text-start">
               <div className="font-bold">{meme.username}</div>
@@ -129,11 +132,20 @@ function Post({ meme }) {
         </div>
 
         <div className="flex justify-center">
-          <img
-            className="rounded-sm w-full "
-            src={`https://circle.net.in/posts/${meme.post}`}
-            alt=""
-          />
+         {isImage ? (
+            <img
+              loading="lazy"
+              className="rounded-sm w-full  max-h-96"
+              src={`https://circle.net.in/posts/${meme.post}`}
+              alt=""
+            />
+          ) : (
+            <video
+              className="rounded-sm w-full max-h-96"
+              src={`https://circle.net.in/posts/${meme.post}`}
+              controls
+            />
+          )}
         </div>
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
@@ -175,13 +187,9 @@ function Post({ meme }) {
         </div> */}
         <div className="flex justify-start gap-4 p-6">
           <div className="rounded-full  overflow-hidden h-[30px] w-[38px]">
-            <img
-              width={"30px"}
-              height={"22px"}
-              src={profile}
-              loading="lazy"
-              alt="fsdf"
-            />
+            {
+
+            }
           </div>
           <input
             value={text}

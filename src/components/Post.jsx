@@ -3,8 +3,7 @@ import { useState } from "react";
 import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
-import { FaShareNodes } from "react-icons/fa6";
-
+import { PiShareFat } from "react-icons/pi";
 function Post({ meme }) {
   // const [showMore, setShowMore] = useState(false);
   const [like, setLike] = useState(meme.like);
@@ -15,6 +14,8 @@ function Post({ meme }) {
   const [text, setText] = useState("");
   const [showReport, setShowReport] = useState(false);
   const isImage = meme.post.split(".").pop() === "jpg";
+  const [showMore, setShowMore] = useState(false);
+  const desc= meme.description?meme.description:"";
 
   const postComment = () => {
     if (text === "") {
@@ -135,13 +136,13 @@ function Post({ meme }) {
          {isImage ? (
             <img
               loading="lazy"
-              className="rounded-sm w-full  max-h-96"
+              className="rounded-sm w-full "
               src={`https://circle.net.in/posts/${meme.post}`}
               alt=""
             />
           ) : (
             <video
-              className="rounded-sm w-full max-h-96"
+              className="rounded-sm w-full "
               src={`https://circle.net.in/posts/${meme.post}`}
               controls
             />
@@ -172,19 +173,20 @@ function Post({ meme }) {
           </div>
           <div>
             <button className="flex items-center gap-2">
-              <FaShareNodes />
+              <PiShareFat />
             </button>
           </div>
         </div>
-        {/* <div className="text-gray-400 px-4 text-start text-sm mb-2">
-          {showMore ? text : text.substring(0, 150)}
-          <button
+        <div className="px-4 text-start text-sm mt-1"></div>
+        <div className="px-4 text-start text-sm mt-1">
+          {showMore ? desc : desc.substring(0, 150)}
+          {desc.length>50 &&<button
             onClick={() => setShowMore(!showMore)}
             className="text-blue-500"
           >
             {showMore ? "show less" : "show more"}
-          </button>
-        </div> */}
+          </button>}
+        </div>
         <div className="flex justify-start gap-4 p-6">
           <div className="rounded-full  overflow-hidden h-[30px] w-[43px]">
             <img
@@ -209,17 +211,17 @@ function Post({ meme }) {
             {comments.map((comment, idx) => (
               <div key={idx} className="text-start pl-4">
                 <div className="flex gap-3 ">
-                  <div className="rounded-full  overflow-hidden h-[39px] translate-y-1">
+                  <div className="rounded-full  overflow-hidden h-[32px] translate-y-1">
                   <img
                     width={"39px"}
-                    height={"22px"}
+                    height={"27px"}
                     src={`https://circle.net.in/upload/${comment.profile_pic}`}
                     loading="lazy"
                     alt="fsdf"
                   />
                 </div>
-                <div className="rounded-xl bg-slate-200 p-2 m-1">
-                  <div className="flex justify-between gap-4 items-center">
+                <div className="rounded-xl bg-slate-200 w-full p-2 m-1 mr-2">
+                  <div className="flex justify-between font-semibold gap-4 w-full items-center">
                     <div>
                       {comment.username}
                     </div>
@@ -231,7 +233,6 @@ function Post({ meme }) {
                     {comment.comment}
                   </div>
                 </div>
-                <div>Reply</div>
                 </div>
                 
               </div>

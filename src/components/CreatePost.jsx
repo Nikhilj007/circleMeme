@@ -18,6 +18,10 @@ function CreatePost() {
   const [tag, setTag] = useState(false);
   const [type, setType] = useState();
   const [anonymous, setAnonymous] = useState();
+  const [imgLink, setImgLink] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+  const [modal,setModal] = useState(false);
+
 
   const handleSubmit = () => {
     if (text === "") {
@@ -93,26 +97,55 @@ function CreatePost() {
           className="outline-none resize-none mt-1"
           placeholder="What's on your mind?"
           cols={width > 570 ? "60" : `30`}
-          rows="5"
+          rows="2"
         ></textarea>
         <input
+          onChange={(e) => {
+            setImgLink(URL.createObjectURL(e.target.files[0]));
+            setVideoLink("");
+          }
+          }
           id="img"
           type="file"
           ref={imgFileRef}
           style={{ display: "none" }}
         />
         <input
+          onChange={(e) => {
+            setVideoLink(URL.createObjectURL(e.target.files[0]));
+            setImgLink("");
+          }}
           id="video"
           type="file"
           ref={videoFileRef}
           style={{ display: "none" }}
         />
-        <div className="flex justify-between px-2 text-xl">
+        {imgLink && (
+          <div className="flex justify-center">
+            <img
+              className="rounded-sm w-full " height={"200px"} width={"200px"} 
+              src={imgLink}
+              alt=""
+            />
+          </div>
+        )}
+        {videoLink && (
+          <div className="flex justify-center">
+            <video
+              className="rounded-sm w-full " height={"200px"} width={"200px"}
+              src={videoLink}
+              alt=""
+              controls
+            />
+          </div>
+        )}
+            
+        <div className="flex justify-between px-2 mt-4 mb-10 text-xl">
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
           <button
-            onClick={() => imgFileRef.current.click()}
+            onClick={() => {imgFileRef.current.click();}}
             className="text-purple-800 flex items-center gap-1"
           >
             <FaImage />
@@ -147,6 +180,8 @@ function CreatePost() {
                 onClick={() => {
                   setType(0);
                   setTag(!tag);
+                  setModal(true);
+
                 }}
                 className="pb-2 "
               >
@@ -156,6 +191,7 @@ function CreatePost() {
                 onClick={() => {
                   setType(1);
                   setTag(!tag);
+                  setModal(true);
                 }}
                 className="pb-2 "
               >
@@ -165,6 +201,7 @@ function CreatePost() {
                 onClick={() => {
                   setType(2);
                   setTag(!tag);
+                  setModal(true);
                 }}
                 className="pb-2 "
               >
@@ -174,6 +211,17 @@ function CreatePost() {
           }
         </div>
       </motion.div>
+      {modal&&<div>
+        <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-black opacity-50">
+        </div>
+        <div className="z-50 bg-white">
+          Post anonymously
+        </div>
+        <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-black opacity-50">
+          Post as yourself
+        </div>
+
+        </div>}
     </>
   );
 }

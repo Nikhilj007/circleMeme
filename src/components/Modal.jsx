@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimension";
 
 const Modal = ({ isOpen, onClose }) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [question, setQuestion] = useState("");
   const { width } = useWindowDimensions();
   useEffect(() => {
@@ -32,25 +32,19 @@ const Modal = ({ isOpen, onClose }) => {
               rows="5"
             ></textarea>
           </div>
-          <div className="flex gap-2">
+          <div className="flex justify-between">
             <div
               onClick={() => setShow(!show)}
               className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm"
             >
-              <div className="text-white text-sm">Ask a question</div>
+              <div className="text-white text-sm">Ask as yourself</div>
             </div>
-            {show && (
-              <div className="relative w-fit h-fit  bg-white px-2 rounded-md text-start z-50">
-                <div className="flex gap-4 bg-black text-white">
-                  <div className="text-2xl"></div>
-                  Post anonymously
-                </div>
-                <div className="flex gap-4 bg-black text-white">
-                  <div className="text-2xl"></div>
-                  Post as yourself
-                </div>
-              </div>
-            )}
+            <div
+              onClick={() => setShow(!show)}
+              className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm"
+            >
+              <div className="text-white text-sm">Ask anonymously</div>
+            </div>
           </div>
         </div>
       </div>

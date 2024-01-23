@@ -10,8 +10,12 @@ import College from "./components/college";
 import Gossips from "./components/Gossips";
 import Search from "./components/Search";
 import User from "./components/User";
+import ProfileDescription from "./components/ProfileDescription";
+import { useState } from "react";
 
 function App() {
+  const [users,setUsers]=useState(null)
+
   const path = useLocation().pathname;
   return (
     <div className="flex justify-center">
@@ -19,11 +23,12 @@ function App() {
      <Routes>
         <Route path="/memes" element={<Memes/>}/>
         <Route path="/gossip" element={<Gossips/>}/>
-        <Route path="/" element={<ForYou/>}/>
+        <Route path="/" element={<ForYou users={users} setUsers={setUsers}/>}/>
         <Route path="/create" element={<CreatePost/>}/>
         <Route path="/college" element={<College/>}/>
         <Route path="/search" element={<Search/>}/>
         <Route path="/user" element={<User/>}/>
+        <Route path="/description/:id" element={<ProfileDescription users={users?.users}/>} />
      </Routes> 
      {path!='/create'?<BottomNav/>:<></>}
     </div>

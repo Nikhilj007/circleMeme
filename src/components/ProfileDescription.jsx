@@ -11,7 +11,12 @@ import { GrFormEdit } from "react-icons/gr";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useNavigate } from "react-router-dom"; 
 
-const User = () => {
+const ProfileDescription = ({users}) => {
+  console.log(users);
+  const id = window.location.href.split("/").pop();
+  console.log(id);
+  const currentUser = users.find((user) => user.id === parseInt(id));
+  console.log(currentUser);
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
@@ -22,15 +27,7 @@ const User = () => {
     department: "Master's of Communication and Journalism",
     email: "amryap@gmail.com",
   });
-  const profileRef = useRef(null);
-  const [img, setImg] = useState(null); 
-  const [editAbout, setEditAbout] = useState(false);
-  const [editCollege, setEditCollege] = useState(false);
-  const [editLocation, setEditLocation] = useState(false);
-  const [editDepartment, setEditDepartment] = useState(false);
-  const [editEmail, setEditEmail] = useState(false);
-  const [imgLink, setImgLink] = useState(null);
-  console.log(imgLink);
+  const profileRef = useRef(null); 
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
@@ -59,30 +56,13 @@ const User = () => {
           </div>
         </div>
         <div className="h-96 overflow-hidden w-full bg-white">
-          <img className=" w-full" src={img?img:profile} alt="" />
+          <img className=" w-full" src={`https://circle.net.in/upload/${currentUser.profile_image}`} alt="" />
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
           <div className="font-bold flex justify-between items-center">
             About
-            <div
-              onClick={() => setEditAbout(!editAbout)}
-              className="text-2xl border-[1px] border-black rounded-full p-1"
-            >
-              {editAbout ? <MdOutlineDownloadDone /> : <GrFormEdit />}
-            </div>
           </div>
-          {editAbout ? (
-            <textarea
-              type="text"
-              id="about"
-              cols={40}
-              value={userData.about}
-              onChange={(e) => handleChange(e)}
-              className="border-[1px] border-black rounded-md p-1"
-            />
-          ) : (
             <div className="text-gray-500 text-sm">{userData.about}</div>
-          )}
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
@@ -91,7 +71,7 @@ const User = () => {
             </div>
             <div>
               <div className="font-bold ">College</div>
-                <div className="text-gray-500 text-sm">{userData.college}</div>
+                <div className="text-gray-500 text-sm">{currentUser.workplaceCollage}</div>
             </div>
           </div>
           <div className="flex justify-between gap-3 items-center">
@@ -99,23 +79,8 @@ const User = () => {
             <div className="text-3xl">
               <IoLocationOutline />
             </div>
-            {editLocation ? (
-              <input
-                type="text"
-                id="location"
-                value={userData.location}
-                onChange={(e) => handleChange(e)}
-                className="border-[1px] border-black rounded-md p-1"
-              />
-            ) : (
-              <div className="font-bold ">{userData.location}</div>
-            )}
-            </div>
-            <div
-              onClick={() => setEditLocation(!editLocation)}
-              className="text-2xl border-[1px] border-black rounded-full p-1"
-            >
-              {editLocation ? <MdOutlineDownloadDone /> : <GrFormEdit />}
+            
+              <div className="font-bold ">{currentUser.cityTown}</div>
             </div>
           </div>
           <div className="flex justify-between gap-3 items-center">
@@ -125,27 +90,13 @@ const User = () => {
             </div>
             <div>
               <div className="font-bold  w-full">Department</div>
-              {editDepartment ? (
-                <input
-                  type="text"
-                  id="department"
-                  value={userData.department}
-                  onChange={(e) => handleChange(e)}
-                  className="border-[1px] border-black rounded-md p-1"
-                />
-              ) : (
+              
                 <div className="text-gray-500 text-sm">
                   {userData.department}
                 </div>
-              )}
             </div>
             </div>
-            <div
-              onClick={() => setEditDepartment(!editDepartment)}
-              className="text-2xl border-[1px] border-black rounded-full p-1"
-            >
-              {editDepartment ? <MdOutlineDownloadDone /> : <GrFormEdit />}
-            </div>
+           
           </div>
           <div className="flex justify-between gap-3 items-center">
             <div className="flex gap-3">
@@ -153,24 +104,8 @@ const User = () => {
               <GoPeople />
             </div>
             <div>
-              {editEmail ? (
-                <input
-                  type="text"
-                  id="email"
-                  value={userData.email}
-                  onChange={(e) => handleChange(e)}
-                  className="border-[1px] border-black rounded-md p-1"
-                />
-              ) : (
-                <div className="font-bold ">{userData.email}</div>
-              )}
+              <div className="font-bold ">{userData.email}</div>
             </div>
-            </div>
-            <div
-              onClick={() => setEditEmail(!editEmail)}
-              className="text-2xl border-[1px] border-black rounded-full p-1"
-            >
-              {editEmail ? <MdOutlineDownloadDone /> : <GrFormEdit />}
             </div>
           </div>
         </div>
@@ -187,26 +122,13 @@ const User = () => {
             damping: 12,
           }}
         >
-          <div
-            onClick={() => profileRef.current.click()}
-            className="flex justify-center items-center gap-2"
-          >Change Picture</div>
           <div>Follow</div>
           <div>Drop Message</div>
           <div>Send Crush</div>
         </motion.div>
-        <input type="file" 
-         onChange={(e) => 
-          {
-            setImg(URL.createObjectURL(e.target.files[0]));
-            setImgLink(e.target.files[0]);
-            // navigate("/upload");
-          }
-        }
-         ref={profileRef} style={{ display: "none" }} />
       </div>
     </div>
   );
 };
 
-export default User;
+export default ProfileDescription;

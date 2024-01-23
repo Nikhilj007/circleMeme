@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { LuDot } from "react-icons/lu";
+import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function Profile({ user }) {
@@ -46,7 +47,7 @@ function Profile({ user }) {
       </div>
       <div className="flex justify-between px-4 py-2">
         <div></div>
-        <div>{username}</div>
+        <Link to={`/description/${id}`} className="cursor pointer">{username}</Link>
         <button
           className="text-red-600 text-3xl active:scale-75 transition-all duration-150"
           onClick={handleClick}

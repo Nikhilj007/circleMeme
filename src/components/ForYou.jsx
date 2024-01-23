@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Profile from "./Profile";
 
 
-function ForYou() {
-    const [users,setUsers]=useState(null)
+function ForYou({users,setUsers}) {
 
     
     useEffect(()=>{
         const fetchdata=async()=>{
             const res=await fetch('https://circle-backend-hw6e.onrender.com/api/users/2').catch((err)=>console.log(err))
             const data=await res.json()
+            console.log(data)
             setUsers(data)
         }
         const currUser= async()=>{

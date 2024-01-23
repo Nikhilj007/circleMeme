@@ -7,6 +7,8 @@ import { FaVideo } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { FaRegEyeSlash } from "react-icons/fa6";
+import { IoEyeOutline } from "react-icons/io5";
 
 function CreatePost() {
   const { width } = useWindowDimensions();
@@ -140,7 +142,7 @@ function CreatePost() {
           </div>
         )}
             
-        <div className="flex justify-around px-2 mt-4 mb-10 text-xl">
+        <div className={`flex justify-start gap-6 px-2 ${(imgLink ||videoLink)?"mt-4":"mt-32"}  mb-10 text-xl`}>
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
@@ -207,14 +209,16 @@ function CreatePost() {
           }
         </div>
       </motion.div>
-      {modal&&<div className="fixed top-0 left-0 w-full h-full flex gap-2 justify-center items-center z-50">
-        <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-black opacity-50">
+      {modal&&<div className="fixed top-16  right-0 w-fit h-full text-sm z-50">
+        <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-transparent opacity-50">
         </div>
-        <div onClick={() => {setAnonymous(1);handleSubmit()}} className="z-50 bg-white px-3 font-semibold rounded-lg py-1 cursor-pointer hover:bg-black hover:text-white transition-all duration-500">
-          Post anonymously
+        <div onClick={() => {setAnonymous(1);handleSubmit()}} className="z-50 bg-white px-3 font-semibold rounded-sm py-1 border-2 cursor-pointer hover:bg-black hover:text-white transition-all flex items-center gap-3 justify-between duration-500">
+          Anonymously
+          <FaRegEyeSlash/>
         </div>
-        <div onClick={() => {setAnonymous(0);handleSubmit()}} className="bg-white font-semibold px-3 rounded-lg py-1 cursor-pointer hover:bg-black hover:text-white transition-all duration-500 z-50">
-          Post as yourself
+        <div onClick={() => {setAnonymous(0);handleSubmit()}} className="bg-white font-semibold px-3 rounded-sm py-1 border-2 cursor-pointer hover:bg-black hover:text-white flex items-center justify-between gap-3 transition-all duration-500 z-50">
+          As yourself
+          <IoEyeOutline/>
         </div>
 
         </div>}

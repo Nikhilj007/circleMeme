@@ -24,7 +24,7 @@
     padding-left: 10px;
   }
   
-  button {
+  .button {
     z-index: 2;
     cursor: pointer;
     width: 100%;

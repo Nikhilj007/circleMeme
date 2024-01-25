@@ -103,7 +103,7 @@ const User = () => {
               className="border-[1px] border-black rounded-md p-1"
             />
           ) : (
-            <div className="text-gray-500 text-sm">{userData?.user_about}</div>
+            <div className="text-gray-500 text-sm">{userData?.user_about || "Write about yourself"}</div>
           )}
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 pb-2 bg-white mx-auto">
@@ -130,7 +130,7 @@ const User = () => {
                 className="border-[1px] border-black rounded-md p-1"
               />
             ) : (
-              <div className="font-bold ">{userData?.cityTown}</div>
+              <div className="font-bold ">{userData?.cityTown || "Write your City/Town"}</div>
             )}
             </div>
             <div
@@ -157,7 +157,7 @@ const User = () => {
                 />
               ) : (
                 <div className="text-gray-500 text-sm">
-                  {userData?.workplaceCollage}
+                  {userData?.workplaceCollage || "Write your Department"}
                 </div>
               )}
             </div>
@@ -184,7 +184,7 @@ const User = () => {
                   className="border-[1px] border-black rounded-md p-1"
                 />
               ) : (
-                <div className="font-bold ">{userData?.user_email}</div>
+                <div className="font-bold ">{userData?.user_email || "Write your Email"}</div>
               )}
             </div>
             </div>

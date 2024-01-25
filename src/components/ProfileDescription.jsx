@@ -58,12 +58,16 @@ const ProfileDescription = () => {
             alt=""
           />
         </div>
-        <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
-          <div className="font-bold flex justify-between items-center">
-            About
+        {currentUser?.user_about && (
+          <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
+            <div className="font-bold flex justify-between items-center">
+              About
+            </div>
+            <div className="text-gray-500 text-sm">
+              {currentUser?.user_about}
+            </div>
           </div>
-          <div className="text-gray-500 text-sm">{currentUser?.user_about}</div>
-        </div>
+        )}
         <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
@@ -94,12 +98,15 @@ const ProfileDescription = () => {
                 <div className="font-bold  w-full">Department</div>
 
                 <div className="text-gray-500 text-sm">
-                  {currentUser?.department?currentUser?.department:"Not Specified"}
+                  {currentUser?.department
+                    ? currentUser?.department
+                    : "Not Specified"}
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex justify-between gap-3 items-center">
+          { currentUser?.user_email &&
+            <div className="flex justify-between gap-3 items-center">
             <div className="flex gap-3">
               <div className="text-3xl">
                 <GoPeople />
@@ -109,6 +116,7 @@ const ProfileDescription = () => {
               </div>
             </div>
           </div>
+          }
         </div>
         <div className="fixed "></div>
         <motion.div

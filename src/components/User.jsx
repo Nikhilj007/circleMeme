@@ -213,9 +213,6 @@ const User = () => {
             onClick={() => profileRef.current.click()}
             className="flex justify-center items-center gap-2"
           >Change Picture</div>
-          <div>Follow</div>
-          <div>Drop Message</div>
-          <div>Send Crush</div>
         </motion.div>
         <input type="file" 
          onChange={(e) => 

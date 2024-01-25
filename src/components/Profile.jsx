@@ -55,20 +55,26 @@ function Profile({ user }) {
           {liked ? < AiFillHeart/> : < AiOutlineHeart/>}
         </button>
       </div>
-      <div className="flex justify-center gap-2 px-2 text-base py-3">
-        <div>{likeCount}</div>
-        <div className="text-3xl">
-          <LuDot />
-        </div>
-        <div>{cityTown}</div>
-        <div className="text-3xl">
-          <LuDot />
-        </div>
-        {
-          // eslint-disable-next-line react/no-unescaped-entities
-        }
-        <div>{workplaceCollage}</div>
-      </div>
+      <div className="flex justify-center items-center gap-2 px-2 text-base py-3">
+  <div className="flex items-center">
+    <div className="text-xl font-bold ml-1">{likeCount}</div>
+    <div className="text-3xl ml-1">
+      <LuDot />
+    </div>
+  </div>
+
+  <div className="flex items-center">
+    <div className="text-base font-semibold">{cityTown}</div>
+    <div className="text-3xl ml-1">
+      <LuDot />
+    </div>
+  </div>
+
+  <div className="flex items-center">
+    <div className="text-base font-semibold">{workplaceCollage}</div>
+  </div>
+</div>
+
     </div>
   );
 }

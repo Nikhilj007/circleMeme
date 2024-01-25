@@ -4,6 +4,7 @@ import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
 import { PiShareFat } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 
 function Post({ meme,isCurrentUser }) {
@@ -19,6 +20,20 @@ function Post({ meme,isCurrentUser }) {
   const [showMore, setShowMore] = useState(false);
   const desc= meme.description?meme.description:"";
   const reportRef = useRef(null);
+  const [userImage, setUserImage] = useState(null);
+
+    useEffect(() => {
+        async function fetchdata() {
+          const res = await fetch(
+            `https://circle-backend-hw6e.onrender.com/api/self_profile/2`
+          ).catch((err) => console.log(err));
+          const data = await res.json();
+          setUserImage(`https://circle.net.in/upload/${data[0].profile_image}`);
+        }
+        if (!userImage) {
+          fetchdata();
+        }
+      }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -136,7 +151,7 @@ function Post({ meme,isCurrentUser }) {
 
   return (
     <>
-      <div className="max-w-lg relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
+      <div className="max-w-lg z-0 relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
         {showReport && (
           <div
             onClick={()=>{isCurrentUser && deletePost()}} 
@@ -158,7 +173,7 @@ function Post({ meme,isCurrentUser }) {
 
             </div>
             <div className="text-start">
-              <div className="font-bold">{meme.username}</div>
+              <Link to={`/description/${meme.user_id}`} className="font-bold">{meme.username}</Link>
               <div className="text-gray-500">{timeAgo(meme.date_time)}</div>
             </div>
           </div>
@@ -229,7 +244,7 @@ function Post({ meme,isCurrentUser }) {
             <img
               width={"48px"}
               height={"30px"}
-              src={profile}
+              src={userImage}
               loading="lazy"
               alt="fsdf"
             />
@@ -248,7 +263,7 @@ function Post({ meme,isCurrentUser }) {
             {comments.map((comment, idx) => (
               <div key={idx} className="text-start pl-4 relative z-50">
                 <div className="flex gap-3 ">
-                  <div className="rounded-full  overflow-hidden h-[32px] translate-y-1">
+                  <Link to={`/description/${comment.user_id}`} className="rounded-full  overflow-hidden h-[32px] translate-y-1">
                   <img
                     width={"39px"}
                     height={"27px"}
@@ -256,7 +271,7 @@ function Post({ meme,isCurrentUser }) {
                     loading="lazy"
                     alt="fsdf"
                   />
-                </div>
+                </Link>
                 <div className="rounded-xl bg-slate-200 w-full p-2 m-1 mr-2">
                   <div className="flex justify-between font-semibold gap-4 w-full items-center">
                     <div>

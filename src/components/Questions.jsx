@@ -3,6 +3,7 @@ import { MdComment } from "react-icons/md";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { PiShareFat } from "react-icons/pi";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Question({ gossip }) {
   const [writeAnswer, setWriteAnswer] = useState(false);
@@ -12,6 +13,8 @@ function Question({ gossip }) {
   const [AnswersCount, setAnswersCount] = useState(gossip.no_of_answers);
   const [Answers, setAnswers] = useState([]); // [{},{}
   const [showComments, setShowComments] = useState(false);
+  const [isLiked, setIsLiked] = useState(gossip.answer_upvoted);
+
 
   const getAnswers = () => {
     setWriteAnswer(false);
@@ -137,16 +140,24 @@ function Question({ gossip }) {
         </div>
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-center">
-            <div className="rounded-full overflow-hidden h-[36px]">
+            {gossip.anonymous ?<div  className="rounded-full overflow-hidden h-[36px]">
               <img
                 width={"36px"}
                 height={"27px"}
                 src={`http://circle.net.in/upload/${gossip.profile_pic}`}
                 alt="fsdf"
               />
-            </div>
+            </div>:
+            <Link to={`/description/${gossip.user_id}`} className="rounded-full overflow-hidden h-[36px]">
+            <img
+              width={"36px"}
+              height={"27px"}
+              src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+              alt="fsdf"
+            />
+          </Link>}
             <div className="text-start">
-              <div className="font-bold text-pink-600">{gossip.username}</div>
+              {gossip.anonymous ?<div className="font-bold text-pink-600">{gossip.username}</div>: <Link to={`/description/${gossip.user_id}`} className="font-bold text-pink-600">{gossip.username}</Link>}
               <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
             </div>
           </div>
@@ -158,14 +169,16 @@ function Question({ gossip }) {
       </div>
       <div className="flex py-3 px-2 justify-between gap-6 items-center text-xl">
         <div className="flex justify-start gap-6 items-center text-xl">
-          <div className="text-gray-400 border-2 border-gray-400 p-1 rounded-full">
+          <div
+           onClick={handleAnswerLike}
+           className={`text-gray-400 border-2 cursor-pointer ${isLiked?"bg-black":""} border-gray-400 p-1 rounded-full`}>
             <div className="text-lg">
               <AiFillLike />
             </div>
           </div>
           <div
             onClick={getAnswers}
-            className="text-gray-600 flex items-center gap-2"
+            className="text-gray-600 cursor-pointer flex items-center gap-2"
           >
             <MdComment />
             <div className="text-base">{AnswersCount}</div>
@@ -175,7 +188,7 @@ function Question({ gossip }) {
               setWriteAnswer(!writeAnswer);
               setShowComments(false);
             }}
-            className="text-white bg-black text-sm px-3 py-1 rounded-sm"
+            className="text-white cursor-pointer bg-black text-sm px-3 py-1 rounded-sm"
           >
             Answer
           </div>
@@ -224,7 +237,7 @@ function Question({ gossip }) {
           <div className="flex justify-end gap-2">
             <div
               onClick={postAnswer}
-              className="text-white bg-black text-sm mb-2 px-3 py-1 rounded-sm"
+              className="text-white cursor-pointer bg-black text-sm mb-2 px-3 py-1 rounded-sm"
             >
               Submit
             </div>
@@ -233,7 +246,7 @@ function Question({ gossip }) {
                 setWriteAnswer(!writeAnswer);
                 setShowComments(false);
               }}
-              className="text-white bg-red-500 text-sm mb-2 px-3 py-1 rounded-sm"
+              className="text-white cursor-pointer bg-red-500 text-sm mb-2 px-3 py-1 rounded-sm"
             >
               Cancel
             </div>

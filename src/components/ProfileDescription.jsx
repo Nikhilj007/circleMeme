@@ -34,14 +34,14 @@ const ProfileDescription = () => {
   };
 
   return (
-    <div className="relative w-full max-w-lg mb-14">
+    <div className="relative w-full h-full bg-red-100 max-w-lg mb-14">
       {show && (
         <div
           className="fixed inset-0 bg-black opacity-60"
           onClick={handleOverlayClick}
         ></div>
       )}
-      <div className={`w-full bg-red-100 mb-14 `}>
+      <div className={`w-full  h-full mb-14 `}>
         <div className="flex text-lg bg-white p-3 justify-between font-semibold items-center">
           <div onClick={() => navigate(-1)} className="text-2xl">
             <MdArrowBack />
@@ -51,7 +51,7 @@ const ProfileDescription = () => {
             <BsThreeDotsVertical />
           </div>
         </div>
-        <div className="h-96 overflow-hidden w-full bg-white">
+        <div className=" overflow-hidden w-full bg-white">
           <img
             className=" w-full"
             src={`https://circle.net.in/upload/${currentUser?.profile_image}`}
@@ -68,7 +68,7 @@ const ProfileDescription = () => {
             </div>
           </div>
         )}
-        <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
+        <div className="w-[97%]  rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
               <FiLock />

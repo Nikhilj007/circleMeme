@@ -26,6 +26,7 @@ function CreatePost() {
 
 
   const handleSubmit = () => {
+    setModal(false);
     if (text === "") {
       return;
     }
@@ -209,9 +210,7 @@ function CreatePost() {
           }
         </div>
       </motion.div>
-      {modal&&<div className="fixed top-16  right-0 w-fit h-full text-sm z-50">
-        <div onClick={()=>setModal(false)} className="fixed top-0 left-0 w-full h-full bg-transparent opacity-50">
-        </div>
+      {modal&&<div className="fixed top-16  right-0 w-fit h-full text-sm">
         <div onClick={() => {setAnonymous(1);handleSubmit()}} className="z-50 bg-white px-3 font-semibold rounded-sm py-1 border-2 cursor-pointer hover:bg-black hover:text-white transition-all flex items-center gap-3 justify-between duration-500">
           Anonymously
           <FaRegEyeSlash/>

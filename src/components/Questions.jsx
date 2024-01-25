@@ -186,10 +186,10 @@ function Question({ gossip }) {
       </div>
 
       {showComments && (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 py-2">
           {Answers.map((answer, idx) => (
-            <div key={idx} className="flex gap-2">
-              <div className="rounded-full overflow-hidden h-[32px]">
+            <div key={idx} className="flex  gap-2">
+              <div className="rounded-full overflow-hidden ml-2 h-[32px]">
                 <img
                   width={"36px"}
                   height={"27px"}

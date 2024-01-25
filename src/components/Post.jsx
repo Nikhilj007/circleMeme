@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
 // import { IoMdSend } from "react-icons/io";
@@ -18,8 +18,24 @@ function Post({ meme }) {
   const isImage = meme.post.split(".").pop() === "jpg";
   const [showMore, setShowMore] = useState(false);
   const desc= meme.description?meme.description:"";
+  const reportRef = useRef(null);
 
-  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (reportRef.current && !reportRef.current.contains(event.target)) {
+        // Click occurred outside the report div, close it
+        setShowReport(false);
+      }
+    };
+
+    // Add event listener when component mounts
+    document.addEventListener("click", handleClickOutside);
+
+    // Remove event listener when component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const postComment = () => {
     if (text === "") {
@@ -107,7 +123,7 @@ function Post({ meme }) {
     <>
       <div className="max-w-lg relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
         {showReport && (
-          <div className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2">
+          <div ref={reportRef} className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2">
             Report
           </div>
         )}

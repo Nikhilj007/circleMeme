@@ -11,24 +11,24 @@ import Gossips from "./components/Gossips";
 import Search from "./components/Search";
 import User from "./components/User";
 import ProfileDescription from "./components/ProfileDescription";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [users,setUsers]=useState(null)
+  
 
   const path = useLocation().pathname;
   return (
     <div className="flex justify-center">
-    {path!='/create'  && path!='/gossip' && path!='/search' &&path!=='/user'?<TopNav/>:<></>}
+      {!path.startsWith('/create') && !path.startsWith('/gossip') && !path.startsWith('/description/') && !path.startsWith('/search') && !path.startsWith('/user') ? <TopNav /> : <></>}
      <Routes>
         <Route path="/memes" element={<Memes/>}/>
         <Route path="/gossip" element={<Gossips/>}/>
-        <Route path="/" element={<ForYou users={users} setUsers={setUsers}/>}/>
+        <Route path="/" element={<ForYou />}/>
         <Route path="/create" element={<CreatePost/>}/>
         <Route path="/college" element={<College/>}/>
         <Route path="/search" element={<Search/>}/>
         <Route path="/user" element={<User/>}/>
-        <Route path="/description/:id" element={<ProfileDescription users={users?.users}/>} />
+        <Route path="/description/:id" element={<ProfileDescription />} />
      </Routes> 
      {path!='/create'?<BottomNav/>:<></>}
     </div>

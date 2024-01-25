@@ -6,7 +6,7 @@ import { MdComment } from "react-icons/md";
 import { PiShareFat } from "react-icons/pi";
 
 
-function Post({ meme }) {
+function Post({ meme,isCurrentUser }) {
   // const [showMore, setShowMore] = useState(false);
   const [like, setLike] = useState(meme.like);
   const [likeCount, setLikeCount] = useState(meme.likes_count);
@@ -36,6 +36,21 @@ function Post({ meme }) {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const deletePost = () => {
+    fetch(
+      `https://circle-backend-hw6e.onrender.com/api/delete_post/${meme.id}`,
+      {
+        method: "POST",
+      }
+    )
+      .then((res) => {
+        // refresh the page
+        window.location.reload();
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const postComment = () => {
     if (text === "") {
@@ -123,8 +138,10 @@ function Post({ meme }) {
     <>
       <div className="max-w-lg relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
         {showReport && (
-          <div ref={reportRef} className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2">
-            Report
+          <div
+            onClick={()=>{isCurrentUser && deletePost()}} 
+           ref={reportRef} className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2">
+            {isCurrentUser?"Delete":"Report"}
           </div>
         )}
 

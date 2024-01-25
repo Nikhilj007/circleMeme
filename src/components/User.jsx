@@ -106,7 +106,7 @@ const User = () => {
             <div className="text-gray-500 text-sm">{userData?.user_about}</div>
           )}
         </div>
-        <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
+        <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 pb-2 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
               <FiLock />
@@ -227,9 +227,12 @@ const User = () => {
         }
          ref={profileRef} style={{ display: "none" }} />
       </div>
+      <div className="text-lg font-bold mb-4 pt-2 border-t-2 border-b-slate-800">
+        Your Posts
+      </div>
       {
         !allPosts && posts && posts.map((post,id)=>(
-            id>0 &&<Post key={post.id} meme={post}/>
+            id>0 &&<Post key={post.id} meme={post} isCurrentUser={true}/>
         ))
       }
       {
@@ -239,7 +242,7 @@ const User = () => {
       }
       {
         allPosts && posts && posts.map((post)=>(
-          <Post key={post.id} meme={post}/> 
+          <Post key={post.id} meme={post} isCurrentUser={true}/> 
         ))
       }
     </div>

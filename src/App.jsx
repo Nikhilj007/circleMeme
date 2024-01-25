@@ -12,6 +12,7 @@ import Search from "./components/Search";
 import User from "./components/User";
 import ProfileDescription from "./components/ProfileDescription";
 import { useEffect, useState } from "react";
+import Upload from "./components/Upload";
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
         <Route path="/search" element={<Search/>}/>
         <Route path="/user" element={<User/>}/>
         <Route path="/description/:id" element={<ProfileDescription />} />
+        <Route path='/upload' element={<Upload/>}/>
      </Routes> 
      {path!='/create'?<BottomNav/>:<></>}
     </div>

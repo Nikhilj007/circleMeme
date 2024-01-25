@@ -15,7 +15,6 @@ const User = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
-  const profileRef = useRef(null);
   const [img, setImg] = useState(null); 
   const [editAbout, setEditAbout] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
@@ -210,19 +209,10 @@ const User = () => {
           }}
         >
           <div
-            onClick={() => profileRef.current.click()}
+            onClick={() =>navigate('/upload')}
             className="flex justify-center items-center gap-2"
           >Change Picture</div>
         </motion.div>
-        <input type="file" 
-         onChange={(e) => 
-          {
-            setImg(e.target.files[0]);
-            setImgLink(URL.createObjectURL(e.target.files[0]));
-            // navigate("/upload");
-          }
-        }
-         ref={profileRef} style={{ display: "none" }} />
       </div>
       <div className="text-lg font-bold mb-4 pt-2 border-t-2 border-b-slate-800">
         Your Posts

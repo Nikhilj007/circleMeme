@@ -11,6 +11,20 @@ function Gossips() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [gossips, setGossips] = useState(null); // [{},{}
+  const [college,setCollege] = useState(null); // ""
+
+  useEffect(() => {
+    async function fetchdata() {
+      const res = await fetch(
+        "https://circle-backend-hw6e.onrender.com/api/self_profile/2"
+      ).catch((err) => console.log(err));
+      const data = await res.json();
+      console.log(data);
+      setCollege(data[0].workplaceCollage);
+    }
+    fetchdata();
+  }, []);
+
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -48,6 +62,7 @@ function Gossips() {
           onChange={() => navigate("/search")}
           className="w-11/12 p-3 focus:outline-none"
           type="text"
+          value={college}
           placeholder="search something"
         />
         <div>

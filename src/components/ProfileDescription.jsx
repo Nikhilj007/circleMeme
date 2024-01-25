@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
@@ -7,18 +7,27 @@ import { GoPeople } from "react-icons/go";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "./UserContext";
 
 const ProfileDescription = () => {
-  const {users} = useUser()
-  console.log(users);
   const id = window.location.href.split("/").pop();
   console.log(id);
-  const currentUser = users?.find((user) => user?.id === parseInt(id));
-  console.log(currentUser);
+  const [currentUser, setCurrentUser] = useState();
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    async function fetchdata() {
+      const res = await fetch(
+        `https://circle-backend-hw6e.onrender.com/api/user_profile/${id}/2`
+      ).catch((err) => console.log(err));
+      const data = await res.json();
+      console.log(data);
+      setCurrentUser(data[0]);
+    }
+    if (!currentUser) {
+      fetchdata();
+    }
+  }, []);
 
   const handleOverlayClick = () => {
     setShow(false);
@@ -37,7 +46,7 @@ const ProfileDescription = () => {
           <div onClick={() => navigate(-1)} className="text-2xl">
             <MdArrowBack />
           </div>
-          <div className="-ml-20">{currentUser.username}</div>
+          <div className="-ml-20">{currentUser?.username}</div>
           <div onClick={() => setShow(!show)} className="text-xl">
             <BsThreeDotsVertical />
           </div>
@@ -45,7 +54,7 @@ const ProfileDescription = () => {
         <div className="h-96 overflow-hidden w-full bg-white">
           <img
             className=" w-full"
-            src={`https://circle.net.in/upload/${currentUser.profile_image}`}
+            src={`https://circle.net.in/upload/${currentUser?.profile_image}`}
             alt=""
           />
         </div>
@@ -53,7 +62,7 @@ const ProfileDescription = () => {
           <div className="font-bold flex justify-between items-center">
             About
           </div>
-          <div className="text-gray-500 text-sm">{"Hello hello "}</div>
+          <div className="text-gray-500 text-sm">{currentUser?.user_about}</div>
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
@@ -63,7 +72,7 @@ const ProfileDescription = () => {
             <div>
               <div className="font-bold ">College</div>
               <div className="text-gray-500 text-sm">
-                {currentUser.workplaceCollage}
+                {currentUser?.workplaceCollage}
               </div>
             </div>
           </div>
@@ -73,7 +82,7 @@ const ProfileDescription = () => {
                 <IoLocationOutline />
               </div>
 
-              <div className="font-bold ">{currentUser.cityTown}</div>
+              <div className="font-bold ">{currentUser?.cityTown}</div>
             </div>
           </div>
           <div className="flex justify-between gap-3 items-center">
@@ -85,7 +94,7 @@ const ProfileDescription = () => {
                 <div className="font-bold  w-full">Department</div>
 
                 <div className="text-gray-500 text-sm">
-                  {'department not known'}
+                  {currentUser?.department?currentUser?.department:"Not Specified"}
                 </div>
               </div>
             </div>
@@ -96,7 +105,7 @@ const ProfileDescription = () => {
                 <GoPeople />
               </div>
               <div>
-                <div className="font-bold ">{"email not known"}</div>
+                <div className="font-bold ">{currentUser?.user_email}</div>
               </div>
             </div>
           </div>
@@ -114,7 +123,7 @@ const ProfileDescription = () => {
             damping: 12,
           }}
         >
-          <div>Follow</div>
+          <div>{currentUser?.status}</div>
           <div>Drop Message</div>
           <div>Send Crush</div>
         </motion.div>

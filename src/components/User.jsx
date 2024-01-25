@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import profile from "../assets/user-8.jpg";
+import { useEffect, useRef, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
@@ -10,27 +9,50 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { GrFormEdit } from "react-icons/gr";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useNavigate } from "react-router-dom"; 
+import Post from "./Post";
 
 const User = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({
-    about:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam saepe, accusantium blanditiis sed numquam quas. Error expedita et dolore obcaecati autem deleniti reiciendis velit eius! ",
-    college: "St. Joseph's College, Darjeeling",
-    location: "Kolkata, India",
-    department: "Master's of Communication and Journalism",
-    email: "amryap@gmail.com",
-  });
+  const [userData, setUserData] = useState(null);
   const profileRef = useRef(null);
   const [img, setImg] = useState(null); 
   const [editAbout, setEditAbout] = useState(false);
-  const [editCollege, setEditCollege] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editDepartment, setEditDepartment] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [imgLink, setImgLink] = useState(null);
-  console.log(imgLink);
+  const [posts,setPosts] = useState(null);
+  const [allPosts,setAllPosts] = useState(false);
+  console.log(img);
+
+  useEffect(() => {
+    async function fetchdata() {
+      const res = await fetch(
+        `https://circle-backend-hw6e.onrender.com/api/self_profile/2`
+      ).catch((err) => console.log(err));
+      const data = await res.json();
+      console.log(data);
+      setUserData(data[0]);
+      setPosts(data);
+      setImgLink(`https://circle.net.in/upload/${data[0].profile_image}`);
+    }
+    if (!userData) {
+      fetchdata();
+    }
+  }, []);
+
+  async function fetchAllPosts() {
+    const res = await fetch(
+      `https://circle-backend-hw6e.onrender.com/api/all_user_posts/2`
+    ).catch((err) => console.log(err));
+    const data = await res.json();
+    console.log(data);
+    setPosts(data.posts);
+    setAllPosts(true);
+  }
+
+
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
@@ -53,13 +75,13 @@ const User = () => {
           <div onClick={()=>navigate(-1)} className="text-2xl">
             <MdArrowBack />
           </div>
-          <div className="-translate-x-20">Amarya Paul</div>
+          <div className="-translate-x-20">{userData?.username}</div>
           <div onClick={() => setShow(!show)} className="text-xl">
             <BsThreeDotsVertical />
           </div>
         </div>
         <div className="h-96 overflow-hidden w-full bg-white">
-          <img className=" w-full" src={img?img:profile} alt="" />
+          <img className=" w-full" src={imgLink} alt="" />
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start p-4 bg-white mx-auto">
           <div className="font-bold flex justify-between items-center">
@@ -74,14 +96,14 @@ const User = () => {
           {editAbout ? (
             <textarea
               type="text"
-              id="about"
+              id="user_about"
               cols={40}
-              value={userData.about}
+              value={userData?.user_about}
               onChange={(e) => handleChange(e)}
               className="border-[1px] border-black rounded-md p-1"
             />
           ) : (
-            <div className="text-gray-500 text-sm">{userData.about}</div>
+            <div className="text-gray-500 text-sm">{userData?.user_about}</div>
           )}
         </div>
         <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
@@ -91,7 +113,7 @@ const User = () => {
             </div>
             <div>
               <div className="font-bold ">College</div>
-                <div className="text-gray-500 text-sm">{userData.college}</div>
+                <div className="text-gray-500 text-sm">{userData?.workplaceCollage}</div>
             </div>
           </div>
           <div className="flex justify-between gap-3 items-center">
@@ -102,13 +124,13 @@ const User = () => {
             {editLocation ? (
               <input
                 type="text"
-                id="location"
-                value={userData.location}
+                id="cityTown"
+                value={userData?.cityTown}
                 onChange={(e) => handleChange(e)}
                 className="border-[1px] border-black rounded-md p-1"
               />
             ) : (
-              <div className="font-bold ">{userData.location}</div>
+              <div className="font-bold ">{userData?.cityTown}</div>
             )}
             </div>
             <div
@@ -128,14 +150,14 @@ const User = () => {
               {editDepartment ? (
                 <input
                   type="text"
-                  id="department"
-                  value={userData.department}
+                  id="workplaceCollage"
+                  value={userData?.workplaceCollage}
                   onChange={(e) => handleChange(e)}
                   className="border-[1px] border-black rounded-md p-1"
                 />
               ) : (
                 <div className="text-gray-500 text-sm">
-                  {userData.department}
+                  {userData?.workplaceCollage}
                 </div>
               )}
             </div>
@@ -156,13 +178,13 @@ const User = () => {
               {editEmail ? (
                 <input
                   type="text"
-                  id="email"
-                  value={userData.email}
+                  id="user_email"
+                  value={userData?.user_email}
                   onChange={(e) => handleChange(e)}
                   className="border-[1px] border-black rounded-md p-1"
                 />
               ) : (
-                <div className="font-bold ">{userData.email}</div>
+                <div className="font-bold ">{userData?.user_email}</div>
               )}
             </div>
             </div>
@@ -198,13 +220,28 @@ const User = () => {
         <input type="file" 
          onChange={(e) => 
           {
-            setImg(URL.createObjectURL(e.target.files[0]));
-            setImgLink(e.target.files[0]);
+            setImg(e.target.files[0]);
+            setImgLink(URL.createObjectURL(e.target.files[0]));
             // navigate("/upload");
           }
         }
          ref={profileRef} style={{ display: "none" }} />
       </div>
+      {
+        !allPosts && posts && posts.map((post,id)=>(
+            id>0 &&<Post key={post.id} meme={post}/>
+        ))
+      }
+      {
+        !allPosts && <div onClick={fetchAllPosts} className="bg-gray-200 hover:bg-gray-800 hover:text-white transition-all duration-300 text-lg py-3 mb-4 cursor-pointer flex justify-center">
+          <div>See All Posts</div>
+        </div>
+      }
+      {
+        allPosts && posts && posts.map((post)=>(
+          <Post key={post.id} meme={post}/> 
+        ))
+      }
     </div>
   );
 };

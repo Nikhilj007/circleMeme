@@ -22,7 +22,7 @@ function Post({ meme }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (reportRef.current && !reportRef.current.contains(event.target)) {
+      if (reportRef.current && !reportRef.current.contains(event.target) && !event.target.className.includes("threeDot")) {
         // Click occurred outside the report div, close it
         setShowReport(false);
       }
@@ -147,8 +147,8 @@ function Post({ meme }) {
           </div>
           <div>
             <button
-              onClick={() => setShowReport(!showReport)}
-             className="text-gray-500 -mt-4 text-3xl">...</button>
+              onClick={() => {setShowReport(!showReport)}}
+             className="text-gray-500 threeDot -mt-4 text-3xl">...</button>
           </div>
         </div>
 
@@ -229,7 +229,7 @@ function Post({ meme }) {
         {showComment && (
           <div>
             {comments.map((comment, idx) => (
-              <div key={idx} className="text-start pl-4">
+              <div key={idx} className="text-start pl-4 relative z-50">
                 <div className="flex gap-3 ">
                   <div className="rounded-full  overflow-hidden h-[32px] translate-y-1">
                   <img

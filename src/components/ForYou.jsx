@@ -12,20 +12,18 @@ function ForYou() {
             console.log(data)
             setUsers(data.users)
         }
-        // const currUser= async()=>{
-        //     const res = await fetch('https://circle.net.in/getUserData.php',
-    
-    
-        //     ).catch((err)=>console.log(err))
-        //     const data=await res.json()
-        //     console.log(data)
-        // }
-        // currUser();
+        const currUser= async()=>{
+            console.log('currUser')
+            const res = await fetch('https://circle.net.in/getUserData.php').catch((err)=>console.log(err))
+            const data=await res.json()
+            console.log(data)
+        }
+        
         if(!users){
             fetchdata()
+            currUser();
         }
     },[])
-
     
     
     return ( 

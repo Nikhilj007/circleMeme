@@ -1,28 +1,12 @@
 import React, { useState } from "react";
 import EasyCrop from "./EasyCrop";
 
-function Upload() {
-  const [image, setImage] = useState(null);
-
-  const handleImageUpload = async (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  };
+function Upload({img}) {
+    
 
   return (
     <div className="App mt-12">
-      <header className="App-header">
-        <label className="_coverImage-holder">
-          Upload Image
-          <input
-            type="file"
-            name="cover"
-            onChange={handleImageUpload}
-            accept="img/*"
-            style={{ display: "none" }}
-          />
-        </label>
-        <EasyCrop image={image}  />
-      </header>
+        <EasyCrop image={URL.createObjectURL(img)}  />
     </div>
   );
 }

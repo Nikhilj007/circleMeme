@@ -1,8 +1,10 @@
 import { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "./Crop";
+import { useNavigate } from "react-router-dom";
 
 const EasyCrop = ({ image }) => {
+  const navigate = useNavigate();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -22,6 +24,7 @@ const EasyCrop = ({ image }) => {
       );
       console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
+      navigate('/user');
     } catch (e) {
       console.error(e);
     }
@@ -32,23 +35,15 @@ const EasyCrop = ({ image }) => {
   }, []);
 
   return (
-    <div>
-      <button
-      className="button"
-        style={{
-          display: image === null || croppedImage !== null ? "none" : "block",
-        }}
-        onClick={showCroppedImage}
-      >
-        Crop
-      </button>
+    <div className="h-[100vh] pt-12">
+      
       <div
-        className="container"
+        className="container mb-28"
         style={{
           display: image === null || croppedImage !== null ? "none" : "block",
         }}
       >
-        <div className="crop-container bg-white">
+        <div className="crop-container h-full bg-white">
           <Cropper
             image={image}
             crop={crop}
@@ -58,14 +53,14 @@ const EasyCrop = ({ image }) => {
             maxZoom={3}
             zoomWithScroll={true}
             showGrid={true}
-            aspect={4 / 3}
+            aspect={3 / 3}
             onCropChange={setCrop}
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}
             onRotationChange={setRotation}
           />
         </div>
-        <div className="controls">
+        <div className="controls pt-14">
           <label>
             Rotate
             <input 
@@ -76,7 +71,7 @@ const EasyCrop = ({ image }) => {
               step={1}
               aria-labelledby="rotate"
               onChange={(e) => setRotation(Number(e.target.value))}
-              className="range"
+              className="range accent-slate-700"
             />
           </label>
           <label>
@@ -89,16 +84,21 @@ const EasyCrop = ({ image }) => {
               step={0.1}
               aria-labelledby="zoom"
               onChange={(e) => setZoom(Number(e.target.value))}
-              className="range"
+              className="range accent-slate-700"
             />
           </label>
         </div>
       </div>
-      <div className="cropped-image-container">
-        {croppedImage && (
-          <img className="cropped-image" src={croppedImage} alt="cropped" />
-        )}
-        {croppedImage && <button onClick={onClose}>close</button>}
+      <div className="flex justify-center">
+      <button
+      className="button w-fit"
+        style={{
+          display: image === null || croppedImage !== null ? "none" : "block",
+        }}
+        onClick={showCroppedImage}
+      >
+        Crop
+      </button>
       </div>
     </div>
   );

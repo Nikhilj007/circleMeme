@@ -15,7 +15,9 @@ import { useEffect, useState } from "react";
 import Upload from "./components/Upload";
 
 function App() {
-  
+  const [img, setImg] = useState(null); 
+  const [croppedImage, setCroppedImage] = useState(null);
+
 
   const path = useLocation().pathname;
   return (
@@ -28,9 +30,9 @@ function App() {
         <Route path="/create" element={<CreatePost/>}/>
         <Route path="/college" element={<College/>}/>
         <Route path="/search" element={<Search/>}/>
-        <Route path="/user" element={<User/>}/>
+        <Route path="/user" element={<User img={img} setImg={setImg}/>}/>
         <Route path="/description/:id" element={<ProfileDescription />} />
-        <Route path='/upload' element={<Upload/>}/>
+        <Route path='/upload' element={<Upload img={img} setCroppedImage={setCroppedImage} croppedImage={croppedImage}/>}/>
      </Routes> 
      {path!='/create'?<BottomNav/>:<></>}
     </div>

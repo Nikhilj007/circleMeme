@@ -27,10 +27,13 @@
   .button {
     z-index: 2;
     cursor: pointer;
-    width: 100%;
-    background-color: #000;
-    color: #fff;
-    padding: 10px 0;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    background-color: transparent;
+    font: bolder;
+    text-align: center;
+    align-self: center;
   }
   
   .cropped-image {

@@ -11,11 +11,10 @@ import { MdOutlineDownloadDone } from "react-icons/md";
 import { useNavigate } from "react-router-dom"; 
 import Post from "./Post";
 
-const User = () => {
+const User = ({img,setImg}) => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
-  const [img, setImg] = useState(null); 
   const [editAbout, setEditAbout] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editDepartment, setEditDepartment] = useState(false);
@@ -23,6 +22,7 @@ const User = () => {
   const [imgLink, setImgLink] = useState(null);
   const [posts,setPosts] = useState(null);
   const [allPosts,setAllPosts] = useState(false);
+  const inputRef = useRef(null);
   console.log(img);
 
   useEffect(() => {
@@ -209,7 +209,7 @@ const User = () => {
           }}
         >
           <div
-            onClick={() =>navigate('/upload')}
+            onClick={() => inputRef.current.click()}
             className="flex justify-center items-center gap-2"
           >Change Picture</div>
         </motion.div>
@@ -232,6 +232,12 @@ const User = () => {
           <Post key={post.id} meme={post} isCurrentUser={true}/> 
         ))
       }
+      <input type="file"
+      ref={inputRef}
+      onChange={(e)=>{setImg(e.target.files[0]);navigate('/upload')}}
+      style={{display:'none'}}
+      accept="img/*"
+       />
     </div>
   );
 };

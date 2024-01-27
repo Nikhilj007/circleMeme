@@ -4,6 +4,10 @@ import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { PiShareFat } from "react-icons/pi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { PiArrowFatUpLight } from "react-icons/pi";
+import { PiArrowFatUpFill } from "react-icons/pi";
+import { PiArrowFatDownLight } from "react-icons/pi";
+import { PiArrowFatDownFill } from "react-icons/pi";
 
 function Question({ gossip }) {
   const [writeAnswer, setWriteAnswer] = useState(false);
@@ -14,7 +18,6 @@ function Question({ gossip }) {
   const [Answers, setAnswers] = useState([]); // [{},{}
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(gossip.answer_upvoted);
-
 
   const getAnswers = () => {
     setWriteAnswer(false);
@@ -68,6 +71,8 @@ function Question({ gossip }) {
       })
       .catch((err) => console.log(err));
   };
+
+  const handleAnswerLike = () => {};
 
   const postAnswer = () => {
     if (text === "") {
@@ -123,66 +128,128 @@ function Question({ gossip }) {
   return (
     <div className=" bg-white my-1 max-w-lg px-2 mx-auto">
       <div className="flex gap-2 items-center">
-        <div className="w-fit flex flex-col items-center text-3xl">
-          <div
-            className={questionLiked ? "opacity-60" : ""}
-            onClick={handleLike}
-          >
-            <GoTriangleUp />
-          </div>
-          <div className="text-base font-semibold">{questionLikes}</div>
-          <div
-            className={!questionLiked ? "opacity-60" : ""}
-            onClick={handleunLike}
-          >
-            <GoTriangleDown />
-          </div>
-        </div>
         <div className="flex justify-between p-3 items-center mb-0">
-          <div className="flex gap-3 items-center">
-            {gossip.anonymous ?<div  className="rounded-full overflow-hidden h-[36px]">
-              <img
-                width={"36px"}
-                height={"27px"}
-                src={`http://circle.net.in/upload/${gossip.profile_pic}`}
-                alt="fsdf"
-              />
-            </div>:
-            <Link to={`/description/${gossip.user_id}`} className="rounded-full overflow-hidden h-[36px]">
-            <img
-              width={"36px"}
-              height={"27px"}
-              src={`http://circle.net.in/upload/${gossip.profile_pic}`}
-              alt="fsdf"
-            />
-          </Link>}
+          <div className="flex gap-3 items-start">
+            {gossip.anonymous ? (
+              <div className="rounded-full overflow-hidden h-[36px]">
+                <img
+                  width={"36px"}
+                  height={"27px"}
+                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  alt="fsdf"
+                />
+              </div>
+            ) : (
+              <Link
+                to={`/description/${gossip.user_id}`}
+                className="rounded-full overflow-hidden h-[36px]"
+              >
+                <img
+                  width={"36px"}
+                  height={"27px"}
+                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  alt="fsdf"
+                />
+              </Link>
+            )}
             <div className="text-start">
-              {gossip.anonymous ?<div className="font-bold text-pink-600">{gossip.username}</div>: <Link to={`/description/${gossip.user_id}`} className="font-bold text-pink-600">{gossip.username}</Link>}
-              <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
+              {gossip.anonymous ? (
+                <div className="font-bold text-pink-600">{gossip.username}</div>
+              ) : (
+                <Link
+                  to={`/description/${gossip.user_id}`}
+                  className="font-bold text-pink-600"
+                >
+                  {gossip.username}
+                </Link>
+              )}
             </div>
+              <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
           </div>
         </div>
       </div>
-      <div className="text-xl font-bold text-left ml-4">{gossip.question}</div>
-      <div className="text-gray-500 text-left ml-4 py-3">
-        {gossip.topAnswer ? gossip.topAnswer : "No answers yet"}
+      <div className="text-xl font-bold text-left ml-2">{gossip.question}</div>
+      <div className="text-sm text-left ml-4 p-3 py-1 border-[1px] border-gray-300 rounded-md">
+      <div className="flex gap-3 items-start">
+            {gossip.anonymous ? (
+              <div className="rounded-full overflow-hidden h-[36px]">
+                <img
+                  width={"36px"}
+                  height={"27px"}
+                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  alt="fsdf"
+                />
+              </div>
+            ) : (
+              <Link
+                to={`/description/${gossip.user_id}`}
+                className="rounded-full overflow-hidden h-[36px]"
+              >
+                <img
+                  width={"36px"}
+                  height={"27px"}
+                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  alt="fsdf"
+                />
+              </Link>
+            )}
+            <div className="text-start">
+              {gossip.anonymous ? (
+                <div className="font-bold text-pink-600">{gossip.username}</div>
+              ) : (
+                <Link
+                  to={`/description/${gossip.user_id}`}
+                  className="font-bold text-pink-600"
+                >
+                  {gossip.username}
+                </Link>
+              )}
+            </div>
+              <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
+          </div>
+        <div className="ml-1">{gossip.topAnswer ? gossip.topAnswer : "No answers yet"}</div>
+      <div className="flex ml-1">
+      <div
+        onClick={handleAnswerLike}
+        className={` w-fit cursor-pointer `}
+      >
+        <div className="text-xl cursor-pointer">
+          {isLiked ? <PiArrowFatUpFill /> : <PiArrowFatUpLight />}
+        </div>
+
       </div>
+        <div className="text-xl cursor-pointer">
+          {!isLiked ? <PiArrowFatDownFill /> : <PiArrowFatDownLight />}
+        </div>
+      </div>
+        </div>
       <div className="flex py-3 px-2 justify-between gap-6 items-center text-xl">
         <div className="flex justify-start gap-6 items-center text-xl">
-          <div
-           onClick={handleAnswerLike}
-           className={`text-gray-400 border-2 cursor-pointer ${isLiked?"bg-black":""} border-gray-400 p-1 rounded-full`}>
-            <div className="text-lg">
-              <AiFillLike />
+          <div className="w-fit flex items-center cursor-pointer text-3xl">
+            <div className="" onClick={handleLike}>
+              {!questionLiked ? <PiArrowFatUpLight /> : <PiArrowFatUpFill />}
             </div>
+            <div className="cursor-pointer" onClick={handleunLike}>
+              {!questionLiked ? (
+                <PiArrowFatDownFill />
+              ) : (
+                <PiArrowFatDownLight />
+              )}
+            </div>
+            <div className="text-base font-semibold">{questionLikes}</div>
           </div>
           <div
             onClick={getAnswers}
-            className="text-gray-600 cursor-pointer flex items-center gap-2"
+            className=" border-[1px] border-gray-300 px-3 rounded-md cursor-pointer relative gap-2 font-semibold"
           >
-            <MdComment />
-            <div className="text-base">{AnswersCount}</div>
+            read answers
+            <div className="text-[0.7rem] leading-[5px] absolute -top-[0.35rem] -right-[0.35rem] p-[0.3rem] bg-red-600 w-fit rounded-full  text-white">{AnswersCount}</div>
           </div>
+        </div>
+        <div>
+          <PiShareFat />
+        </div>
+      </div>
           <div
             onClick={() => {
               setWriteAnswer(!writeAnswer);
@@ -192,11 +259,6 @@ function Question({ gossip }) {
           >
             Answer
           </div>
-        </div>
-        <div>
-          <PiShareFat />
-        </div>
-      </div>
 
       {showComments && (
         <div className="flex flex-col gap-2 py-2">
@@ -215,13 +277,14 @@ function Question({ gossip }) {
                   <div className="font-bold text-pink-600">
                     {answer.username}
                   </div>
-                  <div className="text-gray-500 text-sm">{timeAgo(answer.date_time)}</div>
+                  <div className="text-gray-500 text-sm">
+                    {timeAgo(answer.date_time)}
+                  </div>
                 </div>
                 <div className="text-gray-500 py-1 text-left ">
                   {answer.answer}
                 </div>
               </div>
-              
             </div>
           ))}
         </div>

@@ -171,31 +171,21 @@ function Question({ gossip }) {
       <div className="text-xl font-bold text-left ml-2">{gossip.question}</div>
       <div className="text-sm text-left ml-4 p-3 py-1 border-[1px] border-gray-300 rounded-md">
       <div className="flex gap-3 items-start">
-            {gossip.anonymous ? (
-              <div className="rounded-full overflow-hidden h-[36px]">
-                <img
-                  width={"36px"}
-                  height={"27px"}
-                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
-                  alt="fsdf"
-                />
-              </div>
-            ) : (
+            
               <Link
-                to={`/description/${gossip.user_id}`}
+                to={`/description/${gossip.answeredById}`}
                 className="rounded-full overflow-hidden h-[36px]"
               >
                 <img
                   width={"36px"}
                   height={"27px"}
-                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  src={`http://circle.net.in/upload/${gossip.answeredByPhoto}`}
                   alt="fsdf"
                 />
               </Link>
-            )}
             <div className="text-start">
               {gossip.anonymous ? (
-                <div className="font-bold text-pink-600">{gossip.username}</div>
+                <div className="font-bold text-pink-600">{gossip.answeredByName}</div>
               ) : (
                 <Link
                   to={`/description/${gossip.user_id}`}
@@ -292,6 +282,7 @@ function Question({ gossip }) {
       {writeAnswer && (
         <div className="flex flex-col gap-2">
           <textarea
+            value={text}
             onChange={(e) => setText(e.target.value)}
             className="w-full outline-none resize-none"
             placeholder="Write your answer here..."

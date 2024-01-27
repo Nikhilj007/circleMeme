@@ -11,7 +11,7 @@ function Gossips() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [gossips, setGossips] = useState(null); // [{},{}
-  const [college,setCollege] = useState(null); // ""
+  const [college,setCollege] = useState(""); // ""
 
   useEffect(() => {
     async function fetchdata() {

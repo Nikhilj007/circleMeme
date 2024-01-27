@@ -97,7 +97,7 @@ const EasyCrop = ({ image }) => {
         }}
         onClick={showCroppedImage}
       >
-        Crop
+        Save
       </button>
       </div>
     </div>

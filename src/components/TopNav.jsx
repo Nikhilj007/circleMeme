@@ -17,7 +17,7 @@ function TopNav() {
     setSettings(false);
   };
   return (
-    <div className="fixed max-w-lg ml-auto justify-around bg-white px-4 py-2 -top-1 z-10 w-full flex shadow-md">
+    <div className="fixed max-w-lg ml-auto justify-around bg-white px-1 sm:px-4 py-2 -top-1 z-10 w-full flex shadow-md">
       {settings && (
         <div
           className="fixed inset-0 z-20 bg-black opacity-60"
@@ -60,7 +60,7 @@ function TopNav() {
           (isCollegePage ? "border-b-4 border-gray-700" : "")
         }
       >
-        College
+        Campus
       </div>
       <div
         onClick={() => setSettings(!settings)}
@@ -71,11 +71,11 @@ function TopNav() {
         <LuSettings2 />
       </div>
       <div>
-        <img height={"80px"} width={"80px"} src={logo} alt="" />
+        <img height={"80px"} width={"80px"} src="https://circle.net.in/assets/images/logot.png" alt="" />
       </div>
       {
         <motion.div
-          className="fixed z-40 max-w-lg bottom-10 rounded-3xl border-t-4 font-semibold left-0 lg:left-[30%] translate-x-1/2 right-0 bg-white p-3"
+          className="fixed z-40 max-w-lg bottom-10 rounded-lg border-t-4 font-semibold left-0 lg:left-[30%] translate-x-1/2 mb-2 right-0 bg-white p-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={settings ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}
@@ -86,9 +86,8 @@ function TopNav() {
             damping: 12,
           }}
         >
-          <Link to={"/gossip"} className="pb-2">Gossip</Link>
-          <div className="pb-1">Privacy and security</div>
-          <div className="pb-2 ">Logout</div>
+          <Link to={"/gossip"} className="">Campus Gossips</Link>
+          <div className="pb-1 pt-1">Privacy and security</div>
         </motion.div>
       }
     </div>

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 function Post({ meme,isCurrentUser }) {
   // const [showMore, setShowMore] = useState(false);
+  const userId = localStorage.getItem("userId");
   const [like, setLike] = useState(meme.like);
   const [likeCount, setLikeCount] = useState(meme.likes_count);
   const [comments, setComments] = useState([]); // [{},{}
@@ -25,7 +26,7 @@ function Post({ meme,isCurrentUser }) {
     useEffect(() => {
         async function fetchdata() {
           const res = await fetch(
-            `https://circle-backend-hw6e.onrender.com/api/self_profile/2`
+            `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
           ).catch((err) => console.log(err));
           const data = await res.json();
           setUserImage(`https://circle.net.in/upload/${data[0].profile_image}`);
@@ -74,7 +75,7 @@ function Post({ meme,isCurrentUser }) {
     const formData = new URLSearchParams({
       comment: text,
       post_id: meme.id,
-      user_id: 2,
+      user_id: userId,
     });
     console.log(formData);
     fetch(`https://circle-backend-hw6e.onrender.com/api/comment_post`, {
@@ -115,7 +116,7 @@ function Post({ meme,isCurrentUser }) {
     fetch(
       `https://circle-backend-hw6e.onrender.com/api/${
         like ? "dislike_post" : "like_post"
-      }/${meme.id}/2`,
+      }/${meme.id}/${userId}`,
       {
         method: "POST",
       }
@@ -200,6 +201,15 @@ function Post({ meme,isCurrentUser }) {
             />
           )}
         </div>
+        <div className="px-4 -mb-1 text-start text-sm mt-1">
+          {showMore ? desc : desc.substring(0, 50)}
+          {desc.length>50 &&<button
+            onClick={() => setShowMore(!showMore)}
+            className="text-blue-500"
+          >
+            {showMore ? "show less" : "show more"}
+          </button>}
+        </div>
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
             <div className="flex items-center gap-5">
@@ -230,16 +240,8 @@ function Post({ meme,isCurrentUser }) {
           </div>
         </div>
         <div className="px-4 text-start text-sm mt-1"></div>
-        <div className="px-4 text-start text-sm mt-1">
-          {showMore ? desc : desc.substring(0, 50)}
-          {desc.length>50 &&<button
-            onClick={() => setShowMore(!showMore)}
-            className="text-blue-500"
-          >
-            {showMore ? "show less" : "show more"}
-          </button>}
-        </div>
-        <div className="flex justify-start gap-4 p-6">
+        
+        <div className="flex justify-start gap-4 px-6 py-3 pb-4">
           <div className="rounded-full  overflow-hidden h-[30px] w-[43px]">
             <img
               width={"48px"}
@@ -252,7 +254,7 @@ function Post({ meme,isCurrentUser }) {
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="outline-none w-full "
+            className="outline-none  w-full "
             type="text"
             placeholder="write a comment"
           />

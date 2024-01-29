@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 
 function Memes() {
   const [arr, setArr] = useState(null);
+  const userId = localStorage.getItem("userId");
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/meme_posts/2"
+        "https://circle-backend-hw6e.onrender.com/api/meme_posts/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);

@@ -23,16 +23,17 @@ const User = ({img,setImg}) => {
   const [posts,setPosts] = useState(null);
   const [allPosts,setAllPosts] = useState(false);
   const inputRef = useRef(null);
-  console.log(img);
-
+  const userId = localStorage.getItem("userId");
+  
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/self_profile/2`
+        `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
       setUserData(data[0]);
+      console.log(data[0]);
       setPosts(data);
       setImgLink(`https://circle.net.in/upload/${data[0].profile_image}`);
     }
@@ -53,8 +54,18 @@ const User = ({img,setImg}) => {
 
 
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
+    const res = await fetch(
+      `https://circle-backend-hw6e.onrender.com/api/edit_profile/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ [e.target.id]: e.target.value }),
+      }
+    ).catch((err) => console.log(err));
   };
 
   const handleOverlayClick = () => {
@@ -69,7 +80,7 @@ const User = ({img,setImg}) => {
           onClick={handleOverlayClick}
         ></div>
       )}
-      <div className={`w-full bg-red-100 mb-14 `}>
+      <div className={`w-full bg-red-100 pb-3  `}>
         <div className="flex text-lg bg-white p-3 justify-between font-semibold items-center">
           <div onClick={()=>navigate(-1)} className="text-2xl">
             <MdArrowBack />
@@ -105,7 +116,7 @@ const User = ({img,setImg}) => {
             <div className="text-gray-500 text-sm">{userData?.user_about || "Write about yourself"}</div>
           )}
         </div>
-        <div className="w-[97%] rounded-md mt-2 text-start flex flex-col gap-6 p-4 pb-2 bg-white mx-auto">
+        <div className="w-[97%]  rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
             <div className="text-3xl">
               <FiLock />
@@ -149,14 +160,14 @@ const User = ({img,setImg}) => {
               {editDepartment ? (
                 <input
                   type="text"
-                  id="workplaceCollage"
-                  value={userData?.workplaceCollage}
+                  id="department"
+                  value={userData?.department}
                   onChange={(e) => handleChange(e)}
                   className="border-[1px] border-black rounded-md p-1"
                 />
               ) : (
                 <div className="text-gray-500 text-sm">
-                  {userData?.workplaceCollage || "Write your Department"}
+                  {userData?.department || "Write your Department"}
                 </div>
               )}
             </div>
@@ -197,7 +208,7 @@ const User = ({img,setImg}) => {
         </div>
         <div className="fixed "></div>
         <motion.div
-          className="w-full hover:cursor-pointer text-center text-blue-600 text-lg fixed bottom-0 rounded-lg max-w-lg bg-white mb-3 pb-10 pt-3"
+          className="w-full hover:cursor-pointer text-center font-semibold  fixed bottom-0 rounded-lg max-w-lg bg-white mb-12 pb-2 pt-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}
@@ -210,11 +221,12 @@ const User = ({img,setImg}) => {
         >
           <div
             onClick={() => inputRef.current.click()}
-            className="flex justify-center items-center gap-2"
+            className="flex justify-center items-center pb-1 gap-2"
           >Change Picture</div>
+          <div>Log out</div>
         </motion.div>
       </div>
-      <div className="text-lg font-bold mb-4 pt-2 border-t-2 border-b-slate-800">
+      <div className="text-lg border-[1px] mb-4 pt-2 border-t-2 border-b-slate-800">
         Your Posts
       </div>
       {

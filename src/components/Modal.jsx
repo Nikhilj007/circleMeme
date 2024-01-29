@@ -28,6 +28,7 @@ const Modal = ({ isOpen, onClose }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        window.location.reload();
         onClose();
       })
       .catch((err) => console.log(err));
@@ -61,15 +62,15 @@ const Modal = ({ isOpen, onClose }) => {
           <div className="flex justify-between">
             <div
               onClick={() => { setAnonymous(0); postGossip()}}
-              className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm"
+              className="flex border-[1px] ml-3 border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
             >
-              <div className="text-white text-sm">Ask as yourself</div>
+              <div className=" text-sm ">Ask as yourself</div>
             </div>
             <div
               onClick={() => {setAnonymous(1); postGossip()}}
-              className="flex bg-black items-center gap-2 w-fit mt-4 px-4 py-2 rounded-sm"
+              className="flex border-[1px] border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
             >
-              <div className="text-white text-sm">Ask anonymously</div>
+              <div className=" text-sm">Ask anonymously</div>
             </div>
           </div>
         </div>

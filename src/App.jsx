@@ -18,19 +18,35 @@ function App() {
   const [img, setImg] = useState(null); 
   const [croppedImage, setCroppedImage] = useState(null);
 
+  useEffect(()=>{
+    // const currUser= async()=>{
+    //   console.log('currUser')
+    //   const res = await fetch('https://circle.net.in/getUserData.php').catch((err)=>console.log(err))
+    //   const data=await res.json()
+    //   localStorage.setItem('userId',data.user_id);
+    //   localStorage.setItem('uniqueId',data.user_uniqueid)
+    //   console.log(data)
+  // }
+  // currUser();
+
+  localStorage.setItem('userId',2);
+
+}
+,[])
+
 
   const path = useLocation().pathname;
   return (
     <div className="flex justify-center">
       {!path.startsWith('/create') && !path.startsWith('/gossip') && !path.startsWith('/description/') && !path.startsWith('/search') && !path.startsWith('/user') ? <TopNav /> : <></>}
      <Routes>
-        <Route path="/memes" element={<Memes/>}/>
-        <Route path="/gossip" element={<Gossips/>}/>
+        <Route path="/memes" element={<Memes />}/>
+        <Route path="/gossip" element={<Gossips />}/>
         <Route path="/" element={<ForYou />}/>
-        <Route path="/create" element={<CreatePost/>}/>
-        <Route path="/college" element={<College/>}/>
-        <Route path="/search" element={<Search/>}/>
-        <Route path="/user" element={<User img={img} setImg={setImg}/>}/>
+        <Route path="/create" element={<CreatePost />}/>
+        <Route path="/college" element={<College />}/>
+        <Route path="/search" element={<Search />}/>
+        <Route path="/user" element={<User img={img}  setImg={setImg}/>}/>
         <Route path="/description/:id" element={<ProfileDescription />} />
         <Route path='/upload' element={<Upload img={img} setCroppedImage={setCroppedImage} croppedImage={croppedImage}/>}/>
      </Routes> 

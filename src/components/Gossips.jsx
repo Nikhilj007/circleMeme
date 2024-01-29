@@ -1,6 +1,6 @@
 import { MdArrowBack } from "react-icons/md";
 import { BsQuestionCircle } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams,  } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import Question from "./Questions";
 import bgimage from "../assets/gossipsBackground.jpg";
@@ -8,15 +8,21 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 
 function Gossips() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const collge = searchParams.get("college");
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [gossips, setGossips] = useState(null); // [{},{}
-  const [college,setCollege] = useState(""); // ""
+  const [college,setCollege] = useState(collge); // ""
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
+    if(college){
+      return;
+    }
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/self_profile/2"
+        "https://circle-backend-hw6e.onrender.com/api/self_profile/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -37,13 +43,25 @@ function Gossips() {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/gossips/2"
+        "https://circle-backend-hw6e.onrender.com/api/college_gossips/"+college+"/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
       setGossips(data.posts);
     }
-    fetchdata();
+    async function fetchdata2() {
+      const res = await fetch(
+        "https://circle-backend-hw6e.onrender.com/api/gossips"+"/"+userId)
+      const data = await res.json();
+      console.log(data);
+      setGossips(data.posts);
+    }
+    if (!collge) {
+    fetchdata2();
+    }
+    else {
+      fetchdata();
+    }
   }
   , []);
 
@@ -83,7 +101,7 @@ function Gossips() {
       <div className="">
        {
           gossips && gossips.map((gossip)=>(
-            <Question key={gossip.id} gossip={gossip}/>
+            <Question key={gossip.id} userId={userId} gossip={gossip}/>
           ))
        }
       </div>

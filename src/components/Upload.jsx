@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import EasyCrop from "./EasyCrop";
 
 function Upload({img}) {
-    
+  const userId = localStorage.getItem("userId");
 
   return (
     <div className="App mt-12">
-        <EasyCrop image={URL.createObjectURL(img)}  />
+        <EasyCrop userId={userId} image={URL.createObjectURL(img)}  />
     </div>
   );
 }

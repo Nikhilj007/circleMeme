@@ -5,30 +5,25 @@ import { useUser } from "./UserContext";
 
 function ForYou() {
     const {users, setUsers} = useUser();
+    const userId = localStorage.getItem("userId");
     useEffect(()=>{
         const fetchdata=async()=>{
-            const res=await fetch('https://circle-backend-hw6e.onrender.com/api/users/2').catch((err)=>console.log(err))
+            const res=await fetch('https://circle-backend-hw6e.onrender.com/api/users/'+userId).catch((err)=>console.log(err))
             const data=await res.json()
             console.log(data)
             setUsers(data.users)
         }
-        const currUser= async()=>{
-            console.log('currUser')
-            const res = await fetch('https://circle.net.in/getUserData.php').catch((err)=>console.log(err))
-            const data=await res.json()
-            console.log(data)
-        }
+        
         
         if(!users){
             fetchdata()
-            currUser();
         }
     },[])
     
     
     return ( 
         <div className="flex relative pb-10 flex-col items-center mt-16  p-0">
-            {users?.map((user,idx)=>(<Profile key={idx} user={user}/>) )}
+            {users?.map((user,idx)=>(<Profile key={idx} userId={user} user={user}/>) )}
         </div>
      );
 }

@@ -23,6 +23,7 @@ function CreatePost() {
   const [imgLink, setImgLink] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [modal,setModal] = useState(false);
+  const userId = localStorage.getItem("userId");
 
 
   const handleSubmit = () => {
@@ -31,7 +32,7 @@ function CreatePost() {
       return;
     }
     const formData = new FormData();
-    formData.append("user_id", "2");
+    formData.append("user_id", userId);
     formData.append("description", text);
     formData.append("anonymous", anonymous);
     formData.append("type", type);
@@ -83,7 +84,7 @@ function CreatePost() {
             <RxCross2 />
           </div>
           <div>Create New Post</div>
-          <div  onClick={() => setTag(!tag)} className="text-orange-600">
+          <div  onClick={() => setTag(!tag)} className="text-orange-600 ">
             Post
           </div>
         </div>
@@ -162,7 +163,7 @@ function CreatePost() {
           </button>
           {
             <motion.div
-              className="fixed bottom-0 rounded-3xl border-t-4 left-0 right-0 bg-white p-3"
+              className="fixed bottom-1 rounded-3xl text-base font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
               initial={{ opacity: 0, y: "100%" }}
               animate={tag ? { opacity: 1, y: 0 } : {}}
               exit={{ opacity: 0, y: "100%" }}
@@ -173,6 +174,29 @@ function CreatePost() {
                 damping: 12,
               }}
             >
+              
+              <div
+                onClick={() => {
+                  setType(2);
+                  setTag(!tag);
+                  setModal(true);
+
+                }}
+                className="pb-1  cursor-pointer"
+              >
+                Share in Both
+              </div>
+              <div
+                onClick={() => {
+                  setType(1);
+                  setTag(!tag);
+                  setModal(true);
+
+                }}
+                className="pb-1  cursor-pointer"
+              >
+                Share Meme
+              </div>
               <div
                 onClick={() => {
                   setType(0);
@@ -182,29 +206,7 @@ function CreatePost() {
                 }}
                 className="pb-2  cursor-pointer"
               >
-                Sharing Moments
-              </div>
-              <div
-                onClick={() => {
-                  setType(1);
-                  setTag(!tag);
-                  setModal(true);
-
-                }}
-                className="pb-2  cursor-pointer"
-              >
-                Publishing Memes
-              </div>
-              <div
-                onClick={() => {
-                  setType(2);
-                  setTag(!tag);
-                  setModal(true);
-
-                }}
-                className="pb-2  cursor-pointer"
-              >
-                Both
+                Share on Campus
               </div>
             </motion.div>
           }

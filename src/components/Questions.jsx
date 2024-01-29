@@ -8,6 +8,7 @@ import { PiArrowFatUpLight } from "react-icons/pi";
 import { PiArrowFatUpFill } from "react-icons/pi";
 import { PiArrowFatDownLight } from "react-icons/pi";
 import { PiArrowFatDownFill } from "react-icons/pi";
+import Comment from "./Comment";
 
 function Question({ gossip }) {
   const [writeAnswer, setWriteAnswer] = useState(false);
@@ -18,11 +19,14 @@ function Question({ gossip }) {
   const [Answers, setAnswers] = useState([]); // [{},{}
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(gossip.answer_upvoted);
+  const userId = localStorage.getItem("userId");
+
+
 
   const getAnswers = () => {
     setWriteAnswer(false);
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_get_answers/${gossip.id}/2`
+      `https://circle-backend-hw6e.onrender.com/api/gossip_get_answers/${gossip.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -39,7 +43,7 @@ function Question({ gossip }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_upvote/${gossip.id}/2`,
+      `https://circle-backend-hw6e.onrender.com/api/gossip_upvote/${gossip.id}/${userId}`,
       {
         method: "POST",
       }
@@ -58,7 +62,7 @@ function Question({ gossip }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_unvote/${gossip.id}/2`,
+      `https://circle-backend-hw6e.onrender.com/api/gossip_unvote/${gossip.id}/${userId}`,
       {
         method: "POST",
       }
@@ -72,7 +76,23 @@ function Question({ gossip }) {
       .catch((err) => console.log(err));
   };
 
-  const handleAnswerLike = () => {};
+  const handleAnswerLike = () => {
+    fetch(
+      `https://circle-backend-hw6e.onrender.com/api/gossip_ans_${
+        isLiked ? "unvote" : "upvote"
+      }/${gossip.answer_id}/${userId}`,
+      {
+        method: "POST",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        isLiked ? setAnswersCount(AnswersCount - 1) : setAnswersCount(AnswersCount + 1);
+        setIsLiked(!isLiked);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const postAnswer = () => {
     if (text === "") {
@@ -82,7 +102,7 @@ function Question({ gossip }) {
     const formData = new URLSearchParams({
       answer: text,
       gossip_id: gossip.id,
-      user_id: 2,
+      user_id: userId,
     });
     console.log(formData);
     fetch(`https://circle-backend-hw6e.onrender.com/api/gossip_put_answer`, {
@@ -96,6 +116,8 @@ function Question({ gossip }) {
       .then((data) => {
         console.log(data);
         setWriteAnswer(!writeAnswer);
+        //reload page
+        window.location.reload();
 
         // setCommentCount(commentCount + 1);
         // setText("");
@@ -154,72 +176,88 @@ function Question({ gossip }) {
             )}
             <div className="text-start">
               {gossip.anonymous ? (
-                <div className="font-bold text-pink-600">{gossip.username}</div>
+                <div className="font-bold">{gossip.username}</div>
               ) : (
                 <Link
                   to={`/description/${gossip.user_id}`}
-                  className="font-bold text-pink-600"
+                  className="font-bold"
                 >
                   {gossip.username}
                 </Link>
               )}
             </div>
-              <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
+            <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
           </div>
         </div>
       </div>
-      <div className="text-xl font-bold text-left ml-2">{gossip.question}</div>
-      <div className="text-sm text-left ml-4 p-3 py-1 border-[1px] border-gray-300 rounded-md">
-      <div className="flex gap-3 items-start">
-            
-              <Link
-                to={`/description/${gossip.answeredById}`}
-                className="rounded-full overflow-hidden h-[36px]"
-              >
-                <img
-                  width={"36px"}
-                  height={"27px"}
-                  src={`http://circle.net.in/upload/${gossip.answeredByPhoto}`}
-                  alt="fsdf"
-                />
-              </Link>
+      <div className=" text-left ml-2">{gossip.question}</div>
+      <div className="text-sm text-left ml-4 p-3 py-1 border-[1px] border-gray-300 rounded-md mt-2">
+        {gossip.no_of_answers ? (
+          <div className="flex gap-3 items-start">
+            <Link
+              to={`/description/${gossip.answeredById}`}
+              className="rounded-full overflow-hidden h-[36px]"
+            >
+              <img
+                width={"36px"}
+                height={"27px"}
+                src={`http://circle.net.in/upload/${gossip.answeredByPhoto}`}
+                alt="fsdf"
+              />
+            </Link>
             <div className="text-start">
-              {gossip.anonymous ? (
-                <div className="font-bold text-pink-600">{gossip.answeredByName}</div>
-              ) : (
+              {
                 <Link
                   to={`/description/${gossip.user_id}`}
-                  className="font-bold text-pink-600"
+                  className="font-bold"
                 >
-                  {gossip.username}
+                  {gossip.answeredByName}
                 </Link>
-              )}
+              }
             </div>
-              <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
+            <div className="text-gray-500">{timeAgo(gossip.answer_time)}</div>
           </div>
-        <div className="ml-1">{gossip.topAnswer ? gossip.topAnswer : "No answers yet"}</div>
-      <div className="flex ml-1">
-      <div
-        onClick={handleAnswerLike}
-        className={` w-fit cursor-pointer `}
-      >
-        <div className="text-xl cursor-pointer">
-          {isLiked ? <PiArrowFatUpFill /> : <PiArrowFatUpLight />}
+        ) : (
+          ""
+        )}
+        <div className="ml-1 mt-1">
+          {gossip.topAnswer ? gossip.topAnswer : "No answers yet"}
         </div>
-
+        {gossip.no_of_answers ? (
+          <div className="flex ml-1 text-gray-600 mt-2">
+            <div
+              onClick={!isLiked &&handleAnswerLike}
+              className={` w-fit cursor-pointer `}
+            >
+              <div className="text-xl  cursor-pointer">
+                {isLiked ? <PiArrowFatUpFill /> : <PiArrowFatUpLight />}
+              </div>
+            </div>
+            <div
+              onClick={isLiked && handleAnswerLike}
+             className="text-xl ml-1 cursor-pointer">
+              {!isLiked ? <PiArrowFatDownFill /> : <PiArrowFatDownLight />}
+            </div>
+            <div className="ml-1">{AnswersCount}</div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-        <div className="text-xl cursor-pointer">
-          {!isLiked ? <PiArrowFatDownFill /> : <PiArrowFatDownLight />}
+      {showComments && (
+        <div className="flex flex-col justify-end w-full gap-2 py-2">
+          {Answers.map((answer, idx) => (
+            <Comment answer={answer} key={idx} />
+          ))}
         </div>
-      </div>
-        </div>
+      )}
       <div className="flex py-3 px-2 justify-between gap-6 items-center text-xl">
         <div className="flex justify-start gap-6 items-center text-xl">
-          <div className="w-fit flex items-center cursor-pointer text-3xl">
-            <div className="" onClick={handleLike}>
+          <div className="w-fit text-gray-600 gap-2 flex items-center cursor-pointer text-3xl">
+            <div className="" onClick={!questionLiked && handleLike}>
               {!questionLiked ? <PiArrowFatUpLight /> : <PiArrowFatUpFill />}
             </div>
-            <div className="cursor-pointer" onClick={handleunLike}>
+            <div className="cursor-pointer" onClick={questionLiked && handleunLike}>
               {!questionLiked ? (
                 <PiArrowFatDownFill />
               ) : (
@@ -230,83 +268,38 @@ function Question({ gossip }) {
           </div>
           <div
             onClick={getAnswers}
-            className=" border-[1px] border-gray-300 px-3 rounded-md cursor-pointer relative gap-2 font-semibold"
+            className=" border-[1px] text-base border-gray-300 px-3 rounded-md cursor-pointer relative gap-2 "
           >
             read answers
-            <div className="text-[0.7rem] leading-[5px] absolute -top-[0.35rem] -right-[0.35rem] p-[0.3rem] bg-red-600 w-fit rounded-full  text-white">{AnswersCount}</div>
+            <div className="text-[0.7rem] leading-[5px] absolute -top-[0.35rem] -right-[0.35rem] p-[0.3rem] bg-red-600 w-fit rounded-full  text-white">
+              {AnswersCount}
+            </div>
           </div>
         </div>
         <div>
           <PiShareFat />
         </div>
       </div>
-          <div
-            onClick={() => {
-              setWriteAnswer(!writeAnswer);
-              setShowComments(false);
-            }}
-            className="text-white cursor-pointer bg-black text-sm px-3 py-1 rounded-sm"
-          >
-            Answer
-          </div>
 
-      {showComments && (
-        <div className="flex flex-col gap-2 py-2">
-          {Answers.map((answer, idx) => (
-            <div key={idx} className="flex  gap-2">
-              <div className="rounded-full overflow-hidden ml-2 h-[32px]">
-                <img
-                  width={"36px"}
-                  height={"27px"}
-                  src={`http://circle.net.in/upload/${answer.profile_pic}`}
-                  alt="fsdf"
-                />
-              </div>
-              <div className="flex flex-col items-start w-full">
-                <div className="flex justify-between items-center w-full">
-                  <div className="font-bold text-pink-600">
-                    {answer.username}
-                  </div>
-                  <div className="text-gray-500 text-sm">
-                    {timeAgo(answer.date_time)}
-                  </div>
-                </div>
-                <div className="text-gray-500 py-1 text-left ">
-                  {answer.answer}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-      {writeAnswer && (
+
+      
         <div className="flex flex-col gap-2">
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full outline-none resize-none"
+            className="w-full outline-none resize-none pl-3"
             placeholder="Write your answer here..."
-            rows="3"
+            rows="2"
           ></textarea>
           <div className="flex justify-end gap-2">
             <div
               onClick={postAnswer}
-              className="text-white cursor-pointer bg-black text-sm mb-2 px-3 py-1 rounded-sm"
+              className="border-[1px] border-gray-500 rounded-lg cursor-pointer text-sm mb-2 px-3 py-1 "
             >
               Submit
             </div>
-            <div
-              onClick={() => {
-                setWriteAnswer(!writeAnswer);
-                setShowComments(false);
-              }}
-              className="text-white cursor-pointer bg-red-500 text-sm mb-2 px-3 py-1 rounded-sm"
-            >
-              Cancel
-            </div>
           </div>
         </div>
-      )}
     </div>
   );
 }

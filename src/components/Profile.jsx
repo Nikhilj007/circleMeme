@@ -4,7 +4,7 @@ import { LuDot } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-function Profile({ user }) {
+function Profile({ user ,userId}) {
   // eslint-disable-next-line react/prop-types
   const {profile_image, username, cityTown, workplaceCollage, num_likes, like, id, unique_id
   } = user;
@@ -15,10 +15,10 @@ function Profile({ user }) {
 
     const formData =new  URLSearchParams({
       cur_num_likes: likeCount,
-      sender_id:2,
+      sender_id:userId,
       rec_id:id,
       rec_unique_id:unique_id,
-      sender_unique_id:2,
+      sender_unique_id:userId,
     });
     console.log(formData);
     fetch(`https://circle-backend-hw6e.onrender.com/api/${liked?"pro_dislike":"pro_like"}`, {

@@ -3,7 +3,7 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "./Crop";
 import { useNavigate } from "react-router-dom";
 
-const EasyCrop = ({ image }) => {
+const EasyCrop = ({ image,userId }) => {
   const navigate = useNavigate();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -24,7 +24,17 @@ const EasyCrop = ({ image }) => {
       );
       console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
-      navigate('/user');
+      //cropped image is a file
+      const formData = new FormData();
+      formData.append("profile_pic", croppedImage);
+      const res = await fetch(
+        "https://circle-backend-hw6e.onrender.com/api/edit_photo/"+userId,
+        {
+          method: "POST",
+          body: formData,
+        }
+        );
+        navigate('/user');
     } catch (e) {
       console.error(e);
     }

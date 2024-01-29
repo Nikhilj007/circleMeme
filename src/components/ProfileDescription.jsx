@@ -6,14 +6,35 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GoPeople } from "react-icons/go";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfileDescription = () => {
   const id = window.location.href.split("/").pop();
   console.log(id);
+  const userId = localStorage.getItem("userId");
   const [currentUser, setCurrentUser] = useState();
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
+  const [status,setStatus] = useState('Follow')
+  const [crush,setCrush] = useState(false);
+
+  const handleCrush = () =>{
+    fetch(`https://circle-backend-hw6e.onrender.com/api/drop_crush/${userId}/${id}`)
+    .then((res)=>res.json())
+    .then((data)=>{console.log(data);setCrush(true)})
+    .catch((err)=>console.log(err))
+
+  }
+
+
+  const handleFollow = () =>{
+    fetch(`https://circle-backend-hw6e.onrender.com/api/clicked_follow/${userId}/${id}`
+    ,{method:"POST"}
+    )
+    .then((res)=>res.json())
+    .then((data)=>{console.log(data);setStatus('Requested')})
+    .catch((err)=>console.log(err))
+  }
 
   useEffect(() => {
     async function fetchdata() {
@@ -23,6 +44,7 @@ const ProfileDescription = () => {
       const data = await res.json();
       console.log(data);
       setCurrentUser(data[0]);
+      setStatus(data[0].status)
     }
     if (!currentUser) {
       fetchdata();
@@ -120,7 +142,7 @@ const ProfileDescription = () => {
         </div>
         <div className="fixed "></div>
         <motion.div
-          className="w-full hover:cursor-pointer text-center text-blue-600 text-lg fixed bottom-0 rounded-lg max-w-lg bg-white mb-3 pb-10 pt-3"
+          className="w-full hover:cursor-pointer text-center  fixed bottom-0 rounded-lg max-w-lg bg-white mb-12 pb-2  font-semibold pt-3"
           initial={{ opacity: 0, y: "100%" }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           exit={{ opacity: 0, y: "100%" }}
@@ -131,9 +153,14 @@ const ProfileDescription = () => {
             damping: 12,
           }}
         >
-          <div>{currentUser?.status}</div>
-          <div>Drop Message</div>
-          <div>Send Crush</div>
+          <div
+            onClick={status=="Follow"?handleFollow:()=>{}}
+          >{status}</div>
+          <Link to={'https://circle.net.in/chat.php?msgid='+currentUser?.unique_id}
+          >Drop Message</Link>
+          <div
+          onClick={handleCrush}
+          >{crush?"Crushed":"Send Crush"}</div>
         </motion.div>
       </div>
     </div>

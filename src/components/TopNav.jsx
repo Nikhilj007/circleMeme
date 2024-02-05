@@ -7,9 +7,9 @@ import { useState } from "react";
 
 function TopNav() {
   const location = useLocation();
-  const isMemesPage = location.pathname === "/memes";
+  const isMemesPage = location.pathname === "/";
   const isCollegePage = location.pathname === "/college";
-  const isForYouPage = location.pathname === "/";
+  const isForYouPage = location.pathname === "/foryou";
   const [settings, setSettings] = useState(false);
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ function TopNav() {
       </div>
       <div
         onClick={() => {
-          navigate("/");
+          navigate("/foryou");
         }}
         className={
           "w-1/3 cursor-pointer -translate-x-2 pb-1 flex justify-center items-center bg-white " +
@@ -45,13 +45,14 @@ function TopNav() {
         For you
       </div>
       <div
-        onClick={() => navigate("/memes")}
+        onClick={() => navigate("/")}
+        id="explore"
         className={
           "w-1/3 flex cursor-pointer -translate-x-2 pb-1 justify-center items-center bg-white " +
           (isMemesPage ? "border-b-4 border-gray-700" : "")
         }
       >
-        Memes
+        Explore
       </div>
       <div
         onClick={() => navigate("/college")}
@@ -87,7 +88,7 @@ function TopNav() {
           }}
         >
           <Link to={"/gossip"} className="">Campus Gossips</Link>
-          <div className="pb-1 pt-1">Privacy and security</div>
+          <Link to ='/privacy' className="pb-1 block pt-1">Privacy and security</Link>
         </motion.div>
       }
     </div>

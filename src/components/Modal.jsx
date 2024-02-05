@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimension";
 
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ isOpen, onClose, college }) => {
   const [show, setShow] = useState(true);
   const [question, setQuestion] = useState("");
   const { width } = useWindowDimensions();
   const [anonymous, setAnonymous] = useState();
+  const userId = localStorage.getItem("userId");
 
   const postGossip = () => {
     if (question === "") {
@@ -14,8 +15,9 @@ const Modal = ({ isOpen, onClose }) => {
     }
     const formData =new URLSearchParams({
       question: question,
-      user_id: 2,
+      user_id: userId,
       anonymous: anonymous,
+      college: college
     });
     console.log(formData);
     fetch(`https://circle-backend-hw6e.onrender.com/api/new_gossip`, {
@@ -48,6 +50,7 @@ const Modal = ({ isOpen, onClose }) => {
           className="fixed inset-0 bg-black opacity-60  w-full  "
         ></div>
         <div className="absolute bg-white p-3 rounded-md">
+            <div>You are asking question in <span className="text-red-500">{college}</span> </div>
           <div className="w-full bg-gray-600 flex items-center  rounded-sm text-white p-4">
             <textarea
               className="w-full bg-transparent placeholder:text-white outline-none text-lg focus:outline-none"

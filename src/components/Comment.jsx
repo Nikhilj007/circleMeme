@@ -42,13 +42,14 @@ const Comment = ({ answer }) => {
       .then((data) => {
         console.log(data);
         setUpvoted(!upvoted);
-        upvoted ? setUpvotes(upvotes - 1) : setUpvotes(upvotes + 1);
+        setUpvotes(upvoted ? upvotes - 1 : upvotes + 1);
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <div className="flex border-[1px] w-10/12 border-gray-300 py-1 rounded-lg px-1 gap-2 self-end">
+    <div className=" border-[1px] w-[96%] border-gray-300 py-1 rounded-lg px-1 gap-2 self-end">
+      <div className="flex gap-3 items-start">
       <div className="rounded-full overflow-hidden ml-2 h-[32px]">
         <img
           width={"36px"}
@@ -61,13 +62,15 @@ const Comment = ({ answer }) => {
         <div className="flex gap-4 items-center w-full">
           <div className="font-bold ">{answer.username}</div>
           <div className="text-gray-500 text-sm">
-            {timeAgo(answer.date_time)}
+            {timeAgo(answer.date_time)<0? "Just Now":timeAgo(answer.date_time)}
           </div>
         </div>
-        <div className="text-gray-500 py-1 text-left ">{answer.answer}</div>
-        <div className="flex gap-1 items-center text-gray-600 ml-1">
+      </div>
+      </div>
+        <div className="py-1 text-left ml-3 text-sm ">{answer.answer}</div>
+        <div className="flex gap-1 items-center text-gray-600 ml-3">
         <div
-          onClick={() =>{!upvoted && handleAnswersLike(answer.answer_id)}}
+          onClick={() =>{!upvoted ? handleAnswersLike(answer.answer_id):{}}}
           className={` w-fit cursor-pointer `}
         >
           <div className="text-xl cursor-pointer">
@@ -75,13 +78,12 @@ const Comment = ({ answer }) => {
           </div>
         </div>
         <div
-          onClick={() => {upvoted && handleAnswersLike(answer.answer_id)}}
+          onClick={() => {upvoted ? handleAnswersLike(answer.answer_id):{}}}
           className="text-xl cursor-pointer"
         >
           {!upvoted ? <PiArrowFatDownFill /> : <PiArrowFatDownLight />}
         </div>
         <div>{upvotes}</div>
-      </div>
       </div>
       
     </div>

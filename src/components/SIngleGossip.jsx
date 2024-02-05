@@ -1,0 +1,51 @@
+import React, { useEffect, useState } from "react";
+import { MdArrowBack } from "react-icons/md";
+import Question from "./Questions";
+
+const SIngleGossip = () => {
+  const userId = localStorage.getItem("userId");
+  const post_id = window.location.href.split("/").pop();
+  const [post, setPost] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(
+          `https://circle-backend-hw6e.onrender.com/api/gossip/${post_id}/${userId}`
+        );
+        const data = await res.json();
+          console.log(data)
+        if (data && data.posts && data.posts.length > 0) {
+          setPost(data.posts[0]);
+        } else {
+          console.error("Invalid data format or empty posts array.");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  
+    if (!post) {
+      fetchData();
+    }
+  }, [post, post_id, userId]);
+  
+
+  return (
+    <div className="min-w-lg mb-10">
+      <div className="flex items-center p-2 py-4 text-lg justify-between font-semibold shadow-lg">
+        <div
+          className="cursor-pointer text-2xl"
+          onClick={() => window.history.back()}
+        >
+          <MdArrowBack />
+        </div>
+      </div>
+      {!post? <div className="relative top-1/2">
+        <div className="loader"></div>
+      </div>:<Question gossip={post} userId={userId} />}
+    </div>
+  );
+};
+
+export default SIngleGossip;

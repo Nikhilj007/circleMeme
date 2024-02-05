@@ -105,7 +105,7 @@ function Gossips() {
           ))
        }
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Modal isOpen={isModalOpen} onClose={closeModal} college={college} />
 
     </div>
   );

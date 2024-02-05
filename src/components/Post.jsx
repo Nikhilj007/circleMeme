@@ -1,27 +1,62 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
-import profile from "../assets/user-8.jpg";
 import { MdComment } from "react-icons/md";
-// import { IoMdSend } from "react-icons/io";
 import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { useLongPress } from "use-long-press";
 
 
 function Post({ meme,isCurrentUser }) {
-  // const [showMore, setShowMore] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
   const userId = localStorage.getItem("userId");
-  const [like, setLike] = useState(meme.like);
-  const [likeCount, setLikeCount] = useState(meme.likes_count);
+  const [like, setLike] = useState(meme?.like);
+  const [likeCount, setLikeCount] = useState(meme?.likes_count);
   const [comments, setComments] = useState([]); // [{},{}
   const [showComment, setShowComment] = useState(false);
-  const [commentCount, setCommentCount] = useState(meme.comment_count);
+  const [commentCount, setCommentCount] = useState(meme?.comment_count);
   const [text, setText] = useState("");
   const [showReport, setShowReport] = useState(false);
-  const isImage = meme.post.split(".").pop() === "jpg";
+  const noMedia = meme?.post === "null" || meme?.post === null;
+  const extension = meme?.post?.split(".").pop();
+  const isImage = extension === "jpg" || extension === "png"|| extension === "jpeg" || extension === "gif" || extension === "webp";
   const [showMore, setShowMore] = useState(false);
-  const desc= meme.description?meme.description:"";
+  const desc= meme?.description?meme.description:"";
   const reportRef = useRef(null);
   const [userImage, setUserImage] = useState(null);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const bind = useLongPress(() => {
+    setShowEmoji(true);
+  });
+
+  useEffect(() => {
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (document.visibilityState === 'visible' && document.hasFocus()) {
+            videoRef.current.play();
+            setIsPlaying(true);
+          }
+        } else {
+          videoRef.current.pause();
+          setIsPlaying(false);
+        }
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
+  }, []);
 
     useEffect(() => {
         async function fetchdata() {
@@ -101,7 +136,7 @@ function Post({ meme,isCurrentUser }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme.id}/2`
+      `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme?.id}/${userId}`,
     )
       .then((res) => res.json())
       .then((data) => {
@@ -116,7 +151,7 @@ function Post({ meme,isCurrentUser }) {
     fetch(
       `https://circle-backend-hw6e.onrender.com/api/${
         like ? "dislike_post" : "like_post"
-      }/${meme.id}/${userId}`,
+      }/${meme?.id}/${userId}`,
       {
         method: "POST",
       }
@@ -167,15 +202,17 @@ function Post({ meme,isCurrentUser }) {
                <img 
                 width={"48px"}
                 height={"48px"} 
-                src={`https://circle.net.in/upload/${meme.profile_pic}`}
+                src={`https://circle.net.in/upload/${meme?.profile_pic}`}
                 loading="lazy"
                 alt="fsdf"
               />
 
             </div>
             <div className="text-start">
-              <Link to={`/description/${meme.user_id}`} className="font-bold">{meme.username}</Link>
-              <div className="text-gray-500">{timeAgo(meme.date_time)}</div>
+              {meme?.username ==="Anonymous"?
+               <div className="font-bold">{meme?.username}</div>
+              : <Link to={meme?.user_id==userId?"/user":`/description/${meme?.user_id}`} className="font-bold">{meme?.username}</Link>}
+              <div className="text-gray-500">{timeAgo(meme?.date_time)}</div>
             </div>
           </div>
           <div>
@@ -186,20 +223,44 @@ function Post({ meme,isCurrentUser }) {
         </div>
 
         <div className="flex justify-center">
+          {/* show play button if video is paused */}
+          { videoRef.current && !noMedia &&
+            <div 
+          className="absolute z-50 items-center justify-center w-full h-full
+          bg-black bg-opacity-20 transition-opacity flex duration-400 ease-in-out"
+          style={{ opacity: isPlaying ? 0 : 1, height: isPlaying ? 0 : "77.46%" }}
+            onClick={()=>{videoRef.current.play();setIsPlaying(true)}}
+          >
+            <button
+              className=" rounded-full p-2"
+            >
+              <svg
+                className="w-20 h-20 text-black"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </button>
+
+          </div>}
+          {!noMedia &&<div>
          {isImage ? (
             <img
               loading="lazy"
               className="rounded-sm w-full "
-              src={`https://circle.net.in/posts/${meme.post}`}
+              src={`https://circle.net.in/posts/${meme?.post}`}
               alt=""
             />
           ) : (
             <video
+              onClick={()=>{videoRef.current.pause();setIsPlaying(false)}}
+              ref={videoRef}
               className="rounded-sm w-full "
-              src={`https://circle.net.in/posts/${meme.post}`}
-              controls
+              src={`https://circle.net.in/posts/${meme?.post}`}
             />
-          )}
+          )}</div>}
         </div>
         <div className="px-4 -mb-1 text-start text-sm mt-1">
           {showMore ? desc : desc.substring(0, 50)}
@@ -210,12 +271,19 @@ function Post({ meme,isCurrentUser }) {
             {showMore ? "show less" : "show more"}
           </button>}
         </div>
+        {showEmoji && <button
+                  onClick={() => setShowEmoji(false)}
+                  className="flex items-center gap-2 absolute bg-gray-100 rounded-full py-[2px] px-1 z-40 bottom-[5.5rem] left-2"
+                >😍 👍🏽 😭</button>}
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
             <div className="flex items-center gap-5">
               <div className="flex items-center mt-3">
+                
                 <button
-                  onClick={handleClicked}
+                //add the long press functionality
+                  onClick={ handleClicked}
+                  {...bind({ threshold: 500 })}
                   className="flex items-center gap-2"
                 >
                   {like ? <div className="opacity-25 ">😂</div> : <div>😂</div>}
@@ -233,11 +301,11 @@ function Post({ meme,isCurrentUser }) {
               </div>
             </div>
           </div>
-          <div>
+          {/* <div>
             <button className="flex items-center gap-2">
               <PiShareFat />
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="px-4 text-start text-sm mt-1"></div>
         

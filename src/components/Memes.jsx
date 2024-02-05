@@ -1,8 +1,10 @@
 import Post from "./Post";
 import { useEffect, useState } from "react";
+import ClassicPostLoader from "./PostLoader";
 
 function Memes() {
   const [arr, setArr] = useState(null);
+  const [load, setLoad] = useState(true); // [{},{}
   const userId = localStorage.getItem("userId");
   useEffect(() => {
     async function fetchdata() {
@@ -12,15 +14,19 @@ function Memes() {
       const data = await res.json();
       console.log(data);
       setArr(data.posts);
+      setLoad(false);
     }
     if (!arr) {
       fetchdata();
     }
   }, []);
   return (
-    <div className="flex relative pb-10 flex-col items-center pt-14 bg-[#ECF6FB] p-0">
-      {arr?.map((meme, idx) => (
-        <Post key={idx} meme={meme} />
+    <div className="flex relative pb-10 flex-col items-center pt-14 min-h-screen  p-0">
+      {!arr? <div className="relative top-1/2">
+        <div className="loader"></div>
+      </div>
+      :arr?.map((meme, idx) => (
+        <Post key={idx} meme={meme} load={load} />
       ))}
     </div>
   );

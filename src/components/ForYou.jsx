@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Profile from "./Profile";
 import { useUser } from "./UserContext";
 
 
 function ForYou() {
     const {users, setUsers} = useUser();
+    const [load, setLoad] = useState(true); // [{},{}
     const userId = localStorage.getItem("userId");
     useEffect(()=>{
         const fetchdata=async()=>{
@@ -22,8 +23,8 @@ function ForYou() {
     
     
     return ( 
-        <div className="flex relative pb-10 flex-col items-center mt-16  p-0">
-            {users?.map((user,idx)=>(<Profile key={idx} userId={user} user={user}/>) )}
+        <div className="flex relative pb-10 flex-col items-center mt-16 min-h-screen  p-0">
+            {!users?<div className="relative top-1/2"><div className="loader"></div></div>:users?.map((user,idx)=>(<Profile key={idx} user={user}/> ))}
         </div>
      );
 }

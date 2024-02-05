@@ -1,6 +1,6 @@
 // import { MdCancelPresentation } from "react-icons/md";
 import profile from "../assets/user-8.jpg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { FaImage } from "react-icons/fa6";
 import { FaVideo } from "react-icons/fa";
@@ -24,13 +24,28 @@ function CreatePost() {
   const [videoLink, setVideoLink] = useState("");
   const [modal,setModal] = useState(false);
   const userId = localStorage.getItem("userId");
+  const [loader,setLoader] = useState(false);
+  const [userData, setUserData] = useState(null);
 
+  useEffect(() => {
+    async function fetchdata() {
+      const res = await fetch(
+        `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
+      ).catch((err) => console.log(err));
+      const data = await res.json();
+      console.log(data);
+      setUserData(data[0]);
+      console.log(data[0]);
+    }
+    if (!userData) {
+      fetchdata();
+    }
+  }, []);
 
   const handleSubmit = () => {
+
+    setLoader(true);
     setModal(false);
-    if (text === "") {
-      return;
-    }
     const formData = new FormData();
     formData.append("user_id", userId);
     formData.append("description", text);
@@ -48,12 +63,13 @@ function CreatePost() {
       method: "POST",
       body: formData,
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        navigate(-1);
-      })
-      .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setLoader(false);
+      navigate(-1);
+    })
+    .catch((err) => console.log(err));
   };
 
   const handleCrossClick = () => {
@@ -84,17 +100,17 @@ function CreatePost() {
             <RxCross2 />
           </div>
           <div>Create New Post</div>
-          <div  onClick={() => setTag(!tag)} className="text-orange-600 ">
-            Post
+          <div  onClick={() => {loader?"":setTag(!tag)}} className="text-orange-600 ">
+            {loader?<div className="loader absolute z-50 right-5 top-2"></div>:"Post"}
           </div>
         </div>
         <div className="flex text-sm pt-11 gap-4 items-center rounded-md pb-0 pr-0">
           <div className="rounded-full overflow-hidden  h-[40px]">
-            <img width={"40px"} height={"40px"} src={profile} alt="fsdf" />
+            <img width={"40px"} height={"40px"} src={`http://circle.net.in/upload/${userData?.profile_image}`} alt="" />
           </div>
-          <div className="text-lg font-semibold">Sophia Doyle</div>
+          <div className="text-lg font-semibold">{userData?.username}</div>
         </div>
-        <textarea
+       <textarea
           id="post"
           value={text}
           onChange={(e) => setText(e.target.value)}

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
-import { IoEyeOutline } from "react-icons/io5";
+import { PiBooks } from "react-icons/pi";
 import { IoLocationOutline } from "react-icons/io5";
-import { GoPeople } from "react-icons/go";
+import { HiOutlineMailOpen } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GrFormEdit } from "react-icons/gr";
@@ -27,6 +27,8 @@ const User = ({img,setImg}) => {
   
   useEffect(() => {
     async function fetchdata() {
+      //scroll to top
+      window.scrollTo(0, 0);
       const res = await fetch(
         `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
@@ -44,7 +46,7 @@ const User = ({img,setImg}) => {
 
   async function fetchAllPosts() {
     const res = await fetch(
-      `https://circle-backend-hw6e.onrender.com/api/all_user_posts/2`
+      `https://circle-backend-hw6e.onrender.com/api/all_user_posts/${userId}`
     ).catch((err) => console.log(err));
     const data = await res.json();
     console.log(data);
@@ -118,17 +120,17 @@ const User = ({img,setImg}) => {
         </div>
         <div className="w-[97%]  rounded-md mt-2 text-start flex flex-col gap-6 p-4 bg-white mx-auto">
           <div className="flex justify-start gap-3 items-center">
-            <div className="text-3xl">
+            <div className="text-2xl">
               <FiLock />
             </div>
             <div>
               <div className="font-bold ">College</div>
-                <div className="text-gray-500 text-sm">{userData?.workplaceCollage}</div>
+                <div className="text-gray-500 text-sm">{userData?.workplaceCollage}<span className="text-black font-semibold">({userData?.end_year} {"-"} {userData?.starting_year})</span></div>
             </div>
           </div>
           <div className="flex justify-between gap-3 items-center">
             <div className="flex gap-3">
-            <div className="text-3xl">
+            <div className="text-2xl">
               <IoLocationOutline />
             </div>
             {editLocation ? (
@@ -140,7 +142,7 @@ const User = ({img,setImg}) => {
                 className="border-[1px] border-black rounded-md p-1"
               />
             ) : (
-              <div className="font-bold ">{userData?.cityTown || "Write your City/Town"}</div>
+              <div className="">{userData?.cityTown || "Write your City/Town"}</div>
             )}
             </div>
             <div
@@ -152,8 +154,8 @@ const User = ({img,setImg}) => {
           </div>
           <div className="flex justify-between gap-3 items-center">
             <div className="flex gap-3">
-            <div className="text-3xl">
-              <IoEyeOutline />
+            <div className="text-2xl translate-y-2">
+              <PiBooks />
             </div>
             <div>
               <div className="font-bold  w-full">Department</div>
@@ -181,8 +183,8 @@ const User = ({img,setImg}) => {
           </div>
           <div className="flex justify-between gap-3 items-center">
             <div className="flex gap-3">
-            <div className="text-3xl">
-              <GoPeople />
+            <div className="text-2xl">
+              <HiOutlineMailOpen />
             </div>
             <div>
               {editEmail ? (
@@ -194,7 +196,7 @@ const User = ({img,setImg}) => {
                   className="border-[1px] border-black rounded-md p-1"
                 />
               ) : (
-                <div className="font-bold ">{userData?.user_email || "Write your Email"}</div>
+                <div className=" ">{userData?.user_email || "Write your Email"}</div>
               )}
             </div>
             </div>
@@ -226,8 +228,8 @@ const User = ({img,setImg}) => {
           <div>Log out</div>
         </motion.div>
       </div>
-      <div className="text-lg border-[1px] mb-4 pt-2 border-t-2 border-b-slate-800">
-        Your Posts
+      <div className="text-lg flex justify-center border-b-[1px] border-gray-200 pb-3  mb-4 pt-2">
+        <div className="border-[1px] border-gray-400 text-gray-500 rounded-lg px-3 py-1">Your Posts</div>
       </div>
       {
         !allPosts && posts && posts.map((post,id)=>(

@@ -1,6 +1,3 @@
-import { AiFillLike } from "react-icons/ai";
-import { MdComment } from "react-icons/md";
-import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { PiShareFat } from "react-icons/pi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,7 +17,7 @@ function Question({ gossip }) {
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(gossip.answer_upvoted);
   const userId = localStorage.getItem("userId");
-
+  const [answerUpvotes, setAnswerUpvotes] = useState(gossip.answer_upvotes);
 
 
   const getAnswers = () => {
@@ -88,7 +85,7 @@ function Question({ gossip }) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        isLiked ? setAnswersCount(AnswersCount - 1) : setAnswersCount(AnswersCount + 1);
+        isLiked ? setAnswerUpvotes(AnswersCount - 1) : setAnswerUpvotes(AnswersCount + 1);
         setIsLiked(!isLiked);
       })
       .catch((err) => console.log(err));
@@ -163,7 +160,7 @@ function Question({ gossip }) {
               </div>
             ) : (
               <Link
-                to={`/description/${gossip.user_id}`}
+                to={gossip.user_id==userId?"/user":`/description/${gossip.user_id}`}
                 className="rounded-full overflow-hidden h-[36px]"
               >
                 <img
@@ -186,7 +183,7 @@ function Question({ gossip }) {
                 </Link>
               )}
             </div>
-            <div className="text-gray-500">{timeAgo(gossip.date_time)}</div>
+            <div className="text-gray-500">{timeAgo(gossip.date_time)<0? "Just Now":timeAgo(gossip.date_time)} </div>
           </div>
         </div>
       </div>
@@ -215,7 +212,7 @@ function Question({ gossip }) {
                 </Link>
               }
             </div>
-            <div className="text-gray-500">{timeAgo(gossip.answer_time)}</div>
+            <div className="text-gray-500">{timeAgo(gossip.answer_time)<0? "Just Now":timeAgo(gossip.answer_time)}</div>
           </div>
         ) : (
           ""
@@ -226,7 +223,7 @@ function Question({ gossip }) {
         {gossip.no_of_answers ? (
           <div className="flex ml-1 text-gray-600 mt-2">
             <div
-              onClick={!isLiked &&handleAnswerLike}
+              onClick={!isLiked ?handleAnswerLike:null}
               className={` w-fit cursor-pointer `}
             >
               <div className="text-xl  cursor-pointer">
@@ -234,11 +231,11 @@ function Question({ gossip }) {
               </div>
             </div>
             <div
-              onClick={isLiked && handleAnswerLike}
+              onClick={isLiked ? handleAnswerLike:null}
              className="text-xl ml-1 cursor-pointer">
               {!isLiked ? <PiArrowFatDownFill /> : <PiArrowFatDownLight />}
             </div>
-            <div className="ml-1">{AnswersCount}</div>
+            <div className="ml-1">{answerUpvotes}</div>
           </div>
         ) : (
           ""
@@ -246,7 +243,7 @@ function Question({ gossip }) {
       </div>
       {showComments && (
         <div className="flex flex-col justify-end w-full gap-2 py-2">
-          {Answers.map((answer, idx) => (
+          {Answers.slice(1).map((answer, idx) => (
             <Comment answer={answer} key={idx} />
           ))}
         </div>
@@ -254,10 +251,10 @@ function Question({ gossip }) {
       <div className="flex py-3 px-2 justify-between gap-6 items-center text-xl">
         <div className="flex justify-start gap-6 items-center text-xl">
           <div className="w-fit text-gray-600 gap-2 flex items-center cursor-pointer text-3xl">
-            <div className="" onClick={!questionLiked && handleLike}>
+            <div className="" onClick={!questionLiked ? handleLike:null}>
               {!questionLiked ? <PiArrowFatUpLight /> : <PiArrowFatUpFill />}
             </div>
-            <div className="cursor-pointer" onClick={questionLiked && handleunLike}>
+            <div className="cursor-pointer" onClick={questionLiked ? handleunLike:null}>
               {!questionLiked ? (
                 <PiArrowFatDownFill />
               ) : (
@@ -276,9 +273,9 @@ function Question({ gossip }) {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <PiShareFat />
-        </div>
+        </div> */}
       </div>
 
 

@@ -4,12 +4,13 @@ import { LuDot } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-function Profile({ user ,userId}) {
+function Profile({ user }) {
   // eslint-disable-next-line react/prop-types
   const {profile_image, username, cityTown, workplaceCollage, num_likes, like, id, unique_id
   } = user;
   const [liked, setLike] = useState(like);
   const [likeCount, setLikeCount] = useState(num_likes);
+  const userId = localStorage.getItem("userId");
 
   const handleClick = () => {
 
@@ -17,8 +18,6 @@ function Profile({ user ,userId}) {
       cur_num_likes: likeCount,
       sender_id:userId,
       rec_id:id,
-      rec_unique_id:unique_id,
-      sender_unique_id:userId,
     });
     console.log(formData);
     fetch(`https://circle-backend-hw6e.onrender.com/api/${liked?"pro_dislike":"pro_like"}`, {

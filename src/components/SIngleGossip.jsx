@@ -32,7 +32,7 @@ const SIngleGossip = () => {
   
 
   return (
-    <div className="min-w-lg mb-10">
+    <div className="max-w-lg w-full mb-10 min-h-screen">
       <div className="flex items-center p-2 py-4 text-lg justify-between font-semibold shadow-lg">
         <div
           className="cursor-pointer text-2xl"
@@ -41,7 +41,7 @@ const SIngleGossip = () => {
           <MdArrowBack />
         </div>
       </div>
-      {!post? <div className="relative top-1/2">
+      {!post? <div className="relative top-1/2 left-1/2">
         <div className="loader"></div>
       </div>:<Question gossip={post} userId={userId} />}
     </div>

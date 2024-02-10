@@ -17,7 +17,7 @@ function TopNav() {
     setSettings(false);
   };
   return (
-    <div className="fixed max-w-lg ml-auto justify-around bg-white px-1 sm:px-4 py-2 -top-1 z-10 w-full flex shadow-md">
+    <div className="fixed font-sans max-w-lg ml-auto justify-around bg-white px-1 sm:px-4 py-2 pb-0 -top-1 z-10 w-full flex shadow-md">
       {settings && (
         <div
           className="fixed inset-0 z-20 bg-black opacity-60"
@@ -27,52 +27,51 @@ function TopNav() {
       <div className="w-1/2 flex justify-center items-center bg-white">
         <div
           onClick={() => navigate("/search")}
-          className="text-2xl -translate-x-2 z-10 font-bold cursor-pointer"
+          className="text-2xl -translate-y-1  -translate-x-6 z-10 font-bold cursor-pointer"
         >
           <FaSearch />
-        </div>{" "}
-        <div className="-mt-1 -translate-x-[0.3rem]">circle</div>
+        </div>
       </div>
       <div
         onClick={() => {
           navigate("/foryou");
         }}
         className={
-          "w-1/3 cursor-pointer -translate-x-2 pb-1 flex justify-center items-center bg-white " +
-          (isForYouPage ? "border-b-4 border-gray-700" : "")
+          "w-1/3 cursor-pointer pb-4 -translate-x-16 text-xl mt-2  flex justify-center items-center bg-white " +
+          (isForYouPage ? "border-b-2 border-orange-600" : "")
         }
       >
-        For you
+        circle
       </div>
       <div
         onClick={() => navigate("/")}
         id="explore"
         className={
-          "w-1/3 flex cursor-pointer -translate-x-2 pb-1 justify-center items-center bg-white " +
-          (isMemesPage ? "border-b-4 border-gray-700" : "")
+          "w-1/3 flex cursor-pointer pb-4 -translate-x-14 text-xl mt-2  justify-center items-center bg-white " +
+          (isMemesPage ? "border-b-2 border-orange-600" : "")
         }
       >
-        Explore
+        explore
       </div>
       <div
         onClick={() => navigate("/college")}
         className={
-          "w-1/3 cursor-pointer pb-1 -translate-x-2 flex justify-center items-center bg-white " +
-          (isCollegePage ? "border-b-4 border-gray-700" : "")
+          "w-1/3 cursor-pointer pb-4 -translate-x-10 text-xl mt-2 flex justify-center items-center bg-white " +
+          (isCollegePage ? "border-b-2 border-orange-600" : "")
         }
       >
-        Campus
+        campus
       </div>
       <div
         onClick={() => setSettings(!settings)}
         className={
-          "w-1/4 flex text-2xl cursor-pointer pb-1 -mb-1 justify-center items-center bg-white "
+          "w-1/4 flex text-xl cursor-pointer pb-1  justify-center items-center bg-white "
         }
       >
         <LuSettings2 />
       </div>
       <div>
-        <img height={"80px"} width={"80px"} src="https://circle.net.in/assets/images/logot.png" alt="" />
+        <img className="translate-y-2" height={"60px"} width={"60px"} src="https://circle.net.in/assets/images/logot.png" alt="" />
       </div>
       {
         <motion.div

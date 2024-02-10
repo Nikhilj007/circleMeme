@@ -107,9 +107,9 @@ const Notifications = () => {
     <div className="p-2 mt-1 w-full max-w-lg mb-10 min-h-0">
       <div className="w-full text-sm flex relative items-center justify-between">
         <div>Notifications</div>
-        <div onClick={() => setOptions(!options)} className="pr-2 text-xl">
+        {/* <div onClick={() => setOptions(!options)} className="pr-2 text-xl">
           <FaEllipsisVertical />
-        </div>
+        </div> */}
         {options && (
           <div
             ref={optionsRef}
@@ -195,7 +195,7 @@ const Notifications = () => {
                     </span>
                   </div>
                 </div>
-                <div className="text-gray-500 absolute bottom-1 right-0">
+                <div className="text-gray-500 absolute top-3 right-0">
                   {timeAgo(notify.date_time)}
                 </div>
               </div>

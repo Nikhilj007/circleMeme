@@ -10,6 +10,7 @@ const Comment = ({ answer }) => {
   const [upvoted, setUpvoted] = useState(answer.upvoted);
   const userId = localStorage.getItem("userId");
   const [upvotes, setUpvotes] = useState(answer.upvotes);
+  const [showMore, setShowMore] = useState(false);
   const timeAgo = (date) => {
     const d = new Date(date);
     const timeAgo = new Date() - d;
@@ -60,14 +61,21 @@ const Comment = ({ answer }) => {
       </div>
       <div className="flex flex-col items-start w-full">
         <div className="flex gap-4 items-center w-full">
-          <div className="font-bold ">{answer.username}</div>
+          <div className="font-bold text-sm">{answer.username}</div>
           <div className="text-gray-500 text-sm">
             {timeAgo(answer.date_time)<0? "Just Now":timeAgo(answer.date_time)}
           </div>
         </div>
       </div>
       </div>
-        <div className="py-1 text-left ml-3 text-sm ">{answer.answer}</div>
+        <div className="py-1 text-left ml-3 text-sm ">{showMore ? answer.answer : answer.answer.slice(0, 100)}</div>
+        <div
+          onClick={() => setShowMore(!showMore)}
+          className="text-gray-500 text-sm cursor-pointer ml-3"
+        >
+          {showMore ? "Show Less" : "Show More"}
+        </div>
+
         <div className="flex gap-1 items-center text-gray-600 ml-3">
         <div
           onClick={() =>{!upvoted ? handleAnswersLike(answer.answer_id):{}}}

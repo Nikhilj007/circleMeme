@@ -21,7 +21,7 @@ function Memes() {
     }
   }, []);
   return (
-    <div className="flex relative pb-10 flex-col items-center pt-14 min-h-screen  p-0">
+    <div className="flex relative pb-10 flex-col items-center pt-16 min-h-screen  p-0">
       {!arr? <div className="relative top-1/2">
         <div className="loader"></div>
       </div>

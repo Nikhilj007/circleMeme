@@ -5,8 +5,7 @@ import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { useLongPress } from "use-long-press";
 
-
-function Post({ meme,isCurrentUser }) {
+function Post({ meme, isCurrentUser }) {
   const [showEmoji, setShowEmoji] = useState(false);
   const userId = localStorage.getItem("userId");
   const [like, setLike] = useState(meme?.like);
@@ -18,24 +17,29 @@ function Post({ meme,isCurrentUser }) {
   const [showReport, setShowReport] = useState(false);
   const noMedia = meme?.post === "null" || meme?.post === null;
   const extension = meme?.post?.split(".").pop();
-  const isImage = extension === "jpg" || extension === "png"|| extension === "jpeg" || extension === "gif" || extension === "webp";
+  const isImage =
+    extension === "jpg" ||
+    extension === "png" ||
+    extension === "jpeg" ||
+    extension === "gif" ||
+    extension === "webp";
   const [showMore, setShowMore] = useState(false);
-  const desc= meme?.description?meme.description:"";
+  const desc = meme?.description ? meme.description : "";
   const reportRef = useRef(null);
   const [userImage, setUserImage] = useState(null);
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currEmoji, setCurrEmoji] = useState("👍🏽");
 
   const bind = useLongPress(() => {
     setShowEmoji(true);
   });
 
   useEffect(() => {
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          if (document.visibilityState === 'visible' && document.hasFocus()) {
+          if (document.visibilityState === "visible" && document.hasFocus()) {
             videoRef.current.play();
             setIsPlaying(true);
           }
@@ -58,22 +62,26 @@ function Post({ meme,isCurrentUser }) {
     };
   }, []);
 
-    useEffect(() => {
-        async function fetchdata() {
-          const res = await fetch(
-            `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
-          ).catch((err) => console.log(err));
-          const data = await res.json();
-          setUserImage(`https://circle.net.in/upload/${data[0].profile_image}`);
-        }
-        if (!userImage) {
-          fetchdata();
-        }
-      }, []);
+  useEffect(() => {
+    async function fetchdata() {
+      const res = await fetch(
+        `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
+      ).catch((err) => console.log(err));
+      const data = await res.json();
+      setUserImage(`https://circle.net.in/upload/${data[0]?.profile_image}`);
+    }
+    if (!userImage) {
+      fetchdata();
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (reportRef.current && !reportRef.current.contains(event.target) && !event.target.className.includes("threeDot")) {
+      if (
+        reportRef.current &&
+        !reportRef.current.contains(event.target) &&
+        !event.target.className.includes("threeDot")
+      ) {
         // Click occurred outside the report div, close it
         setShowReport(false);
       }
@@ -136,7 +144,7 @@ function Post({ meme,isCurrentUser }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme?.id}/${userId}`,
+      `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme?.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -190,103 +198,143 @@ function Post({ meme,isCurrentUser }) {
       <div className="max-w-lg z-0 relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
         {showReport && (
           <div
-            onClick={()=>{isCurrentUser && deletePost()}} 
-           ref={reportRef} className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2">
-            {isCurrentUser?"Delete":"Report"}
+            onClick={() => {
+              isCurrentUser && deletePost();
+            }}
+            ref={reportRef}
+            className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2"
+          >
+            {isCurrentUser ? "Delete" : "Report"}
           </div>
         )}
 
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-center">
-            <div className="rounded-full overflow-hidden h-[48px]">
-               <img 
-                width={"48px"}
-                height={"48px"} 
+              <img
+                className="rounded-full"
+                width={"40px"}
+                height={"40px"}
                 src={`https://circle.net.in/upload/${meme?.profile_pic}`}
                 loading="lazy"
                 alt="fsdf"
               />
-
-            </div>
             <div className="text-start">
-              {meme?.username ==="Anonymous"?
-               <div className="font-bold">{meme?.username}</div>
-              : <Link to={meme?.user_id==userId?"/user":`/description/${meme?.user_id}`} className="font-bold">{meme?.username}</Link>}
-              <div className="text-gray-500">{timeAgo(meme?.date_time)}</div>
+              {meme?.username === "Anonymous" ? (
+                <div className="font-bold text-sm">{meme?.username}</div>
+              ) : (
+                <Link
+                  to={
+                    meme?.user_id == userId
+                      ? "/user"
+                      : `/description/${meme?.user_id}`
+                  }
+                  className="font-bold text-sm"
+                >
+                  {meme?.username}
+                </Link>
+              )}
+              <div className="text-gray-500 text-sm">{timeAgo(meme?.date_time)}</div>
             </div>
           </div>
           <div>
             <button
-              onClick={() => {setShowReport(!showReport)}}
-             className="text-gray-500 threeDot -mt-4 text-3xl">...</button>
+              onClick={() => {
+                setShowReport(!showReport);
+              }}
+              className="text-gray-500 threeDot -mt-4 text-3xl"
+            >
+              ...
+            </button>
           </div>
         </div>
 
         <div className="flex justify-center">
           {/* show play button if video is paused */}
-          { videoRef.current && !noMedia &&
-            <div 
-          className="absolute z-50 items-center justify-center w-full h-full
-          bg-black bg-opacity-20 transition-opacity flex duration-400 ease-in-out"
-          style={{ opacity: isPlaying ? 0 : 1, height: isPlaying ? 0 : "77.46%" }}
-            onClick={()=>{videoRef.current.play();setIsPlaying(true)}}
-          >
-            <button
-              className=" rounded-full p-2"
+          {videoRef.current && !noMedia && (
+            <div
+              className="absolute z-50 items-center justify-center w-full h-full
+          bg-black bg-opacity-20 flex "
+              style={{
+                opacity: isPlaying ? 0 : 1,
+                height: isPlaying ? '1px': "77.46%",
+              }}
+              onClick={() => {
+                videoRef.current.play();
+                setIsPlaying(true);
+              }}
             >
-              <svg
-                className="w-20 h-20 text-black"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M8 5v14l11-7z"></path>
-              </svg>
-            </button>
-
-          </div>}
-          {!noMedia &&<div>
-         {isImage ? (
-            <img
-              loading="lazy"
-              className="rounded-sm w-full "
-              src={`https://circle.net.in/posts/${meme?.post}`}
-              alt=""
-            />
-          ) : (
-            <video
-              onClick={()=>{videoRef.current.pause();setIsPlaying(false)}}
-              ref={videoRef}
-              className="rounded-sm w-full "
-              src={`https://circle.net.in/posts/${meme?.post}`}
-            />
-          )}</div>}
+              <button className=" rounded-full p-2">
+                <svg
+                
+                  className="w-20 h-20 text-black"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+              </button>
+            </div>
+          )}
+          {!noMedia && (
+            <div>
+              {isImage ? (
+                <img
+                  loading="lazy"
+                  className="rounded-sm w-full "
+                  src={`https://circle.net.in/posts/${meme?.post}`}
+                  alt=""
+                />
+              ) : (
+                <video
+                  onClick={() => {
+                    videoRef.current.pause();
+                    setIsPlaying(false);
+                  }}
+                  ref={videoRef}
+                  className="rounded-sm w-full "
+                  src={`https://circle.net.in/posts/${meme?.post}`}
+                />
+              )}
+            </div>
+          )}
         </div>
         <div className="px-4 -mb-1 text-start text-sm mt-1">
-          {showMore ? desc : desc.substring(0, 50)}
-          {desc.length>50 &&<button
-            onClick={() => setShowMore(!showMore)}
-            className="text-blue-500"
-          >
-            {showMore ? "show less" : "show more"}
-          </button>}
+          {showMore ? desc : desc.substring(0, 300)}
+          {desc.length > 300 && (
+            <button
+              onClick={() => setShowMore(!showMore)}
+              className="text-blue-500"
+            >
+              {showMore ? "show less" : "show more"}
+            </button>
+          )}
         </div>
-        {showEmoji && <button
-                  onClick={() => setShowEmoji(false)}
-                  className="flex items-center gap-2 absolute bg-gray-100 rounded-full py-[2px] px-1 z-40 bottom-[5.5rem] left-2"
-                >😍 👍🏽 😭</button>}
+        {/* {showEmoji && (
+          <button
+            onClick={() => {setShowEmoji(false)}}
+            className="flex items-center gap-2 absolute bg-gray-100 rounded-full py-[2px] px-1 z-40 bottom-[5.5rem] left-2"
+          >
+            <span onClick={() => {setCurrEmoji("😍");handleClicked()}}>😍</span>{" "}
+            <span onClick={() => {setCurrEmoji("👍🏽");handleClicked()}}>👍🏽</span>{" "}
+            <span onClick={() => {setCurrEmoji("😭");handleClicked()}}>😭</span>
+          </button>
+        )} */}
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
             <div className="flex items-center gap-5">
               <div className="flex items-center mt-3">
-                
                 <button
-                //add the long press functionality
-                  onClick={ handleClicked}
+                  //add the long press functionality
+                  onClick={handleClicked}
                   {...bind({ threshold: 500 })}
                   className="flex items-center gap-2"
                 >
-                  {like ? <div className="opacity-25 ">😂</div> : <div>😂</div>}
+                  {like ? (
+                    <div className="opacity-25 ">{currEmoji}</div>
+                  ) : (
+                    <div>{currEmoji}</div>
+                  )}
                   <span>{likeCount}</span>
                 </button>
               </div>
@@ -308,7 +356,7 @@ function Post({ meme,isCurrentUser }) {
           </div> */}
         </div>
         <div className="px-4 text-start text-sm mt-1"></div>
-        
+
         <div className="flex justify-start gap-4 px-6 py-3 pb-4">
           <div className="rounded-full  overflow-hidden h-[30px] w-[43px]">
             <img
@@ -326,37 +374,37 @@ function Post({ meme,isCurrentUser }) {
             type="text"
             placeholder="write a comment"
           />
-          <button className="text-end" onClick={postComment}>Post</button>
+          <button className="text-end" onClick={postComment}>
+            Post
+          </button>
         </div>
         {showComment && (
           <div>
             {comments.map((comment, idx) => (
               <div key={idx} className="text-start pl-4 relative z-50">
                 <div className="flex gap-3 ">
-                  <Link to={`/description/${comment.user_id}`} className="rounded-full  overflow-hidden h-[32px] translate-y-1">
-                  <img
-                    width={"39px"}
-                    height={"27px"}
-                    src={`https://circle.net.in/upload/${comment.profile_pic}`}
-                    loading="lazy"
-                    alt="fsdf"
-                  />
-                </Link>
-                <div className="rounded-xl bg-slate-200 w-full p-2 m-1 mr-2">
-                  <div className="flex justify-between font-semibold gap-4 w-full items-center">
-                    <div>
-                      {comment.username}
+                  <Link
+                    to={`/description/${comment.user_id}`}
+                    className="rounded-full  overflow-hidden h-[32px] translate-y-1"
+                  >
+                    <img
+                      width={"39px"}
+                      height={"27px"}
+                      src={`https://circle.net.in/upload/${comment.profile_pic}`}
+                      loading="lazy"
+                      alt="fsdf"
+                    />
+                  </Link>
+                  <div className="rounded-xl bg-slate-200 w-full p-2 m-1 mr-2">
+                    <div className="flex justify-between font-semibold gap-4 w-full items-center">
+                      <div className="text-sm">{comment.username}</div>
+                      <div className="text-xs">
+                        {timeAgo(comment.date_time)}
+                      </div>
                     </div>
-                    <div className="text-sm">
-                      {timeAgo(comment.date_time)}
-                    </div>
-                  </div>
-                  <div className="text-gray-600">
-                    {comment.comment}
+                    <div className="text-gray-600 text-sm">{comment.comment}</div>
                   </div>
                 </div>
-                </div>
-                
               </div>
             ))}
           </div>

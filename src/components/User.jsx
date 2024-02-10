@@ -125,7 +125,7 @@ const User = ({img,setImg}) => {
             </div>
             <div>
               <div className="font-bold ">College</div>
-                <div className="text-gray-500 text-sm">{userData?.workplaceCollage}<span className="text-black font-semibold">({userData?.end_year} {"-"} {userData?.starting_year})</span></div>
+                <div className="text-gray-500 text-sm">{userData?.workplaceCollage}<span className="text-black font-semibold">({userData?.starting_year} {"-"} {userData?.end_year})</span></div>
             </div>
           </div>
           <div className="flex justify-between gap-3 items-center">

@@ -18,6 +18,8 @@ function Question({ gossip }) {
   const [isLiked, setIsLiked] = useState(gossip.answer_upvoted);
   const userId = localStorage.getItem("userId");
   const [answerUpvotes, setAnswerUpvotes] = useState(gossip.answer_upvotes);
+  const [showMore, setShowMore] = useState(false);
+  const [fullQuestion, setFullQuestion] = useState(false);
 
 
   const getAnswers = () => {
@@ -187,7 +189,16 @@ function Question({ gossip }) {
           </div>
         </div>
       </div>
-      <div className=" text-left ml-2">{gossip.question}</div>
+      <div className=" text-left w-fit ml-2">{fullQuestion ? gossip.question : gossip.question.slice(0, 300)}</div>
+      {gossip.question.length > 300 && (
+        <div
+
+          onClick={() => setFullQuestion(!fullQuestion)}
+          className="text-gray-500 text-start w-fit relative right-24 text-sm inline cursor-pointer ml-7"
+        >
+          {fullQuestion ? "Show Less" : "Show More"}
+        </div>
+      )}
       <div className="text-sm text-left ml-4 p-3 py-1 border-[1px] border-gray-300 rounded-md mt-2">
         {gossip.no_of_answers ? (
           <div className="flex gap-3 items-start">
@@ -218,7 +229,15 @@ function Question({ gossip }) {
           ""
         )}
         <div className="ml-1 mt-1">
-          {gossip.topAnswer ? gossip.topAnswer : "No answers yet"}
+          {gossip.topAnswer ? showMore?gossip.topAnswer:gossip.topAnswer.slice(0, 300):"No Answers Yet"}
+          {gossip.topAnswer && gossip.topAnswer.length > 300 && (
+            <div
+              onClick={() => setShowMore(!showMore)}
+              className="text-gray-500 text-sm cursor-pointer ml-3"
+            >
+              {showMore ? "Show Less" : "Show More"}
+            </div>
+          )}
         </div>
         {gossip.no_of_answers ? (
           <div className="flex ml-1 text-gray-600 mt-2">

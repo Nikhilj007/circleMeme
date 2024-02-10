@@ -49,7 +49,7 @@ function Search() {
   }, []);
 
   return (
-    <div className="p-2 py-0 bg-white ">
+    <div className="p-2 py-0 flex flex-col justify-start content-start text-start bg-white ">
       <div className="fixed bg-white lg:left-1/3 left-6 w-[97%] max-w-lg mx-auto flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1">
         <button onClick={() => navigate(-1)} className="text-3xl">
           <MdArrowBack />
@@ -65,12 +65,12 @@ function Search() {
           <FaSearch />
         </div>
       </div>
-      <div className="h-14 w-full bg-white"></div>
+      <div className="h-14 w-full flex text-start bg-white"></div>
       {showResults &&
         students.map((student) => (
           <Link
             to={`/description/${student.id}`}
-            className="flex items-center text-left w-full mt-4"
+            className="flex items-center justify-start text-left w-full mt-4"
           >
             <div className="border-2 border-gray-300 rounded-full">
               <img
@@ -89,7 +89,7 @@ function Search() {
         Object.keys(colleges).map((college) => (
           <Link
             to={`/gossip?college=${college}`}
-            className=" flex items-center text-left w-full mt-4"
+            className=" flex items-center  text-left w-full mt-4"
           >
             <div className=" border-2 border-gray-300 p-3 rounded-full">
               <CiStar className="w-5 h-5 rounded-full" />

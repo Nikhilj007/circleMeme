@@ -18,10 +18,28 @@ import CrushList from "./components/CrushList";
 import Notifications from "./components/Notifications";
 import SinglePost from "./components/SinglePost";
 import SIngleGossip from "./components/SIngleGossip";
+import {messaging, app} from './firebase'
+import { getToken } from "firebase/messaging";
 
 function App() {
   const [img, setImg] = useState(null); 
   const [croppedImage, setCroppedImage] = useState(null);
+
+  async function requqestPermission(){
+    const permission = await Notification.requestPermission();
+    if(permission==='granted'){
+     const token = getToken(messaging,{vapidKey:'BL5v6Rrd6sUV_Zl_NeDWMvNfwj3cr7IoNczHWr-HwRpU-FCMQpAMUuTQlZgCxaBPxToU6iK32GNZUZzhB6e6L-E'})
+      console.log('FCM token:',token)
+    }
+    else if(permission==='denied'){
+      console.log('Notification permission denied')
+    }
+  }
+
+  useEffect(()=>{
+    //request the user for notification permission
+    requqestPermission();
+  },[])
 
   useEffect(()=>{
   //   const currUser= async()=>{
@@ -35,7 +53,7 @@ function App() {
   // }
   // currUser();
 
-  localStorage.setItem('userId',2);
+  localStorage.setItem('userId',7);
 
 }
 ,[])
@@ -48,7 +66,6 @@ function App() {
         path=='/' || path.startsWith('/college') ||path.startsWith('/foryou')? <TopNav/>:null
       }
      <Routes>
-        <Route path="/" element={<Memes />}/>
         <Route path="/gossip" element={<Gossips />}/>
         <Route path="/foryou" element={<ForYou />}/>
         <Route path="/create" element={<CreatePost />}/>
@@ -61,6 +78,7 @@ function App() {
         <Route path='/notify' element={<Notifications/>}/>
         <Route path='/singlepost/:id' element={<SinglePost/>}/>
         <Route path='/newgossip/:id' element={<SIngleGossip/>}/>
+        <Route path="/" element={<Memes />}/>
         <Route path='/upload' element={<Upload img={img} setCroppedImage={setCroppedImage} croppedImage={croppedImage}/>}/>
 
      </Routes> 

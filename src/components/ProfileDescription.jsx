@@ -98,7 +98,7 @@ const ProfileDescription = () => {
             <div>
               <div className="font-bold ">College</div>
               <div className="text-gray-500 text-sm">
-                {currentUser?.workplaceCollage} <span className="text-black font-semibold">({currentUser?.end_year} {"-"} {currentUser?.starting_year})</span>
+                {currentUser?.workplaceCollage}{ currentUser?.end_year?<span className="text-black font-semibold">({currentUser?.end_year} {"-"} {currentUser?.starting_year})</span>:null}
               </div>
             </div>
           </div>

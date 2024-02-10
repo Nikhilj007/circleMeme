@@ -26,6 +26,7 @@ function CreatePost() {
   const userId = localStorage.getItem("userId");
   const [loader,setLoader] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [textOnly, setTextOnly] = useState(true);
 
   useEffect(() => {
     async function fetchdata() {
@@ -117,10 +118,11 @@ function CreatePost() {
           className="outline-none resize-none mt-1"
           placeholder="What's on your mind?"
           cols={width > 570 ? "60" : `30`}
-          rows="2"
+          rows={textOnly?'5':'2'}
         ></textarea>
         <input
           onChange={(e) => {
+            setTextOnly(false);
             setImgLink(URL.createObjectURL(e.target.files[0]));
             setVideoLink("");
           }
@@ -132,6 +134,7 @@ function CreatePost() {
         />
         <input
           onChange={(e) => {
+            setTextOnly(false);
             setVideoLink(URL.createObjectURL(e.target.files[0]));
             setImgLink("");
           }}
@@ -160,7 +163,7 @@ function CreatePost() {
           </div>
         )}
             
-        <div className={`flex justify-start gap-6 px-2 ${(imgLink ||videoLink)?"mt-4":"mt-32"}  mb-10 text-xl`}>
+        <div className={`flex justify-start gap-6 px-2 ${(imgLink ||videoLink)?"mt-4":"mt-14"}  mb-10 text-xl`}>
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
@@ -179,7 +182,7 @@ function CreatePost() {
           </button>
           {
             <motion.div
-              className="fixed bottom-1 rounded-3xl text-base font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
+              className="fixed bottom-1 rounded-3xl text-sm font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
               initial={{ opacity: 0, y: "100%" }}
               animate={tag ? { opacity: 1, y: 0 } : {}}
               exit={{ opacity: 0, y: "100%" }}
@@ -200,7 +203,7 @@ function CreatePost() {
                 }}
                 className="pb-1  cursor-pointer"
               >
-                Share in Both
+                Share in both
               </div>
               <div
                 onClick={() => {
@@ -211,7 +214,7 @@ function CreatePost() {
                 }}
                 className="pb-1  cursor-pointer"
               >
-                Share Meme
+                Share on explore
               </div>
               <div
                 onClick={() => {
@@ -222,7 +225,7 @@ function CreatePost() {
                 }}
                 className="pb-2  cursor-pointer"
               >
-                Share on Campus
+                Share on campus
               </div>
             </motion.div>
           }

@@ -2,114 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@200&family=Inknut+Antiqua:wght@300&family=Inter:wght@100;200;300;400;500;600;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
   -webkit-user-select: none;
   user-select: none;
 }
 
 .App {
-    background-color: #c4c4c4;
-    width: 100%;
-    font-family: 'Helvetica Neue', sans-serif;
-    overflow-x: hidden;
-  }
-  
-  .App-header {
-    padding-top: 20px;
-    height: 85vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    color: #fff;
-  }
-  
-  label {
-    font-weight: bold;
-    padding-left: 10px;
-  }
-  
-  .button {
-    z-index: 2;
-    cursor: pointer;
-    padding: 10px 30px;
-    border-radius: 5px;
-    border: 1px solid #fff;
-    background-color: transparent;
-    font: bolder;
-    text-align: center;
-    align-self: center;
-  }
-  
-  .cropped-image {
-    height: 200px;
-    width: auto;
-  }
-  
-  .cropped-image-container {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  ._coverImage-holder  {
-    padding: 25px 40px;
-    background-color:black;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-  
-  .crop-container {
-    height: 200px;
-    min-width: 400px;
-  }
-  
-  .controls {
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    position: absolute;
-    bottom: -5rem;
-    left: 50%;
-    transform: translateX(-50%);
+  background-color: #c4c4c4;
+  width: 100%;
+  font-family: 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+}
+
+.App-header {
+  padding-top: 20px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+}
+
+label {
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.button {
+  z-index: 2;
+  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  font: bolder;
+  text-align: center;
+  align-self: center;
+}
+
+.cropped-image {
+  height: 200px;
+  width: auto;
+}
+
+.cropped-image-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+._coverImage-holder {
+  padding: 25px 40px;
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.crop-container {
+  height: 200px;
+  min-width: 400px;
+}
+
+.controls {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  position: absolute;
+  bottom: -5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.loader {
+  border: 4px solid black;
+  border-left-color: transparent;
+  border-radius: 50%;
+}
+
+.loader {
+  border: 4px solid black;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+}
+
+.loader {
+  border: 4px solid black;
+  border-left-color: transparent;
+  width: 30px;
+  height: 30px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
   }
 
-  .loader {
-    border: 4px solid black;
-    border-left-color: transparent;
-    border-radius: 50%;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .loader {
-    border: 4px solid black;
-    border-left-color: transparent;
-    width: 36px;
-    height: 36px;
-  }
-  
-  .loader {
-    border: 4px solid black;
-    border-left-color: transparent;
-    width: 30px;
-    height: 30px;
-    animation: spin89345 1s linear infinite;
-  }
-  
-  @keyframes spin89345 {
-    0% {
-      transform: rotate(0deg);
-    }
-  
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+}

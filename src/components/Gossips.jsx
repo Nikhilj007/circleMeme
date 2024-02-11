@@ -14,7 +14,7 @@ function Gossips() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [gossips, setGossips] = useState(null); // [{},{}
-  const [college,setCollege] = useState(collge); // ""
+  const [college,setCollege] = useState(collge?collge:""); // ""
   const userId = localStorage.getItem("userId");
   const handlers = useSwipeable({
     onSwipedLeft: () => navigate("/foryou"),
@@ -30,7 +30,6 @@ function Gossips() {
         "https://circle-backend-hw6e.onrender.com/api/self_profile/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
-      console.log(data);
       setCollege(data[0].workplaceCollage);
     }
     fetchdata();
@@ -58,7 +57,6 @@ function Gossips() {
       const res = await fetch(
         "https://circle-backend-hw6e.onrender.com/api/gossips"+"/"+userId)
       const data = await res.json();
-      console.log(data);
       setGossips(data.posts);
     }
     if (!collge) {

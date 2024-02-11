@@ -1,11 +1,12 @@
 import { FaSearch } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LuSettings2 } from "react-icons/lu";
-import logo from "../assets/circleLogo.png";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import useWindowDimensions from "../hooks/useWindowDimension";
 
 function TopNav() {
+  const { width } = useWindowDimensions();
   const location = useLocation();
   const isMemesPage = location.pathname === "/";
   const isCollegePage = location.pathname === "/college";
@@ -37,8 +38,8 @@ function TopNav() {
           navigate("/foryou");
         }}
         className={
-          "w-1/3 cursor-pointer pb-4 -translate-x-16  text-xl max-[360px]:text-lg mt-2  flex justify-center items-center bg-white " +
-          (isForYouPage ? "border-b-2 border-orange-600" : "")
+          `w-1/3 font-heebo cursor-pointer  ${width<350?'-translate-x-10':'-translate-x-16'}   text-xl max-[360px]:text-lg mt-2  flex justify-center items-center bg-white ` +
+          (isForYouPage ? "border-b-2 border-orange-600 pb-3" : "pb-4")
         }
       >
         circle
@@ -47,8 +48,8 @@ function TopNav() {
         onClick={() => navigate("/")}
         id="explore"
         className={
-          "w-1/3 flex cursor-pointer pb-4 -translate-x-14 text-xl mt-2  justify-center items-center bg-white " +
-          (isMemesPage ? "border-b-2 border-orange-600" : "")
+          `w-1/3 font-heebo flex cursor-pointer  ${width<350?'-translate-x-8':'-translate-x-14'} text-xl mt-2  justify-center text-[#808080] items-center bg-white ` +
+          (isMemesPage ? "border-b-2 border-orange-600 pb-3" : "pb-4")
         }
       >
         explore
@@ -56,8 +57,8 @@ function TopNav() {
       <div
         onClick={() => navigate("/college")}
         className={
-          "w-1/3 cursor-pointer pb-4 -translate-x-10 text-xl mt-2 flex justify-center items-center bg-white " +
-          (isCollegePage ? "border-b-2 border-orange-600" : "")
+          `w-1/3 font-heebo cursor-pointer  ${width<350?'-translate-x-4':'-translate-x-10'} text-xl mt-2 flex justify-center text-[#808080] items-center bg-white ` +
+          (isCollegePage ? "border-b-2 border-orange-600 pb-3" : "pb-4")
         }
       >
         campus

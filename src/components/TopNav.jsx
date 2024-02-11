@@ -37,7 +37,7 @@ function TopNav() {
           navigate("/foryou");
         }}
         className={
-          "w-1/3 cursor-pointer pb-4 -translate-x-16 text-xl mt-2  flex justify-center items-center bg-white " +
+          "w-1/3 cursor-pointer pb-4 -translate-x-16  text-xl max-[360px]:text-lg mt-2  flex justify-center items-center bg-white " +
           (isForYouPage ? "border-b-2 border-orange-600" : "")
         }
       >

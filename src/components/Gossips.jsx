@@ -6,6 +6,7 @@ import Question from "./Questions";
 import bgimage from "../assets/gossipsBackground.jpg";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
+import { useSwipeable } from "react-swipeable";
 
 function Gossips() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,6 +16,10 @@ function Gossips() {
   const [gossips, setGossips] = useState(null); // [{},{}
   const [college,setCollege] = useState(collge); // ""
   const userId = localStorage.getItem("userId");
+  const handlers = useSwipeable({
+    onSwipedLeft: () => navigate("/foryou"),
+    onSwipedRight: () => navigate("/college"),
+  });
 
   useEffect(() => {
     if(college){
@@ -68,7 +73,7 @@ function Gossips() {
 
 
   return (
-    <div className="bg-zinc-300 w-full mb-14">
+    <div {...handlers} className="bg-zinc-300 w-full mb-14">
       <div
         to={"/search"}
         className="fixed z-50 bg-white left-6 w-[97%] max-w-lg lg:ml-[27.7%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"

@@ -39,22 +39,22 @@ function Profile({ user }) {
       <div className="flex w-full justify-center">
         <img
           loading="lazy"
-          className="rounded-sm w-full h-96"
+          className="rounded-sm w-full"
           src={`https://circle.net.in/upload/${profile_image}`}
           alt=""
         />
       </div>
-      <div className="flex justify-between px-4 py-2">
+      <div className="relative py-2">
         <div></div>
         <Link to={`/description/${id}`} className="cursor pointer">{username}</Link>
         <button
-          className="text-red-600 text-3xl active:scale-75 transition-all duration-150"
+          className="text-red-600 absolute right-1 text-3xl active:scale-75 transition-all duration-150"
           onClick={handleClick}
         >
           {liked ? < AiFillHeart/> : < AiOutlineHeart/>}
         </button>
       </div>
-      <div className="flex justify-center gap-2 px-2 text-base py-3">
+      <div className="flex justify-center gap-2 ml-1 items-center m text-sm py-2">
         <div>{likeCount}</div>
         <div className="text-3xl">
           <LuDot />

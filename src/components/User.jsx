@@ -225,7 +225,8 @@ const User = ({img,setImg}) => {
             onClick={() => inputRef.current.click()}
             className="flex justify-center items-center pb-1 gap-2"
           >Change Picture</div>
-          <div>Log out</div>
+          <a href="https://circle.net.in/logout.php"
+          >Log out</a>
         </motion.div>
       </div>
       <div className="text-lg flex justify-center border-b-[1px] border-gray-200 pb-3  mb-4 pt-2">

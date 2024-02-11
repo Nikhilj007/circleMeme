@@ -45,8 +45,8 @@ const messaging = getMessaging(app);
 // });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename="/home">
-    {/* <BrowserRouter> */}
+  // <BrowserRouter basename="/home">
+   <BrowserRouter> 
     <UserProvider>
       <App />
     </UserProvider>

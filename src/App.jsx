@@ -61,7 +61,7 @@ function App() {
 
   const path = useLocation().pathname;
   return (
-    <div className="flex justify-center">
+    <div className="flex font-heebo justify-center">
       {
         path=='/' || path.startsWith('/college') ||path.startsWith('/foryou')? <TopNav/>:null
       }

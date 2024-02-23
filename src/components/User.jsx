@@ -30,7 +30,7 @@ const User = ({img,setImg}) => {
       //scroll to top
       window.scrollTo(0, 0);
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -46,7 +46,7 @@ const User = ({img,setImg}) => {
 
   async function fetchAllPosts() {
     const res = await fetch(
-      `https://circle-backend-hw6e.onrender.com/api/all_user_posts/${userId}`
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/all_user_posts/${userId}`
     ).catch((err) => console.log(err));
     const data = await res.json();
     console.log(data);
@@ -59,7 +59,7 @@ const User = ({img,setImg}) => {
   const handleChange = async (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
     const res = await fetch(
-      `https://circle-backend-hw6e.onrender.com/api/edit_profile/${userId}`,
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/edit_profile/${userId}`,
       {
         method: "POST",
         headers: {

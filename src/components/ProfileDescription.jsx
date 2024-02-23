@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
-import { HiOutlineMailOpen } from "react-icons/hi";
+// import { HiOutlineMailOpen } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const ProfileDescription = () => {
   const [crush,setCrush] = useState(false);
 
   const handleCrush = () =>{
-    fetch(`https://circle-backend-hw6e.onrender.com/api/drop_crush/${userId}/${id}`)
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/drop_crush/${userId}/${id}`)
     .then((res)=>res.json())
     .then((data)=>{console.log(data);setCrush(true)})
     .catch((err)=>console.log(err))
@@ -28,7 +28,7 @@ const ProfileDescription = () => {
 
 
   const handleFollow = () =>{
-    fetch(`https://circle-backend-hw6e.onrender.com/api/clicked_follow/${userId}/${id}`
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/clicked_follow/${userId}/${id}`
     ,{method:"POST"}
     )
     .then((res)=>res.json())
@@ -39,7 +39,7 @@ const ProfileDescription = () => {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/user_profile/${id}/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/user_profile/${id}/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -98,7 +98,7 @@ const ProfileDescription = () => {
             <div>
               <div className="font-bold ">College</div>
               <div className="text-gray-500 text-sm">
-                {currentUser?.workplaceCollage}{ currentUser?.end_year?<span className="text-black font-semibold">({currentUser?.end_year} {"-"} {currentUser?.starting_year})</span>:null}
+                {currentUser?.workplaceCollage}{ currentUser?.end_year?<span className="text-black font-semibold">({currentUser?.starting_year} {"-"} {currentUser?.end_year})</span>:null}
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ const ProfileDescription = () => {
               </div>
             </div>
           </div>
-          { currentUser?.user_email &&
+          {/* { currentUser?.user_email &&
             <div className="flex justify-between gap-3 items-center">
             <div className="flex gap-3">
               <div className="text-2xl">
@@ -138,7 +138,7 @@ const ProfileDescription = () => {
               </div>
             </div>
           </div>
-          }
+          } */}
         </div>
         <div className="fixed "></div>
         <motion.div

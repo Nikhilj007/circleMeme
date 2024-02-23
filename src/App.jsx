@@ -20,6 +20,7 @@ import SinglePost from "./components/SinglePost";
 import SIngleGossip from "./components/SIngleGossip";
 import {messaging, app} from './firebase'
 import { getToken } from "firebase/messaging";
+import ClDetail from "./components/ClDetails";
 
 function App() {
   const [img, setImg] = useState(null); 
@@ -28,8 +29,28 @@ function App() {
   async function requqestPermission(){
     const permission = await Notification.requestPermission();
     if(permission==='granted'){
-     const token = getToken(messaging,{vapidKey:'BL5v6Rrd6sUV_Zl_NeDWMvNfwj3cr7IoNczHWr-HwRpU-FCMQpAMUuTQlZgCxaBPxToU6iK32GNZUZzhB6e6L-E'})
-      console.log('FCM token:',token)
+      try {
+        const token = await getToken(messaging, { vapidKey: 'BNAIysW2PdMAjLnInpZp384XGZx_GkNa8s182w5ixbkj_FkYf0IdlIkmAuplro1_L97kzjWKSH22iA1hS1bPzQk' });
+        console.log("FCM token:", token);
+        //check if the token is already present in the local storage
+        const oken = localStorage.getItem('fcmToken');
+        if(oken){
+          return;
+        }
+        //if not present then send the token to the backend 
+         
+        fetch('https://circle-backend-ewrpf36y4q-el.a.run.app/api/noti_token',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({token:token,id:localStorage.getItem('userId')
+          })
+          })
+          localStorage.setItem('fcmToken', token);
+        } catch (error) {
+          console.error("Error generating token:", error);
+        }
     }
     else if(permission==='denied'){
       console.log('Notification permission denied')
@@ -42,22 +63,22 @@ function App() {
   },[])
 
   useEffect(()=>{
-  //   const currUser= async()=>{
-  //     console.log('currUser')
-  //     const res = await fetch('https://circle.net.in/getUserData.php').catch((err)=>console.log(err))
-  //     const data=await res.json()
-  //     localStorage.setItem('userId',data.user_id);
-  //     localStorage.setItem('uniqueId',data.user_uniqueid)
-  //     localStorage.setItem('profile_image',data.profile_image)
-  //     console.log(data)
-  // }
+    const currUser= async()=>{
+      console.log('currUser')
+      const res = await fetch('https://circle.net.in/getUserData.php').catch((err)=>window.location.href='https://circle.net.in/signin.php')
+      const data=await res.json()
+      localStorage.setItem('userId',data.user_id);
+      localStorage.setItem('uniqueId',data.user_uniqueid)
+      localStorage.setItem('profile_image',data.profile_image)
+      console.log(data)
+  }
   // currUser();
 
   localStorage.setItem('userId',7);
+  localStorage.setItem('profile_image','647c56b8e34d4.jpg')
 
 }
 ,[])
-
 
   const path = useLocation().pathname;
   return (
@@ -79,10 +100,11 @@ function App() {
         <Route path='/singlepost/:id' element={<SinglePost/>}/>
         <Route path='/newgossip/:id' element={<SIngleGossip/>}/>
         <Route path="/" element={<Memes />}/>
+        <Route path="/cldetail" element={<ClDetail/>}/>
         <Route path='/upload' element={<Upload img={img} setCroppedImage={setCroppedImage} croppedImage={croppedImage}/>}/>
 
      </Routes> 
-     {path!='/create' && path!='/privacy' && path!='/crushes'?<BottomNav/>:<></>}
+     {path!='/create' && path!='/privacy' && path!='/cldetail'&& path!='/crushes'?<BottomNav/>:<></>}
     </div>
   );
 }

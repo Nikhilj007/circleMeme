@@ -25,7 +25,7 @@ function Question({ gossip }) {
   const getAnswers = () => {
     setWriteAnswer(false);
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_get_answers/${gossip.id}/${userId}`
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_get_answers/${gossip.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -42,7 +42,7 @@ function Question({ gossip }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_upvote/${gossip.id}/${userId}`,
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_upvote/${gossip.id}/${userId}`,
       {
         method: "POST",
       }
@@ -61,7 +61,7 @@ function Question({ gossip }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_unvote/${gossip.id}/${userId}`,
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_unvote/${gossip.id}/${userId}`,
       {
         method: "POST",
       }
@@ -77,7 +77,7 @@ function Question({ gossip }) {
 
   const handleAnswerLike = () => {
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_ans_${
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_ans_${
         isLiked ? "unvote" : "upvote"
       }/${gossip.answer_id}/${userId}`,
       {
@@ -104,7 +104,7 @@ function Question({ gossip }) {
       user_id: userId,
     });
     console.log(formData);
-    fetch(`https://circle-backend-hw6e.onrender.com/api/gossip_put_answer`, {
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_put_answer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

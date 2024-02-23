@@ -30,6 +30,24 @@ function Post({ meme, isCurrentUser }) {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currEmoji, setCurrEmoji] = useState("👍🏽");
+  const [showReportPopup, setShowReportPopup] = useState(false);
+  const reportTimeoutRef = useRef(null);
+
+  const handleReportClick = () => {
+    // Show the report popup
+    setShowReportPopup(true);
+
+    // Set a timeout to hide the report popup after 2 seconds
+    reportTimeoutRef.current = setTimeout(() => {
+      setShowReportPopup(false);
+    }, 2000);
+  };
+
+  const clearReportTimeout = () => {
+    // Clear the timeout if the user dismisses the popup manually
+    clearTimeout(reportTimeoutRef.current);
+    setShowReportPopup(false);
+  };
 
   const bind = useLongPress(() => {
     setShowEmoji(true);
@@ -65,7 +83,7 @@ function Post({ meme, isCurrentUser }) {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       setUserImage(`https://circle.net.in/upload/${data[0]?.profile_image}`);
@@ -75,30 +93,30 @@ function Post({ meme, isCurrentUser }) {
     }
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        reportRef.current &&
-        !reportRef.current.contains(event.target) &&
-        !event.target.className.includes("threeDot")
-      ) {
-        // Click occurred outside the report div, close it
-        setShowReport(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       reportRef.current &&
+  //       !reportRef.current.contains(event.target) &&
+  //       !event.target.className.includes("threeDot")
+  //     ) {
+  //       // Click occurred outside the report div, close it
+  //       setShowReport(false);
+  //     }
+  //   };
 
     // Add event listener when component mounts
-    document.addEventListener("click", handleClickOutside);
+    // document.addEventListener("click", handleClickOutside);
 
     // Remove event listener when component unmounts
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
 
   const deletePost = () => {
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/delete_post/${meme.id}`,
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/delete_post/${meme.id}`,
       {
         method: "POST",
       }
@@ -121,7 +139,7 @@ function Post({ meme, isCurrentUser }) {
       user_id: userId,
     });
     console.log(formData);
-    fetch(`https://circle-backend-hw6e.onrender.com/api/comment_post`, {
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/comment_post`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -144,7 +162,7 @@ function Post({ meme, isCurrentUser }) {
       return;
     }
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/commentsofpost/${meme?.id}/${userId}`
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/commentsofpost/${meme?.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -157,7 +175,7 @@ function Post({ meme, isCurrentUser }) {
 
   const handleClicked = () => {
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/${
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/${
         like ? "dislike_post" : "like_post"
       }/${meme?.id}/${userId}`,
       {
@@ -196,10 +214,17 @@ function Post({ meme, isCurrentUser }) {
   return (
     <>
       <div className="max-w-lg z-0 relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
+      {showReportPopup && (
+        <div className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2" onClick={clearReportTimeout}>
+          Your report will be examined.
+        </div>
+      )}
         {showReport && (
           <div
             onClick={() => {
+              setShowReport(false);
               isCurrentUser && deletePost();
+              !isCurrentUser && handleReportClick();
             }}
             ref={reportRef}
             className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2"
@@ -233,7 +258,7 @@ function Post({ meme, isCurrentUser }) {
                   {meme?.username}
                 </Link>
               )}
-              <div className="text-gray-500 text-sm">{timeAgo(meme?.date_time)}</div>
+              <div className="text-gray-500 text-sm">{timeAgo(meme?.date_time)<0?"Just Now":timeAgo(meme?.date_time)}</div>
             </div>
           </div>
           <div>

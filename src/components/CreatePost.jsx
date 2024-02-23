@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { IoEyeOutline } from "react-icons/io5";
 
+let type=0;
+
 function CreatePost() {
   const { width } = useWindowDimensions();
   const imgFileRef = useRef(null);
@@ -18,20 +20,18 @@ function CreatePost() {
   const navigate = useNavigate();
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [tag, setTag] = useState(false);
-  const [type, setType] = useState();
-  const [anonymous, setAnonymous] = useState();
   const [imgLink, setImgLink] = useState("");
   const [videoLink, setVideoLink] = useState("");
-  const [modal,setModal] = useState(false);
   const userId = localStorage.getItem("userId");
   const [loader,setLoader] = useState(false);
   const [userData, setUserData] = useState(null);
   const [textOnly, setTextOnly] = useState(true);
+  const [anonmymous, setAnonmymous] = useState(0);
 
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/self_profile/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -43,16 +43,15 @@ function CreatePost() {
     }
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = (anony) => {
 
     setLoader(true);
-    setModal(false);
     const formData = new FormData();
     formData.append("user_id", userId);
     formData.append("description", text);
-    formData.append("anonymous", anonymous);
+    formData.append("anonymous", anony);
     formData.append("type", type);
-
+    console.log(anony)
     // Append the file (image or video)
     if (imgFileRef.current.files[0]) {
       formData.append("post", imgFileRef.current.files[0]);
@@ -60,7 +59,7 @@ function CreatePost() {
       formData.append("post", videoFileRef.current.files[0]);
     }
     console.log(formData);
-    fetch(`https://circle-backend-hw6e.onrender.com/api/create_post`, {
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/create_post`, {
       method: "POST",
       body: formData,
     })
@@ -92,7 +91,7 @@ function CreatePost() {
         }}
         exit={{ opacity: 0, y: 100 }}
         style={{
-          boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)", // Add a shadow at the top
+          boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)", 
         }}
         className="w-full top-3 relative max-w-lg rounded-3xl shadow-2xl bg-white p-4 text-lg mb-3"
       >
@@ -180,6 +179,7 @@ function CreatePost() {
           >
             <FaVideo /> <span className="text-base">Video</span>
           </button>
+          <button className={`${anonmymous==0?'':'bg-gray-400'} px-3 border py-1 rounded-full text-base`} onClick={()=>{anonmymous==0?setAnonmymous(1):setAnonmymous(0);}}>Post anonymously</button>
           {
             <motion.div
               className="fixed bottom-1 rounded-3xl text-sm font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
@@ -196,21 +196,19 @@ function CreatePost() {
               
               <div
                 onClick={() => {
-                  setType(2);
+                  type=2;
                   setTag(!tag);
-                  setModal(true);
-
+                  handleSubmit(anonmymous);
                 }}
                 className="pb-1  cursor-pointer"
               >
-                Share in both
+                Share on both
               </div>
               <div
                 onClick={() => {
-                  setType(1);
+                  type=1;
                   setTag(!tag);
-                  setModal(true);
-
+                  handleSubmit(anonmymous);
                 }}
                 className="pb-1  cursor-pointer"
               >
@@ -218,9 +216,9 @@ function CreatePost() {
               </div>
               <div
                 onClick={() => {
-                  setType(0);
+                  type=0;
                   setTag(!tag);
-                  setModal(true);
+                  handleSubmit(anonmymous);
               
                 }}
                 className="pb-2  cursor-pointer"
@@ -231,17 +229,7 @@ function CreatePost() {
           }
         </div>
       </motion.div>
-      {modal&&<div className="fixed top-16  right-0 w-fit h-full text-sm">
-        <div onClick={() => {setAnonymous(1);handleSubmit()}} className="z-50 bg-white px-3 font-semibold rounded-sm py-1 border-2 cursor-pointer hover:bg-black hover:text-white transition-all flex items-center gap-3 justify-between duration-500">
-          Anonymously
-          <FaRegEyeSlash/>
-        </div>
-        <div onClick={() => {setAnonymous(0);handleSubmit()}} className="bg-white font-semibold px-3 rounded-sm py-1 border-2 cursor-pointer hover:bg-black hover:text-white flex items-center justify-between gap-3 transition-all duration-500 z-50">
-          As yourself
-          <IoEyeOutline/>
-        </div>
-
-        </div>}
+      
     </>
   );
 }

@@ -27,7 +27,7 @@ function Gossips() {
     }
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/self_profile/"+userId
+        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       setCollege(data[0].workplaceCollage);
@@ -45,9 +45,10 @@ function Gossips() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/college_gossips/"+college+"/"+userId
+        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/college_gossips/"+college+"/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -55,7 +56,7 @@ function Gossips() {
     }
     async function fetchdata2() {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/gossips"+"/"+userId)
+        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossips"+"/"+userId)
       const data = await res.json();
       setGossips(data.posts);
     }
@@ -67,8 +68,6 @@ function Gossips() {
     }
   }
   , []);
-
-
 
   return (
     <div {...handlers} className="bg-zinc-300 w-full mb-14">

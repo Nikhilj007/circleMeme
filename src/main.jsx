@@ -3,29 +3,17 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { UserProvider } from './components/UserContext'
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
-import { useEffect } from 'react'
+import {messaging, app} from './firebase'
+import {  getToken } from "firebase/messaging";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCt5af8h9sDVEC8_WNyB3_-ns-VceabjlQ",
-  authDomain: "circle-50c68.firebaseapp.com",
-  projectId: "circle-50c68",
-  storageBucket: "circle-50c68.appspot.com",
-  messagingSenderId: "125020355409",
-  appId: "1:125020355409:web:5e3169f3edfd0714607170",
-  measurementId: "G-DV9RKGDCHC"
-};
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
 
 // async function requestPermission() {
 //   if (localStorage.getItem('notificationRequestMade')) {
 //     const permission = await Notification.requestPermission();
 //     if (permission === 'granted') {
 //       try {
-//         const token = await getToken(messaging, { vapidKey: 'BL5v6Rrd6sUV_Zl_NeDWMvNfwj3cr7IoNczHWr-HwRpU-FCMQpAMUuTQlZgCxaBPxToU6iK32GNZUZzhB6e6L-E' });
+//         const token = await getToken(messaging, { vapidKey: 'BNAIysW2PdMAjLnInpZp384XGZx_GkNa8s182w5ixbkj_FkYf0IdlIkmAuplro1_L97kzjWKSH22iA1hS1bPzQk' });
 //         console.log("FCM token:", token);
 //         localStorage.setItem('fcmToken', token);
 //       } catch (error) {
@@ -46,7 +34,7 @@ const messaging = getMessaging(app);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <BrowserRouter basename="/home">
-   <BrowserRouter> 
+     <BrowserRouter> 
     <UserProvider>
       <App />
     </UserProvider>

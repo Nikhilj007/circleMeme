@@ -16,7 +16,7 @@ const Notifications = () => {
 
   const onAccept = (sender_id, noti_id) => {
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/accept/${userId}/${sender_id}/${noti_id}`,
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/accept/${userId}/${sender_id}/${noti_id}`,
       {
         method: "POST",
       }
@@ -31,7 +31,7 @@ const Notifications = () => {
 
   const onReject = (sender_id, noti_id) => {
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/decline/${userId}/${sender_id}/${noti_id}`,
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/decline/${userId}/${sender_id}/${noti_id}`,
       {
         method: "POST",
       }
@@ -65,7 +65,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/notification/" + userId
+        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/notification/" + userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);

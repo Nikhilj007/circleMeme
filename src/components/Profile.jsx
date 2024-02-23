@@ -20,7 +20,7 @@ function Profile({ user }) {
       rec_id:id,
     });
     console.log(formData);
-    fetch(`https://circle-backend-hw6e.onrender.com/api/${liked?"pro_dislike":"pro_like"}`, {
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/${liked?"pro_dislike":"pro_like"}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

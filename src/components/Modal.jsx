@@ -6,10 +6,9 @@ const Modal = ({ isOpen, onClose, college }) => {
   const [show, setShow] = useState(true);
   const [question, setQuestion] = useState("");
   const { width } = useWindowDimensions();
-  const [anonymous, setAnonymous] = useState();
   const userId = localStorage.getItem("userId");
 
-  const postGossip = () => {
+  const postGossip = (anonymous) => {
     if (question === "") {
       return;
     }
@@ -20,7 +19,7 @@ const Modal = ({ isOpen, onClose, college }) => {
       college: college
     });
     console.log(formData);
-    fetch(`https://circle-backend-hw6e.onrender.com/api/new_gossip`, {
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/new_gossip`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -41,7 +40,7 @@ const Modal = ({ isOpen, onClose, college }) => {
   return (
     <>
       <div
-        className={`fixed inset-0 z-10 w-full flex mt-40 justify-center ${
+        className={`fixed inset-0 z-10 w-full flex mt-20 justify-center ${
           isOpen ? "visible" : "invisible"
         }`}
       >
@@ -64,13 +63,13 @@ const Modal = ({ isOpen, onClose, college }) => {
           </div>
           <div className="flex justify-between">
             <div
-              onClick={() => { setAnonymous(0); postGossip()}}
+              onClick={() => { postGossip(0)}}
               className="flex border-[1px] ml-3 border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
             >
               <div className=" text-sm ">Ask as yourself</div>
             </div>
             <div
-              onClick={() => {setAnonymous(1); postGossip()}}
+              onClick={() => { postGossip(1)}}
               className="flex border-[1px] border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
             >
               <div className=" text-sm">Ask anonymously</div>

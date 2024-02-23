@@ -8,31 +8,41 @@ import { useEffect, useState } from "react";
 function BottomNav() {
   const profile_image = localStorage.getItem("profile_image");
   const userId = localStorage.getItem("userId");
-  const [userData, setUserData] = useState(null); // [{},{}
-  const [userImage, setUserImage] = useState(
-    `https://circle.net.in/upload/${
-      profile_image!==undefined ? profile_image : "defaultProfileImg.jpg"
-    }`
-  );
-
+  const [noti, setNoti] = useState(0); // [{},{}
+  const [msg, setMsg] = useState(0); 
+    const [userImage, setUserImage] = useState(null);
+  //   `https://circle.net.in/upload/${profile_image || "default.png"}`
+  // );
+  console.log(userImage);
+  console.log(profile_image==='undefined')
+  useEffect(() => {
+    if (profile_image === 'undefined' || profile_image === null) {
+      setUserImage("https://circle.net.in/upload/defaultProfileImg.jpg");
+    } else {
+      setUserImage(`https://circle.net.in/upload/${profile_image}`);
+    }
+  }
+  ,[profile_image]);
   setTimeout(() => {
       fetch(
-        `https://circle-backend-hw6e.onrender.com/api/badge/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/badge/${userId}`
       )
       .then((res) => res.json()
-      .then((data) => setUserData(data[0]))
+      .then((data) => {setNoti(data[0].noti);
+        setMsg(data[0].msg);})
       .catch((err) => console.log(err)))
 
-  }, 1000);
+  }, 10000000);
 
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/badge/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/badge/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data[0].noti==0);
-      setUserData(data[0]);
+      setNoti(data[0].noti);
+      setMsg(data[0].msg);
     }
     fetchdata();
   }
@@ -51,7 +61,7 @@ function BottomNav() {
         className="w-1/2 relative flex justify-center items-center bg-white font-bold"
       >
         <PiChatCircleTextBold />
-        <div className={`absolute ${userData?.msg==0 ?'hidden':""} top-0 right-[30%] w-4 h-4 bg-red-500 rounded-full`}></div>
+        <div className={`absolute ${msg==0 ?'hidden':""} top-0 right-[30%] w-4 h-4 bg-red-500 rounded-full`}></div>
       </a>
       <Link
         to={"/create"}
@@ -64,7 +74,7 @@ function BottomNav() {
         className="w-1/2 relative flex text-4xl justify-center items-center bg-white font-bold"
       >
         <IoIosNotifications />
-        <div className={`absolute ${userData?.noti!==0? '':'hidden'} top-0 right-[30%] w-4 h-4 bg-red-500 rounded-full`}></div>
+        <div className={`absolute ${noti!==0? '':'hidden'} top-0 right-[30%] w-4 h-4 bg-red-500 rounded-full`}></div>
       </Link>
       <Link
         to="/user"

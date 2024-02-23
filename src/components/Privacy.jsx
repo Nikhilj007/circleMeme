@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { MdArrowBack } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Privacy = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigat = useNavigate();
 
   const navigate =(url) => {
     window.location.href = url
@@ -13,9 +14,8 @@ const Privacy = () => {
   return (
     <div className='w-full max-w-lg'>
       <div className='flex items-center p-2 py-4 text-xl justify-between font-bold shadow-lg'>
-        <div className='cursor-pointer text-2xl'
-        onClick={() => window.history.back()}
-        ><MdArrowBack/></div>
+        <Link to='/' className='cursor-pointer text-2xl'
+        ><MdArrowBack/></Link>
         <div>Privacy and Security</div>
         <div></div>
       </div>

@@ -26,7 +26,7 @@ function Search() {
   const handleDebouncedChange = debounce(async (value) => {
     try {
       const res = await fetch(
-        `https://circle-backend-hw6e.onrender.com/api/search/${value}/${userId}`
+        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/search/${value}/${userId}`
       );
 
       if (!res.ok) {

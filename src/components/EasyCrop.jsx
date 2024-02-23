@@ -28,12 +28,13 @@ const EasyCrop = ({ image,userId }) => {
       const formData = new FormData();
       formData.append("profile_pic", croppedImage);
       const res = await fetch(
-        "https://circle-backend-hw6e.onrender.com/api/edit_photo/"+userId,
+        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/edit_photo/"+userId,
         {
           method: "POST",
           body: formData,
         }
         );
+        window.location.reload();
         navigate('/user');
     } catch (e) {
       console.error(e);

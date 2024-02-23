@@ -32,7 +32,7 @@ const Comment = ({ answer }) => {
 
   const handleAnswersLike = (answerId) => {
     fetch(
-      `https://circle-backend-hw6e.onrender.com/api/gossip_ans_${
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_ans_${
         upvoted ? "unvote" : "upvote"
       }/${answerId}/${userId}`,
       {

@@ -17,6 +17,7 @@ function Memes() {
   const handlers = useSwipeable({
     onSwipedLeft: () => navigate("/college"),
     onSwipedRight: () => navigate("/foryou"),
+    delta: 200
   });
 
   useEffect(() => {

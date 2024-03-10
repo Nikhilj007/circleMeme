@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { MdComment } from "react-icons/md";
-import { PiShareFat } from "react-icons/pi";
+// import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { useLongPress } from "use-long-press";
 
@@ -15,6 +15,7 @@ function Post({ meme, isCurrentUser }) {
   const [commentCount, setCommentCount] = useState(meme?.comment_count);
   const [text, setText] = useState("");
   const [showReport, setShowReport] = useState(false);
+  const [isPoll, setIsPoll] = useState(meme?.poll);
   const noMedia = meme?.post === "null" || meme?.post === null;
   const extension = meme?.post?.split(".").pop();
   const isImage =
@@ -93,26 +94,26 @@ function Post({ meme, isCurrentUser }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       reportRef.current &&
-  //       !reportRef.current.contains(event.target) &&
-  //       !event.target.className.includes("threeDot")
-  //     ) {
-  //       // Click occurred outside the report div, close it
-  //       setShowReport(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        reportRef.current &&
+        !reportRef.current.contains(event.target) &&
+        !event.target.className.includes("threeDot")
+      ) {
+        // Click occurred outside the report div, close it
+        setShowReport(false);
+      }
+    };
 
     // Add event listener when component mounts
-    // document.addEventListener("click", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     // Remove event listener when component unmounts
-  //   return () => {
-  //     document.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, []);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const deletePost = () => {
     fetch(
@@ -227,7 +228,7 @@ function Post({ meme, isCurrentUser }) {
               !isCurrentUser && handleReportClick();
             }}
             ref={reportRef}
-            className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2"
+            className="absolute top-2 cursor-pointer right-1 bg-white rounded-lg shadow-lg p-2"
           >
             {isCurrentUser ? "Delete" : "Report"}
           </div>
@@ -272,7 +273,8 @@ function Post({ meme, isCurrentUser }) {
             </button>
           </div>
         </div>
-
+        
+        {/* play / pause button */}
         <div className="flex justify-center">
           {/* show play button if video is paused */}
           {videoRef.current && !noMedia && (
@@ -301,7 +303,9 @@ function Post({ meme, isCurrentUser }) {
               </button>
             </div>
           )}
-          {!noMedia && (
+
+          {/* image / video */}
+          {/* {!noMedia && (
             <div>
               {isImage ? (
                 <img
@@ -322,8 +326,16 @@ function Post({ meme, isCurrentUser }) {
                 />
               )}
             </div>
-          )}
+          )} */}
+          <div>
+            <div className="text-xl p-2 px-4 font-[400] text-start">Question that will start the poll in the options</div>
+            <div className="m-4">
+              <div className="bg-gray-100 w-5/6 rounded-lg p-3 text-start text-gray-600">Option 1</div>
+            </div>
+          </div>
         </div>
+
+        {/* Caption */}
         <div className="px-4 -mb-1 text-start text-sm mt-1">
           {showMore ? desc : desc.substring(0, 300)}
           {desc.length > 300 && (
@@ -335,6 +347,8 @@ function Post({ meme, isCurrentUser }) {
             </button>
           )}
         </div>
+
+        
         {/* {showEmoji && (
           <button
             onClick={() => {setShowEmoji(false)}}
@@ -345,6 +359,8 @@ function Post({ meme, isCurrentUser }) {
             <span onClick={() => {setCurrEmoji("😭");handleClicked()}}>😭</span>
           </button>
         )} */}
+
+        {/* likes comments */}
         <div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
             <div className="flex items-center gap-5">
@@ -380,8 +396,7 @@ function Post({ meme, isCurrentUser }) {
             </button>
           </div> */}
         </div>
-        <div className="px-4 text-start text-sm mt-1"></div>
-
+        {/* add comment section */}
         <div className="flex justify-start gap-4 px-6 py-3 pb-4">
           <div className="rounded-full  overflow-hidden h-[30px] w-[43px]">
             <img

@@ -19,9 +19,14 @@ function Gossips() {
   const handlers = useSwipeable({
     onSwipedLeft: () => navigate("/foryou"),
     onSwipedRight: () => navigate("/college"),
+    delta: 200
   });
 
   useEffect(() => {
+    if (!userId || userId==="undefined") {
+      window.location.href = "https://circle.net.in/signin.php";
+    }
+
     if(college){
       return;
     }

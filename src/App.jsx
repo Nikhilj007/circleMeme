@@ -21,6 +21,7 @@ import SIngleGossip from "./components/SIngleGossip";
 import {messaging, app} from './firebase'
 import { getToken } from "firebase/messaging";
 import ClDetail from "./components/ClDetails";
+import CrushLis from "./components/CrushNew";
 
 function App() {
   const [img, setImg] = useState(null); 
@@ -82,7 +83,7 @@ function App() {
 
   const path = useLocation().pathname;
   return (
-    <div className="flex font-heebo justify-center">
+    <div className="flex font-heebo justify-center ">
       {
         path=='/' || path.startsWith('/college') ||path.startsWith('/foryou')? <TopNav/>:null
       }
@@ -101,6 +102,7 @@ function App() {
         <Route path='/newgossip/:id' element={<SIngleGossip/>}/>
         <Route path="/" element={<Memes />}/>
         <Route path="/cldetail" element={<ClDetail/>}/>
+        <Route path='/crush_update' element={<CrushLis/>}/>
         <Route path='/upload' element={<Upload img={img} setCroppedImage={setCroppedImage} croppedImage={croppedImage}/>}/>
 
      </Routes> 

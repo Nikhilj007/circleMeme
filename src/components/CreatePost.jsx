@@ -7,8 +7,7 @@ import { FaVideo } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { IoEyeOutline } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa6";
 
 let type=0;
 
@@ -27,6 +26,7 @@ function CreatePost() {
   const [userData, setUserData] = useState(null);
   const [textOnly, setTextOnly] = useState(true);
   const [anonmymous, setAnonmymous] = useState(0);
+  const [question, setQuestion] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
@@ -96,7 +96,7 @@ function CreatePost() {
         className="w-full top-3 relative max-w-lg rounded-3xl shadow-2xl bg-white p-4 text-lg mb-3"
       >
         <div className="flex items-center text-xl justify-between font-bold">
-          <div onClick={handleCrossClick} className="text-2xl">
+          <div onClick={handleCrossClick} className="text-2xl cursor-pointer">
             <RxCross2 />
           </div>
           <div>Create New Post</div>
@@ -162,7 +162,7 @@ function CreatePost() {
           </div>
         )}
             
-        <div className={`flex justify-start gap-6 px-2 ${(imgLink ||videoLink)?"mt-4":"mt-14"}  mb-10 text-xl`}>
+        <div className={`flex justify-start gap-6 px-2 ${(imgLink ||videoLink)?"mt-4":"mt-14"} mb-3 text-xl`}>
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
@@ -180,7 +180,6 @@ function CreatePost() {
             <FaVideo /> <span className="text-base">Video</span>
           </button>
           <button className={`${anonmymous==0?'':'bg-gray-400'} px-3 border py-1 rounded-full text-base`} onClick={()=>{anonmymous==0?setAnonmymous(1):setAnonmymous(0);}}>Post anonymously</button>
-          {
             <motion.div
               className="fixed bottom-1 rounded-3xl text-sm font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
               initial={{ opacity: 0, y: "100%" }}
@@ -226,8 +225,39 @@ function CreatePost() {
                 Share on campus
               </div>
             </motion.div>
-          }
         </div>
+        <div onClick={()=>setQuestion(true)} className={`rounded-full ${question?"hidden":""} bg-gray-200 text-xl mx-3 font-heebo p-3 cursor-pointer`}>
+          <FaPlus className="inline -translate-y-[0.1rem]"/> Create Poll
+        </div>
+        <motion.div
+              className="fixed bottom-1 rounded-3xl border w-full max-w-lg bg-white p-3 pb-1"
+              style={{translateX: "-50%", left: "50%"}}
+              initial={{ opacity: 0, y: "100%" }}
+              animate={question ? { opacity: 1, y: 0 } : {}}
+              exit={{ opacity: 0, y: "100%" }}
+              transition={{
+                duration: 0.3,
+                type: "spring",
+                stiffness: 200,
+                damping: 12,
+              }}
+            >
+              <div>
+                <div className="flex items-center m-2">
+                  <div className=" bg-gray-200 w-full text-start rounded-md p-3">Add Question</div>
+                  <RxCross2 onClick={()=>setQuestion(false)} className="inline mx-4 cursor-pointer text-3xl"/>
+                </div>
+                <input type="text" className="focus:outline-none w-full mr-4 placeholder:text-black text-start p-2" placeholder="Add longer description" />
+              </div>
+              <div className="text-start font-semibold p-3">Options</div>
+              <div>
+              <div className="flex items-center w-4/6 m-2">
+                  <div className=" bg-gray-200 w-full text-start rounded-md p-3">Option 1</div>
+                  <RxCross2 className="inline mx-4 cursor-pointer text-3xl"/>
+                </div>
+              </div>
+            </motion.div>
+
       </motion.div>
       
     </>

@@ -32,7 +32,7 @@ function BottomNav() {
         setMsg(data[0].msg);})
       .catch((err) => console.log(err)))
 
-  }, 10000000);
+  }, 1000);
 
   useEffect(() => {
     async function fetchdata() {

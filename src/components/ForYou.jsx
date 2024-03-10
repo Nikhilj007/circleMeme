@@ -12,10 +12,14 @@ function ForYou() {
 
     const handlers = useSwipeable({
         onSwipedLeft: () => navigate('/'),
-        onSwipedRight: () => navigate('/gossip'),
+        delta:200
       });
     useEffect(()=>{
         window.scrollTo(0, 0);
+        if (!userId || userId==="undefined") {
+            window.location.href = "https://circle.net.in/signin.php";
+          }
+      
         const fetchdata=async()=>{
             const res=await fetch('https://circle-backend-ewrpf36y4q-el.a.run.app/api/users/'+userId).catch((err)=>console.log(err))
             const data=await res.json()

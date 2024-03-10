@@ -34,7 +34,7 @@ const EasyCrop = ({ image,userId }) => {
           body: formData,
         }
         );
-        window.location.reload();
+        // window.location.reload();
         navigate('/user');
     } catch (e) {
       console.error(e);

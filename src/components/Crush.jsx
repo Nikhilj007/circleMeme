@@ -13,14 +13,14 @@ function Crush({ index, crush, handleChange, handleDelete }) {
       <input
         type="text"
         className="focus:outline-none border-2 text-white mb-4 w-full placeholder:text-white block rounded-lg border-white bg-[#989898] px-5 py-3"
-        placeholder="name"
+        placeholder="Name"
         value={crush.name}
         onChange={(e) => handleChange(index, 'name', e.target.value)}
       />
       <input
         type="text"
         className="focus:outline-none border-2 text-white block rounded-lg w-full placeholder:text-white border-white bg-[#989898] px-5 py-3"
-        placeholder="department"
+        placeholder="Department (if you know)"
         value={crush.department}
         onChange={(e) => handleChange(index, 'department', e.target.value)}
       />

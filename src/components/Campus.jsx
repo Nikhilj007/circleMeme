@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import ClassicPostLoader from "./PostLoader";
+import demo from '../assets/demo.png'
 
 function College() {
   const [load, setLoad] = useState(true); 
@@ -15,12 +16,17 @@ function College() {
   const handlers = useSwipeable({
     onSwipedLeft: () => navigate("/gossip"),
     onSwipedRight: () => navigate("/foryou"),
+    delta:200
   });
 
   const userId = localStorage.getItem("userId");
   useEffect(() => {
     //scroll to top
     window.scrollTo(0, 0);
+    //redirect if no userId
+    if (!userId || userId==="undefined") {
+      window.location.href = "https://circle.net.in/signin.php";
+    }
 
     async function fetchdata() {
       const res = await fetch(

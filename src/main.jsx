@@ -33,7 +33,7 @@ import {  getToken } from "firebase/messaging";
 // });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename="/home">
+  <BrowserRouter >
      {/* <BrowserRouter>  */}
     <UserProvider>
       <App />

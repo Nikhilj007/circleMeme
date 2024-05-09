@@ -23,7 +23,7 @@ function ForYou() {
         const fetchdata=async()=>{
             const res=await fetch('https://circle-backend-ewrpf36y4q-el.a.run.app/api/users/'+userId).catch((err)=>console.log(err))
             const data=await res.json()
-            console.log(data)
+            // console.log(data)
             setUsers(data.users)
         }
         

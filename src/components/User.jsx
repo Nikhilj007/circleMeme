@@ -10,6 +10,7 @@ import { GrFormEdit } from "react-icons/gr";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useNavigate } from "react-router-dom"; 
 import Post from "./Post";
+import useWindowDimensions from "../hooks/useWindowDimension";
 
 const User = ({img,setImg}) => {
   const [show, setShow] = useState(true);
@@ -24,6 +25,7 @@ const User = ({img,setImg}) => {
   const [allPosts,setAllPosts] = useState(false);
   const inputRef = useRef(null);
   const userId = localStorage.getItem("userId");
+  const {width} = useWindowDimensions();
   
   useEffect(() => {
     async function fetchdata() {
@@ -109,7 +111,7 @@ const User = ({img,setImg}) => {
             <textarea
               type="text"
               id="user_about"
-              cols={40}
+              cols={width>768?50:width>375?40:35}
               value={userData?.user_about}
               onChange={(e) => handleChange(e)}
               className="border-[1px] border-black rounded-md p-1"

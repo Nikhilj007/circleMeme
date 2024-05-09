@@ -22,6 +22,10 @@ import {messaging, app} from './firebase'
 import { getToken } from "firebase/messaging";
 import ClDetail from "./components/ClDetails";
 import CrushLis from "./components/CrushNew";
+import Messages from "./components/Messages";
+import Chat from "./components/Chat";
+import Debate from "./components/Debate";
+import Landing from "./components/Landing";
 
 function App() {
   const [img, setImg] = useState(null); 
@@ -38,7 +42,6 @@ function App() {
         if(oken){
           return;
         }
-        //if not present then send the token to the backend 
          
         fetch('https://circle-backend-ewrpf36y4q-el.a.run.app/api/noti_token',{
           method:'POST',
@@ -71,13 +74,15 @@ function App() {
       localStorage.setItem('userId',data.user_id);
       localStorage.setItem('uniqueId',data.user_uniqueid)
       localStorage.setItem('profile_image',data.profile_image)
-      console.log(data)
+      localStorage.setItem('username',data.username);
+      console.log(data);
   }
   // currUser();
 
   localStorage.setItem('userId',7);
   localStorage.setItem('profile_image','647c56b8e34d4.jpg')
-
+  localStorage.setItem('uniqueId',7633832871);
+  localStorage.setItem('username','Rishabh');
 }
 ,[])
 
@@ -85,7 +90,7 @@ function App() {
   return (
     <div className="flex font-heebo justify-center ">
       {
-        path=='/' || path.startsWith('/college') ||path.startsWith('/foryou')? <TopNav/>:null
+        path=='/' || path.startsWith('/college') || path.startsWith('/meme') ||path.startsWith('/foryou')? <TopNav/>:null
       }
      <Routes>
         <Route path="/gossip" element={<Gossips />}/>
@@ -100,13 +105,18 @@ function App() {
         <Route path='/notify' element={<Notifications/>}/>
         <Route path='/singlepost/:id' element={<SinglePost/>}/>
         <Route path='/newgossip/:id' element={<SIngleGossip/>}/>
-        <Route path="/" element={<Memes />}/>
+        <Route path="/meme" element={<Memes />}/>
+        <Route path="/debate/:id" element={<Debate/>}/>
+        <Route path="/messages" element={<Messages/>}/>
+        <Route path="/" element={<Gossips/>}/>
         <Route path="/cldetail" element={<ClDetail/>}/>
         <Route path='/crush_update' element={<CrushLis/>}/>
+        <Route path="/chat/:id" element={<Chat/>}/>
+        <Route path="/landing" element={<Landing/>}/>
         <Route path='/upload' element={<Upload img={img} setCroppedImage={setCroppedImage} croppedImage={croppedImage}/>}/>
 
      </Routes> 
-     {path!='/create' && path!='/privacy' && path!='/cldetail'&& path!='/crushes'?<BottomNav/>:<></>}
+     {path!='/create' && !path.startsWith('/debate') && path!='/landing' && path!='/privacy' && path!='/cldetail'&& path!='/crushes' && !path.startsWith('/chat')?<BottomNav/>:<></>}
     </div>
   );
 }

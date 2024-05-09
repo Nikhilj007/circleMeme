@@ -56,13 +56,12 @@ function BottomNav() {
       >
         <FaHome />
       </Link>
-      <a
-        href="https://circle.net.in/message.php"
+      <Link to='/messages'
         className="w-1/2 relative flex justify-center items-center bg-white font-bold"
       >
         <PiChatCircleTextBold />
         <div className={`absolute ${msg==0 ?'hidden':""} top-0 right-[30%] w-4 h-4 bg-red-500 rounded-full`}></div>
-      </a>
+      </Link>
       <Link
         to={"/create"}
         className="w-1/2 text-2xl flex justify-center items-center bg-white font-bold"

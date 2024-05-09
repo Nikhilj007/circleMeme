@@ -17,6 +17,8 @@ const ProfileDescription = () => {
   const navigate = useNavigate();
   const [status,setStatus] = useState('Follow')
   const [crush,setCrush] = useState(false);
+  const [uniqueId, setUniqueId] = useState(null);
+
 
   const handleCrush = () =>{
     fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/drop_crush/${userId}/${id}`)
@@ -45,6 +47,7 @@ const ProfileDescription = () => {
       console.log(data);
       setCurrentUser(data[0]);
       setStatus(data[0].status)
+      setUniqueId(data[0].unique_id)
     }
     if (!currentUser) {
       fetchdata();
@@ -156,7 +159,7 @@ const ProfileDescription = () => {
           <div
             onClick={status=="Follow"?handleFollow:()=>{}}
           >{status}</div>
-          <Link to={'https://circle.net.in/chat.php?msgid='+currentUser?.unique_id+'&share'}
+          <Link to={'/chat/'+uniqueId+"?profile=1"}
           >Drop Message</Link>
           <div
           onClick={handleCrush}

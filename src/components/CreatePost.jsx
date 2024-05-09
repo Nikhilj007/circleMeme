@@ -1,5 +1,3 @@
-// import { MdCancelPresentation } from "react-icons/md";
-import profile from "../assets/user-8.jpg";
 import { useEffect, useRef, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { FaImage } from "react-icons/fa6";
@@ -9,7 +7,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 
-let type=0;
+let type = 0;
 
 function CreatePost() {
   const { width } = useWindowDimensions();
@@ -22,11 +20,16 @@ function CreatePost() {
   const [imgLink, setImgLink] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const userId = localStorage.getItem("userId");
-  const [loader,setLoader] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [userData, setUserData] = useState(null);
   const [textOnly, setTextOnly] = useState(true);
   const [anonmymous, setAnonmymous] = useState(0);
   const [question, setQuestion] = useState(false);
+  const [options, setOptions] = useState([{ option: "" }, { option: "" }]);
+  const [description, setDescription] = useState("");
+  const [ques, setQues] = useState("");
+  let [cp, setCp] = useState(0);
+  const [debate, setDebate] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
@@ -44,6 +47,59 @@ function CreatePost() {
   }, []);
 
   const handleSubmit = (anony) => {
+    if (debate) {
+      if (ques == "") {
+        alert("Please fill all the fields");
+        return;
+      }
+      setLoader(true);
+      const formData = new URLSearchParams();
+      formData.append("user_id", userId);
+      formData.append("type", type);
+      formData.append("anonymous", anony);
+      formData.append("question", ques);
+      fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/new_debate`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setLoader(false);
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
+
+      return;
+    }
+    if (cp == 1) {
+      if (ques == "" || options[0].option == "" || options[1].option == "") {
+        alert("Please fill all the fields");
+        return;
+      }
+      setLoader(true);
+      const formData = new URLSearchParams();
+      formData.append("user_id", userId);
+      formData.append("description", description);
+      formData.append("anonymous", anony);
+      formData.append("question", ques);
+      formData.append("option1", options[0].option);
+      formData.append("option2", options[1].option);
+
+      fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/new_poll`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setLoader(false);
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
+
+      return;
+    }
 
     setLoader(true);
     const formData = new FormData();
@@ -51,7 +107,7 @@ function CreatePost() {
     formData.append("description", text);
     formData.append("anonymous", anony);
     formData.append("type", type);
-    console.log(anony)
+    console.log(anony);
     // Append the file (image or video)
     if (imgFileRef.current.files[0]) {
       formData.append("post", imgFileRef.current.files[0]);
@@ -63,13 +119,13 @@ function CreatePost() {
       method: "POST",
       body: formData,
     })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setLoader(false);
-      navigate(-1);
-    })
-    .catch((err) => console.log(err));
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setLoader(false);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleCrossClick = () => {
@@ -91,7 +147,7 @@ function CreatePost() {
         }}
         exit={{ opacity: 0, y: 100 }}
         style={{
-          boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)", 
+          boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
         }}
         className="w-full top-3 relative max-w-lg rounded-3xl shadow-2xl bg-white p-4 text-lg mb-3"
       >
@@ -100,32 +156,46 @@ function CreatePost() {
             <RxCross2 />
           </div>
           <div>Create New Post</div>
-          <div  onClick={() => {loader?"":setTag(!tag)}} className="text-orange-600 ">
-            {loader?<div className="loader absolute z-50 right-5 top-2"></div>:"Post"}
+          <div
+            onClick={() => {
+              if (cp == 1) handleSubmit(anonmymous);
+              else loader ? "" : setTag(!tag);
+            }}
+            className="text-orange-600 cursor-pointer "
+          >
+            {loader ? (
+              <div className="loader absolute z-50 right-5 top-2"></div>
+            ) : (
+              "Post"
+            )}
           </div>
         </div>
         <div className="flex text-sm pt-11 gap-4 items-center rounded-md pb-0 pr-0">
           <div className="rounded-full overflow-hidden  h-[40px]">
-            <img width={"40px"} height={"40px"} src={`http://circle.net.in/upload/${userData?.profile_image}`} alt="" />
+            <img
+              width={"40px"}
+              height={"40px"}
+              src={`http://circle.net.in/upload/${userData?.profile_image}`}
+              alt=""
+            />
           </div>
           <div className="text-lg font-semibold">{userData?.username}</div>
         </div>
-       <textarea
+        <textarea
           id="post"
           value={text}
           onChange={(e) => setText(e.target.value)}
           className="outline-none resize-none mt-1"
           placeholder="What's on your mind?"
           cols={width > 570 ? "60" : `30`}
-          rows={textOnly?'5':'2'}
+          rows={textOnly ? "5" : "2"}
         ></textarea>
         <input
           onChange={(e) => {
             setTextOnly(false);
             setImgLink(URL.createObjectURL(e.target.files[0]));
             setVideoLink("");
-          }
-          }
+          }}
           id="img"
           type="file"
           ref={imgFileRef}
@@ -145,7 +215,9 @@ function CreatePost() {
         {imgLink && (
           <div className="flex justify-center">
             <img
-              className="rounded-sm w-full " height={"200px"} width={"200px"} 
+              className="rounded-sm w-full "
+              height={"200px"}
+              width={"200px"}
               src={imgLink}
               alt=""
             />
@@ -154,20 +226,28 @@ function CreatePost() {
         {videoLink && (
           <div className="flex justify-center">
             <video
-              className="rounded-sm w-full " height={"200px"} width={"200px"}
+              className="rounded-sm w-full "
+              height={"200px"}
+              width={"200px"}
               src={videoLink}
               alt=""
               controls
             />
           </div>
         )}
-            
-        <div className={`flex justify-start gap-6 px-2 ${(imgLink ||videoLink)?"mt-4":"mt-14"} mb-3 text-xl`}>
+
+        <div
+          className={`flex justify-start gap-6 px-2 ${
+            imgLink || videoLink ? "mt-4" : "mt-14"
+          } mb-3 text-xl`}
+        >
           {/* <button onClick={() => setText("")}>
             <MdCancelPresentation />
           </button> */}
           <button
-            onClick={() => {imgFileRef.current.click();}}
+            onClick={() => {
+              imgFileRef.current.click();
+            }}
             className="text-purple-800 flex items-center gap-1"
           >
             <FaImage />
@@ -179,87 +259,170 @@ function CreatePost() {
           >
             <FaVideo /> <span className="text-base">Video</span>
           </button>
-          <button className={`${anonmymous==0?'':'bg-gray-400'} px-3 border py-1 rounded-full text-base`} onClick={()=>{anonmymous==0?setAnonmymous(1):setAnonmymous(0);}}>Post anonymously</button>
-            <motion.div
-              className="fixed bottom-1 rounded-3xl text-sm font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
-              initial={{ opacity: 0, y: "100%" }}
-              animate={tag ? { opacity: 1, y: 0 } : {}}
-              exit={{ opacity: 0, y: "100%" }}
-              transition={{
-                duration: 0.3,
-                type: "spring",
-                stiffness: 200,
-                damping: 12,
+          <button
+            className={`${
+              anonmymous == 0 ? "" : "bg-gray-400"
+            } px-3 border py-1 rounded-full text-base`}
+            onClick={() => {
+              anonmymous == 0 ? setAnonmymous(1) : setAnonmymous(0);
+            }}
+          >
+            Post anonymously
+          </button>
+          <motion.div
+            className="fixed z-50 bottom-1 rounded-3xl text-sm font-semibold border-4 left-0 right-0 bg-white  p-3 pb-1"
+            initial={{ opacity: 0, y: "100%" }}
+            animate={tag ? { opacity: 1, y: 0 } : {}}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{
+              duration: 0.3,
+              type: "spring",
+              stiffness: 200,
+              damping: 12,
+            }}
+          >
+            <div
+              onClick={() => {
+                type = 2;
+                setTag(!tag);
+                handleSubmit(anonmymous);
               }}
+              className="pb-1  cursor-pointer"
             >
-              
-              <div
-                onClick={() => {
-                  type=2;
-                  setTag(!tag);
-                  handleSubmit(anonmymous);
-                }}
-                className="pb-1  cursor-pointer"
-              >
-                Share on both
-              </div>
-              <div
-                onClick={() => {
-                  type=1;
-                  setTag(!tag);
-                  handleSubmit(anonmymous);
-                }}
-                className="pb-1  cursor-pointer"
-              >
-                Share on explore
-              </div>
-              <div
-                onClick={() => {
-                  type=0;
-                  setTag(!tag);
-                  handleSubmit(anonmymous);
-              
-                }}
-                className="pb-2  cursor-pointer"
-              >
-                Share on campus
-              </div>
-            </motion.div>
+              Share on both
+            </div>
+            <div
+              onClick={() => {
+                type = 1;
+                setTag(!tag);
+                handleSubmit(anonmymous);
+              }}
+              className="pb-1  cursor-pointer"
+            >
+              Share on explore
+            </div>
+            <div
+              onClick={() => {
+                type = 0;
+                setTag(!tag);
+                handleSubmit(anonmymous);
+              }}
+              className="pb-2  cursor-pointer"
+            >
+              Share on campus
+            </div>
+          </motion.div>
         </div>
-        <div onClick={()=>setQuestion(true)} className={`rounded-full ${question?"hidden":""} bg-gray-200 text-xl mx-3 font-heebo p-3 cursor-pointer`}>
-          <FaPlus className="inline -translate-y-[0.1rem]"/> Create Poll
+        {!question && (
+          <div
+            onClick={() => {
+              setQuestion(true);
+              setCp(1);
+              setDebate(false);
+            }}
+            className={`rounded-full relative z-40 bg-gray-200 mx-3 font-heebo p-2 mt-1 cursor-pointer`}
+          >
+            <FaPlus className="inline -translate-y-[0.1rem]" /> Create Poll
+          </div>
+        )}
+        <div
+          onClick={() => {
+            setQuestion(true);
+            setCp(0);
+            setDebate(true);
+          }}
+          className={`rounded-full relative z-40 ${
+            question ? "hidden" : ""
+          } bg-gray-200 mx-3 font-heebo p-2 mt-1 cursor-pointer`}
+        >
+          <FaPlus className="inline -translate-y-[0.1rem]" /> Create Debate
         </div>
         <motion.div
-              className="fixed bottom-1 rounded-3xl border w-full max-w-lg bg-white p-3 pb-1"
-              style={{translateX: "-50%", left: "50%"}}
-              initial={{ opacity: 0, y: "100%" }}
-              animate={question ? { opacity: 1, y: 0 } : {}}
-              exit={{ opacity: 0, y: "100%" }}
-              transition={{
-                duration: 0.3,
-                type: "spring",
-                stiffness: 200,
-                damping: 12,
-              }}
-            >
-              <div>
-                <div className="flex items-center m-2">
-                  <div className=" bg-gray-200 w-full text-start rounded-md p-3">Add Question</div>
-                  <RxCross2 onClick={()=>setQuestion(false)} className="inline mx-4 cursor-pointer text-3xl"/>
-                </div>
-                <input type="text" className="focus:outline-none w-full mr-4 placeholder:text-black text-start p-2" placeholder="Add longer description" />
+          className={`fixed bottom-1 ${
+            question ? "z-0" : "-z-10"
+          } rounded-3xl border w-full max-w-lg bg-white p-3 pb-1`}
+          style={{
+            translateX: "-50%",
+            left: "50%",
+            bottom: debate ? "9rem" : "1.5rem",
+          }}
+          initial={{ opacity: 0, y: 0 }}
+          animate={question ? { opacity: 1, y: 0 } : {}}
+          exit={{ opacity: 0, y: 0 }}
+          transition={{
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+            damping: 12,
+          }}
+        >
+          <div>
+            <div className="flex items-center m-2">
+              <input
+                type="text"
+                onChange={(e) => setQues(e.target.value)}
+                placeholder="Write the topic for debate"
+                className=" bg-gray-200 w-full text-start placeholder:text-black focus:outline-none rounded-md p-2 text-sm"
+              />
+              <RxCross2
+                onClick={() => {
+                  setQuestion(false);
+                  setCp(0);
+                }}
+                className="inline mx-4 cursor-pointer text-3xl"
+              />
+            </div>
+            {!debate && (
+              <input
+                type="text"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                className="focus:outline-none text-sm w-full mr-4 placeholder:text-black text-start p-2"
+                placeholder="Add longer description"
+              />
+            )}
+            {debate && (
+              <div className="text-slate-700 text-left p-2 text-sm">
+                Once you create a debate, you can share the link and invite friends or anyone to participate in the discussion.
               </div>
-              <div className="text-start font-semibold p-3">Options</div>
-              <div>
-              <div className="flex items-center w-4/6 m-2">
-                  <div className=" bg-gray-200 w-full text-start rounded-md p-3">Option 1</div>
-                  <RxCross2 className="inline mx-4 cursor-pointer text-3xl"/>
-                </div>
-              </div>
-            </motion.div>
-
+            )}
+          </div>
+          {!debate && (
+            <div className="text-start font-semibold ml-2">Options</div>
+          )}
+          {!debate && (
+            <div>
+              {options.map((option, index) => {
+                return (
+                  <div key={index} className="flex items-center m-2">
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        const newOptions = [...options];
+                        newOptions[index].option = e.target.value;
+                        setOptions(newOptions);
+                      }}
+                      placeholder={`Enter option ${index + 1}`}
+                      className=" bg-gray-200 w-3/5 text-start placeholder:text-black focus:outline-none rounded-md p-2 text-sm"
+                    />
+                    {/* <RxCross2
+                      onClick={() => {
+                        const newOptions = options.filter(
+                          (option, i) => i !== index
+                        );
+                        setOptions(newOptions);
+                      }}
+                      className="inline mx-4 cursor-pointer text-3xl"
+                    /> */}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          {/* <div onClick={()=>setOptions([...options, {option: ""}])} className="bg-gray-200 rounded-full mx-2 font-semibold p-2 text-sm">+ option</div> */}
+        </motion.div>
       </motion.div>
-      
     </>
   );
 }

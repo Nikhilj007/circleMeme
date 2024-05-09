@@ -7,11 +7,13 @@ const Modal = ({ isOpen, onClose, college }) => {
   const [question, setQuestion] = useState("");
   const { width } = useWindowDimensions();
   const userId = localStorage.getItem("userId");
+  const [loader,setLoader] = useState(false);
 
   const postGossip = (anonymous) => {
     if (question === "") {
       return;
     }
+    setLoader(true);
     const formData =new URLSearchParams({
       question: question,
       user_id: userId,
@@ -29,6 +31,7 @@ const Modal = ({ isOpen, onClose, college }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setLoader(false);
         window.location.reload();
         onClose();
       })
@@ -39,7 +42,7 @@ const Modal = ({ isOpen, onClose, college }) => {
   }, [isOpen]);
   return (
     <>
-      <div
+      {loader?<div className="relative top-1/2"><div className="loader"></div></div>:<div
         className={`fixed inset-0 z-10 w-full flex mt-20 justify-center ${
           isOpen ? "visible" : "invisible"
         }`}
@@ -64,19 +67,19 @@ const Modal = ({ isOpen, onClose, college }) => {
           <div className="flex justify-between">
             <div
               onClick={() => { postGossip(0)}}
-              className="flex border-[1px] ml-3 border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
+              className="flex border-[1px] ml-3 cursor-pointer border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
             >
               <div className=" text-sm ">Ask as yourself</div>
             </div>
             <div
               onClick={() => { postGossip(1)}}
-              className="flex border-[1px] border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
+              className="flex cursor-pointer border-[1px] border-gray-500  items-center gap-2 w-fit mt-4 px-4 py-2 rounded-lg"
             >
               <div className=" text-sm">Ask anonymously</div>
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   );
 };

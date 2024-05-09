@@ -178,7 +178,7 @@ function Question({ gossip }) {
                 <div className="font-bold">{gossip.username}</div>
               ) : (
                 <Link
-                  to={`/description/${gossip.user_id}`}
+                  to={gossip.user_id==userId?"/user":`/description/${gossip.user_id}`}
                   className="font-bold"
                 >
                   {gossip.username}
@@ -216,7 +216,7 @@ function Question({ gossip }) {
             <div className="text-start">
               {
                 <Link
-                  to={`/description/${gossip.user_id}`}
+                  to={`/description/${gossip.answeredById}`}
                   className="font-bold"
                 >
                   {gossip.answeredByName}

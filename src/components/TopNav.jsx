@@ -9,7 +9,7 @@ import demo from '../assets/demo.png'
 function TopNav() {
   const { width } = useWindowDimensions();
   const location = useLocation();
-  const isMemesPage = location.pathname === "/";
+  const isMemesPage = location.pathname === "/meme";
   const isCollegePage = location.pathname === "/college";
   const isForYouPage = location.pathname === "/foryou";
   const [settings, setSettings] = useState(false);
@@ -21,8 +21,6 @@ function TopNav() {
   const [showExplore, setShowExplore] = useState(url.includes("?first"));
   const [urlHasFirst,seturlHasFirst] = useState(url.includes("?first"));
   const [showDemo, setShowDemo] = useState(false);
-
-  console.log(showExplore)
   const handletour = () => {
     if(showExplore){
       setShowExplore(false);
@@ -56,6 +54,7 @@ function TopNav() {
 
   return (
     <div className="fixed  font-sans max-w-lg ml-auto justify-around bg-white px-1 sm:px-4 py-2 pb-0 -top-1 z-10 w-full flex shadow-md">
+      
       {(settings) && (
         <div
           className="fixed inset-0 z-10 bg-black opacity-60"
@@ -95,7 +94,7 @@ function TopNav() {
           </div>
         )}
       </Link>
-      <Link to='/'
+      <Link to='/meme'
         id="explore"
         className={
           `w-1/3 font-heebo ${showExplore?'z-10':''} ${urlHasFirst?'rounded-md':''} flex cursor-pointer  ${

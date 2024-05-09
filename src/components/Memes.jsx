@@ -33,7 +33,6 @@ function Memes() {
           userId
       ).catch((err) => console.log(err));
       const data = await res.json();
-      console.log(data);
       setArr(data.posts);
       setLoad(false);
     }
@@ -49,7 +48,7 @@ function Memes() {
   return (
     <div
       {...handlers}
-      className="flex relative pb-10 flex-col items-center pt-16 min-h-screen  p-0"
+      className="flex  relative pb-10 flex-col items-center pt-16 min-h-screen  p-0"
     >
       {!arr ? (
         <div

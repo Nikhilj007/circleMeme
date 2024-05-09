@@ -4,6 +4,8 @@ import { MdComment } from "react-icons/md";
 // import { PiShareFat } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { useLongPress } from "use-long-press";
+import { GoArrowUpRight } from "react-icons/go";
+import Option from "./Option";
 
 function Post({ meme, isCurrentUser }) {
   const [showEmoji, setShowEmoji] = useState(false);
@@ -15,8 +17,11 @@ function Post({ meme, isCurrentUser }) {
   const [commentCount, setCommentCount] = useState(meme?.comment_count);
   const [text, setText] = useState("");
   const [showReport, setShowReport] = useState(false);
-  const [isPoll, setIsPoll] = useState(meme?.poll);
   const noMedia = meme?.post === "null" || meme?.post === null;
+  const [optionPercentage, setOptionPercentage] = useState({
+    op1Percent: null,
+    op2Percent: null,
+  });
   const extension = meme?.post?.split(".").pop();
   const isImage =
     extension === "jpg" ||
@@ -33,6 +38,7 @@ function Post({ meme, isCurrentUser }) {
   const [currEmoji, setCurrEmoji] = useState("👍🏽");
   const [showReportPopup, setShowReportPopup] = useState(false);
   const reportTimeoutRef = useRef(null);
+  const type = meme?.type? meme.type: null;
 
   const handleReportClick = () => {
     // Show the report popup
@@ -134,13 +140,17 @@ function Post({ meme, isCurrentUser }) {
     if (text === "") {
       return;
     }
-    const formData = new URLSearchParams({
+    const formData = new URLSearchParams(type=='poll'?{
       comment: text,
-      post_id: meme.id,
+      poll_id: meme?.id,
+      user_id: userId,
+    }:{
+      comment: text,
+      post_id: meme?.id,
       user_id: userId,
     });
     console.log(formData);
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/comment_post`, {
+    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/${type=='poll'?'pollComment_post':'comment_post'}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -163,7 +173,7 @@ function Post({ meme, isCurrentUser }) {
       return;
     }
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/commentsofpost/${meme?.id}/${userId}`
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/${type=='poll'?'commentsofpoll':'commentsofpost'}/${meme?.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -175,6 +185,15 @@ function Post({ meme, isCurrentUser }) {
   };
 
   const handleClicked = () => {
+    if(type=='poll'){
+      fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/poll_like/${userId}/${meme?.id}/${like?0:1}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setLikeCount(data.likes);
+        setLike(!like);
+      })
+    }
     fetch(
       `https://circle-backend-ewrpf36y4q-el.a.run.app/api/${
         like ? "dislike_post" : "like_post"
@@ -187,6 +206,19 @@ function Post({ meme, isCurrentUser }) {
         console.log(res);
         like ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
         setLike(!like);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleOption = (option) => {
+    if(optionPercentage.op1Percent!=null) return;  
+    fetch(
+      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/pollanswered/${userId}/${meme?.id}/${option}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setOptionPercentage(data);
       })
       .catch((err) => console.log(err));
   };
@@ -214,7 +246,8 @@ function Post({ meme, isCurrentUser }) {
 
   return (
     <>
-      <div className="max-w-lg z-0 relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 mb-2">
+      <div className={`max-w-lg z-0 relative w-full rounded-lg bg-white text-lg px-0 shadow-lg  sm:p-5 ${type!='debate'?'':'pb-1'} mb-2`}>
+        {/* report */}
       {showReportPopup && (
         <div className="absolute top-2 right-1 bg-white rounded-lg shadow-lg p-2" onClick={clearReportTimeout}>
           Your report will be examined.
@@ -234,6 +267,7 @@ function Post({ meme, isCurrentUser }) {
           </div>
         )}
 
+        {/* top of post */}
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-center">
               <img
@@ -274,8 +308,8 @@ function Post({ meme, isCurrentUser }) {
           </div>
         </div>
         
-        {/* play / pause button */}
-        <div className="flex justify-center">
+        {/* Main image/video/poll of the post */}
+        {type!='debate'&&<div className="flex justify-center">
           {/* show play button if video is paused */}
           {videoRef.current && !noMedia && (
             <div
@@ -305,7 +339,7 @@ function Post({ meme, isCurrentUser }) {
           )}
 
           {/* image / video */}
-          {/* {!noMedia && (
+          {!noMedia && type==null && (
             <div>
               {isImage ? (
                 <img
@@ -326,17 +360,43 @@ function Post({ meme, isCurrentUser }) {
                 />
               )}
             </div>
-          )} */}
-          <div>
-            <div className="text-xl p-2 px-4 font-[400] text-start">Question that will start the poll in the options</div>
-            <div className="m-4">
-              <div className="bg-gray-100 w-5/6 rounded-lg p-3 text-start text-gray-600">Option 1</div>
+          )}
+          {type=='poll' &&( <div className="w-10/12">
+            <div className="text-xl p-2 px-4 font-[400] text-start">{meme?.question}</div>
+            <div className=" w-full text-start">
+              <Option option={meme?.option1} optionPercentage={optionPercentage?.op1Percent} id='1' handleOption={handleOption} />
+              <Option option={meme?.option2} optionPercentage={optionPercentage?.op2Percent} id='2' handleOption={handleOption} />
             </div>
+          </div>)}
+        </div>}
+
+        {/* Debate */}
+        {type=='debate'&&<div className="w-full max-w-lg pt-2 px-2">
+          <div className="mb-2 text-left px-7 rounded-t-md py-2">{meme?.question}
           </div>
+          <div class={`flex mb-2 items-center space-x-2 ${meme.ans_type=='for'?"flex-row-reverse space-x-reverse":""}`}>
+        <img
+          class="w-10 h-10 rounded-full bg-gray-300"
+          src={
+            meme.anonymous == 0
+              ? `https://circle.net.in/upload/${meme.ans_profile_pic}`
+              : "https://sandstormit.com/wp-content/uploads/2021/06/incognito-2231825_960_720-1.png"
+          }
+          alt=""
+        />
+        <div class="bg-gray-200 max-w-[70%] rounded-lg py-2 px-4">
+           {meme.answer}
         </div>
+      </div>
+          <Link className="flex py-2 justify-between items-center px-4 rounded-md bg-slate-700 w-full text-white" to={'/debate/' + meme?.id}>
+            <div></div>
+            <div>Join Debate</div>
+            <div className="text-2xl font-semibold"><GoArrowUpRight/></div>
+            </Link>
+        </div>}
 
         {/* Caption */}
-        <div className="px-4 -mb-1 text-start text-sm mt-1">
+        {type!='debate'&&<div className="px-4 -mb-1 text-start text-sm mt-1">
           {showMore ? desc : desc.substring(0, 300)}
           {desc.length > 300 && (
             <button
@@ -346,22 +406,11 @@ function Post({ meme, isCurrentUser }) {
               {showMore ? "show less" : "show more"}
             </button>
           )}
-        </div>
+        </div>}
 
-        
-        {/* {showEmoji && (
-          <button
-            onClick={() => {setShowEmoji(false)}}
-            className="flex items-center gap-2 absolute bg-gray-100 rounded-full py-[2px] px-1 z-40 bottom-[5.5rem] left-2"
-          >
-            <span onClick={() => {setCurrEmoji("😍");handleClicked()}}>😍</span>{" "}
-            <span onClick={() => {setCurrEmoji("👍🏽");handleClicked()}}>👍🏽</span>{" "}
-            <span onClick={() => {setCurrEmoji("😭");handleClicked()}}>😭</span>
-          </button>
-        )} */}
 
         {/* likes comments */}
-        <div className="flex items-center justify-between px-2 mr-5">
+        {type!='debate'&&<div className="flex items-center justify-between px-2 mr-5">
           <div className="flex px-2  gap-2">
             <div className="flex items-center gap-5">
               <div className="flex items-center mt-3">
@@ -395,9 +444,9 @@ function Post({ meme, isCurrentUser }) {
               <PiShareFat />
             </button>
           </div> */}
-        </div>
+        </div>}
         {/* add comment section */}
-        <div className="flex justify-start gap-4 px-6 py-3 pb-4">
+        {type!='debate'&&<div className="flex justify-start gap-4 px-6 py-3 pb-4">
           <div className="rounded-full  overflow-hidden h-[30px] w-[43px]">
             <img
               width={"48px"}
@@ -417,8 +466,8 @@ function Post({ meme, isCurrentUser }) {
           <button className="text-end" onClick={postComment}>
             Post
           </button>
-        </div>
-        {showComment && (
+        </div>}
+        {showComment && type!='debate' (
           <div>
             {comments.map((comment, idx) => (
               <div key={idx} className="text-start pl-4 relative z-50">

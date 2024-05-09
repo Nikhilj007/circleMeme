@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import ClassicPostLoader from "./PostLoader";
-import demo from '../assets/demo.png'
+import nocamp from '../assets/noCampus.png'
 
 function College() {
   const [load, setLoad] = useState(true); 
@@ -33,7 +33,7 @@ function College() {
         "https://circle-backend-ewrpf36y4q-el.a.run.app/api/college_posts/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setArr(data.posts);
       setLoad(false);
     }
@@ -49,7 +49,7 @@ function College() {
       {!arr? <div className={`relative ${width<500?'-top-[1rem]':'top-[2rem]'} ${width<500?'left-[7rem]':'left-[8rem]'}`}>
         <ClassicPostLoader />
         <ClassicPostLoader />
-      </div>:arr?.map((meme,idx)=>(<Post key={idx} userId={userId} meme={meme}/>) )}
+      </div>:arr.length==0?<img src={nocamp}/>:arr?.map((meme,idx)=>(<Post key={idx} userId={userId} meme={meme}/>) )}
     </div>
   );
 }

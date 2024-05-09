@@ -1,20 +1,21 @@
 import { MdArrowBack } from "react-icons/md";
 import { BsQuestionCircle } from "react-icons/bs";
-import { useNavigate, useSearchParams,  } from "react-router-dom";
+import { useNavigate, useLocation,Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import Question from "./Questions";
 import bgimage from "../assets/gossipsBackground.jpg";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useSwipeable } from "react-swipeable";
+import { TbPlayerTrackNextFilled,TbPlayerTrackPrevFilled } from "react-icons/tb";
 
 function Gossips() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const collge = searchParams.get("college");
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [gossips, setGossips] = useState(null); // [{},{}
-  const [college,setCollege] = useState(collge?collge:""); // ""
+  const [college,setCollege] = useState(""); // ""
   const userId = localStorage.getItem("userId");
   const handlers = useSwipeable({
     onSwipedLeft: () => navigate("/foryou"),
@@ -56,27 +57,26 @@ function Gossips() {
         "https://circle-backend-ewrpf36y4q-el.a.run.app/api/college_gossips/"+college+"/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
-      console.log(data);
       setGossips(data.posts);
     }
     async function fetchdata2() {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossips"+"/"+userId)
+        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/allgossips"+"/"+userId)
       const data = await res.json();
       setGossips(data.posts);
     }
-    if (!collge) {
+    if (!college || path=='/') {
     fetchdata2();
     }
     else {
       fetchdata();
     }
   }
-  , []);
+  , [college,path]);
 
   return (
     <div {...handlers} className="bg-zinc-300 w-full mb-14">
-      <div
+      {path=='/gossip' &&<div
         to={"/search"}
         className="fixed z-50 bg-white left-6 w-[97%] max-w-lg lg:ml-[27.7%] flex items-center border-[1px] border-gray-300 -ml-[1.15rem] px-1"
       >
@@ -93,7 +93,7 @@ function Gossips() {
         <div>
           <FaSearch />
         </div>
-      </div>
+      </div>}
       <div className="mt-12 max-w-lg lg:left-[29.7%] relative">
         <img  src={bgimage} alt="" />
         <div className="absolute bottom-2 flex justify-around w-full">
@@ -104,10 +104,16 @@ function Gossips() {
             <div  className="text-white text-sm">Ask a question</div>
           </div>
         </div>
+        {path=='/' &&<Link to='/gossip' className="absolute bottom-2 right-4">
+          <TbPlayerTrackNextFilled className=" text-2xl" />
+        </Link>}
+        {path=='/gossip' &&<Link to='/' className="absolute bottom-2 left-4">
+          <TbPlayerTrackPrevFilled className=" text-2xl" />
+        </Link>}
       </div>
       <div className="">
        {
-          gossips && gossips.map((gossip)=>(
+          gossips?.length==0?<div className="h-[60vh] px-3 text-start w-full max-w-lg flex justify-center items-center">Scoop! Be the first one to ask questions to the current enrolled students and alumni.</div>: gossips?.map((gossip)=>(
             <Question key={gossip.id} userId={userId} gossip={gossip}/>
           ))
        }

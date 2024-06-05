@@ -11,6 +11,7 @@ node_modules
 dist
 dist.zip
 dist-ssr
+circle-machine.pem
 *.local
 
 # Editor directories and files

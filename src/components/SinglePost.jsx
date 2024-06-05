@@ -11,7 +11,7 @@ const SinglePost = () => {
     async function fetchData() {
       try {
         const res = await fetch(
-          `https://circle-backend-ewrpf36y4q-el.a.run.app/api/post/${post_id}/${userId}`
+          `https://anonymously.link/backend/api/post/${post_id}/${userId}`
         );
         const data = await res.json();
           console.log(data)

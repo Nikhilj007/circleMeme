@@ -11,21 +11,21 @@ function BottomNav() {
   const [noti, setNoti] = useState(0); // [{},{}
   const [msg, setMsg] = useState(0); 
     const [userImage, setUserImage] = useState(null);
-  //   `https://circle.net.in/upload/${profile_image || "default.png"}`
+  //   `https://4.240.73.133/upload/${profile_image || "default.png"}`
   // );
   console.log(userImage);
   console.log(profile_image==='undefined')
   useEffect(() => {
     if (profile_image === 'undefined' || profile_image === null) {
-      setUserImage("https://circle.net.in/upload/defaultProfileImg.jpg");
+      setUserImage("https://4.240.73.133/upload/defaultProfileImg.jpg");
     } else {
-      setUserImage(`https://circle.net.in/upload/${profile_image}`);
+      setUserImage(`https://4.240.73.133/upload/${profile_image}`);
     }
   }
   ,[profile_image]);
   setTimeout(() => {
       fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/badge/${userId}`
+        `https://anonymously.link/backend/api/badge/${userId}`
       )
       .then((res) => res.json()
       .then((data) => {setNoti(data[0].noti);
@@ -37,7 +37,7 @@ function BottomNav() {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/badge/${userId}`
+        `https://anonymously.link/backend/api/badge/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data[0].noti==0);

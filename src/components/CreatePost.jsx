@@ -34,7 +34,7 @@ function CreatePost() {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/${userId}`
+        `https://anonymously.link/backend/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -58,7 +58,7 @@ function CreatePost() {
       formData.append("type", type);
       formData.append("anonymous", anony);
       formData.append("question", ques);
-      fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/new_debate`, {
+      fetch(`https://anonymously.link/backend/api/new_debate`, {
         method: "POST",
         body: formData,
       })
@@ -86,7 +86,7 @@ function CreatePost() {
       formData.append("option1", options[0].option);
       formData.append("option2", options[1].option);
 
-      fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/new_poll`, {
+      fetch(`https://anonymously.link/backend/api/new_poll`, {
         method: "POST",
         body: formData,
       })
@@ -115,7 +115,7 @@ function CreatePost() {
       formData.append("post", videoFileRef.current.files[0]);
     }
     console.log(formData);
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/create_post`, {
+    fetch(`https://anonymously.link/backend/api/create_post`, {
       method: "POST",
       body: formData,
     })
@@ -175,7 +175,7 @@ function CreatePost() {
             <img
               width={"40px"}
               height={"40px"}
-              src={`http://circle.net.in/upload/${userData?.profile_image}`}
+              src={`https://4.240.73.133/upload/${userData?.profile_image}`}
               alt=""
             />
           </div>

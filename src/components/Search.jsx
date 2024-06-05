@@ -26,7 +26,7 @@ function Search() {
   const handleDebouncedChange = debounce(async (value) => {
     try {
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/search/${value}/${userId}`
+        `https://anonymously.link/backend/api/search/${value}/${userId}`
       );
 
       if (!res.ok) {
@@ -74,7 +74,7 @@ function Search() {
           >
             <div className="border-2 border-gray-300 rounded-full">
               <img
-                src={`http://circle.net.in/upload/${student.profile_image}`}
+                src={`https://4.240.73.133/upload/${student.profile_image}`}
                 alt=""
                 className="w-10 h-10 rounded-full"
               />
@@ -109,7 +109,7 @@ function Search() {
               >
                 <div className=" border-2 border-gray-300 rounded-full">
                   <img
-                    src={`http://circle.net.in/upload/${student.profile_image}`}
+                    src={`https://4.240.73.133/upload/${student.profile_image}`}
                     alt=""
                     className="w-10 h-10 rounded-full"
                   />

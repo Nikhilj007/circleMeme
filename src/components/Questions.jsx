@@ -1,10 +1,11 @@
 import { PiShareFat } from "react-icons/pi";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { PiArrowFatUpLight } from "react-icons/pi";
 import { PiArrowFatUpFill } from "react-icons/pi";
 import { PiArrowFatDownLight } from "react-icons/pi";
 import { PiArrowFatDownFill } from "react-icons/pi";
+import { motion } from "framer-motion";
 import Comment from "./Comment";
 
 function Question({ gossip }) {
@@ -20,12 +21,14 @@ function Question({ gossip }) {
   const [answerUpvotes, setAnswerUpvotes] = useState(gossip.answer_upvotes);
   const [showMore, setShowMore] = useState(false);
   const [fullQuestion, setFullQuestion] = useState(false);
+  const [submit,setSubmit] = useState(false);
+  const answersRef = useRef(null);
 
 
   const getAnswers = () => {
     setWriteAnswer(false);
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_get_answers/${gossip.id}/${userId}`
+      `https://anonymously.link/backend/api/gossip_get_answers/${gossip.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -42,7 +45,7 @@ function Question({ gossip }) {
       return;
     }
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_upvote/${gossip.id}/${userId}`,
+      `https://anonymously.link/backend/api/gossip_upvote/${gossip.id}/${userId}`,
       {
         method: "POST",
       }
@@ -61,7 +64,7 @@ function Question({ gossip }) {
       return;
     }
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_unvote/${gossip.id}/${userId}`,
+      `https://anonymously.link/backend/api/gossip_unvote/${gossip.id}/${userId}`,
       {
         method: "POST",
       }
@@ -77,7 +80,7 @@ function Question({ gossip }) {
 
   const handleAnswerLike = () => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_ans_${
+      `https://anonymously.link/backend/api/gossip_ans_${
         isLiked ? "unvote" : "upvote"
       }/${gossip.answer_id}/${userId}`,
       {
@@ -93,8 +96,13 @@ function Question({ gossip }) {
       .catch((err) => console.log(err));
   };
 
-  const postAnswer = () => {
+  const handleOverlayClick = () => {
+    setSubmit(false);
+  }
+
+  const postAnswer = (anonymous) => {
     if (text === "") {
+      setSubmit(false);
       return;
     }
     console.log(gossip.id, text, 2);
@@ -102,9 +110,10 @@ function Question({ gossip }) {
       answer: text,
       gossip_id: gossip.id,
       user_id: userId,
+      anonymous:anonymous
     });
     console.log(formData);
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_put_answer`, {
+    fetch(`https://anonymously.link/backend/api/gossip_put_answer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -117,7 +126,7 @@ function Question({ gossip }) {
         setWriteAnswer(!writeAnswer);
         //reload page
         window.location.reload();
-
+        setSubmit(false);
         // setCommentCount(commentCount + 1);
         // setText("");
         // handleComment();
@@ -146,8 +155,21 @@ function Question({ gossip }) {
     }
   }
 
+  useEffect(()=>{
+    if(showComments && answersRef.current){
+      answersRef.current.scrollIntoView({behavior:'smooth',block:'start'})
+    }
+  },[showComments])
+
+
   return (
     <div className=" bg-white my-1 max-w-lg px-2 mx-auto">
+      {(submit) && (
+        <div
+          className="fixed inset-0 z-10 bg-black opacity-60"
+          onClick={handleOverlayClick}
+        ></div>
+      )}
       <div className="flex gap-2 items-center">
         <div className="flex justify-between p-3 items-center mb-0">
           <div className="flex gap-3 items-start">
@@ -156,7 +178,7 @@ function Question({ gossip }) {
                 <img
                   width={"36px"}
                   height={"27px"}
-                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  src={`https://4.240.73.133/upload/${gossip.profile_pic}`}
                   alt="fsdf"
                 />
               </div>
@@ -168,7 +190,7 @@ function Question({ gossip }) {
                 <img
                   width={"36px"}
                   height={"27px"}
-                  src={`http://circle.net.in/upload/${gossip.profile_pic}`}
+                  src={`https://4.240.73.133/upload/${gossip.profile_pic}`}
                   alt="fsdf"
                 />
               </Link>
@@ -209,7 +231,7 @@ function Question({ gossip }) {
               <img
                 width={"36px"}
                 height={"27px"}
-                src={`http://circle.net.in/upload/${gossip.answeredByPhoto}`}
+                src={`https://4.240.73.133/upload/${gossip.answeredByPhoto}`}
                 alt="fsdf"
               />
             </Link>
@@ -261,7 +283,7 @@ function Question({ gossip }) {
         )}
       </div>
       {showComments && (
-        <div className="flex flex-col justify-end w-full gap-2 py-2">
+        <div ref={answersRef} className="flex flex-col-reverse max-h-[60vh] overflow-y-scroll w-full gap-2 py-2">
           {Answers.slice(1).map((answer, idx) => (
             <Comment answer={answer} key={idx} />
           ))}
@@ -286,7 +308,7 @@ function Question({ gossip }) {
             onClick={getAnswers}
             className=" border-[1px] text-base border-gray-300 px-3 rounded-md cursor-pointer relative gap-2 "
           >
-            read answers
+            {showComments ? "hide" : "read"} answers
             <div className="text-[0.7rem] leading-[5px] absolute -top-[0.35rem] -right-[0.35rem] p-[0.3rem] bg-red-600 w-fit rounded-full  text-white">
               {AnswersCount}
             </div>
@@ -309,13 +331,32 @@ function Question({ gossip }) {
           ></textarea>
           <div className="flex justify-end gap-2">
             <div
-              onClick={postAnswer}
-              className="border-[1px] border-gray-500 rounded-lg cursor-pointer text-sm mb-2 px-3 py-1 "
+              onClick={()=>setSubmit(true)}
+              className="border-[1px] hover:bg-gray-800 hover:text-white transform transition-all duration-300 border-gray-500 rounded-lg cursor-pointer text-sm mb-2 px-3 py-1 "
             >
               Submit
             </div>
           </div>
         </div>
+        <motion.div
+          className="fixed z-40 max-w-lg bottom-10 rounded-lg border-t-4 font-semibold left-0 lg:left-[30%] translate-x-1/2 mb-2 right-0 bg-white p-3"
+          initial={{ opacity: 0, y: "100%" }}
+          animate={submit ? { opacity: 1, y: 0 } : {}}
+          exit={{ opacity: 0, y: "100%" }}
+          transition={{
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+            damping: 12,
+          }}
+        >
+          <div onClick={()=>postAnswer(0)} className="hover:bg-gray-400 rounded-md transform transition-all ">
+            Submit As Yourself
+          </div>
+          <div onClick={()=>postAnswer(1)} className="hover:bg-gray-400 rounded-md transform transition-all pb-1 block pt-1">
+            Submit Anonymously
+          </div>
+        </motion.div>
     </div>
   );
 }

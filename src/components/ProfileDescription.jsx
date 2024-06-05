@@ -21,7 +21,7 @@ const ProfileDescription = () => {
 
 
   const handleCrush = () =>{
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/drop_crush/${userId}/${id}`)
+    fetch(`https://anonymously.link/backend/api/drop_crush/${userId}/${id}`)
     .then((res)=>res.json())
     .then((data)=>{console.log(data);setCrush(true)})
     .catch((err)=>console.log(err))
@@ -30,7 +30,7 @@ const ProfileDescription = () => {
 
 
   const handleFollow = () =>{
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/clicked_follow/${userId}/${id}`
+    fetch(`https://anonymously.link/backend/api/clicked_follow/${userId}/${id}`
     ,{method:"POST"}
     )
     .then((res)=>res.json())
@@ -41,7 +41,7 @@ const ProfileDescription = () => {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/user_profile/${id}/${userId}`
+        `https://anonymously.link/backend/api/user_profile/${id}/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -79,7 +79,7 @@ const ProfileDescription = () => {
         <div className=" overflow-hidden w-full bg-white">
           <img
             className=" w-full"
-            src={`https://circle.net.in/upload/${currentUser?.profile_image}`}
+            src={`https://4.240.73.133/upload/${currentUser?.profile_image}`}
             alt=""
           />
         </div>

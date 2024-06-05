@@ -43,7 +43,7 @@ function Debate() {
       debate_id : debateId
     });
     const res = await fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/ans_gossip`,
+      `https://anonymously.link/backend/api/ans_gossip`,
       {
         method: "POST",
         headers: {
@@ -66,7 +66,7 @@ function Debate() {
   useEffect(() => {
     async function fetchData() {
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/debate/${debateId}`
+        `https://anonymously.link/backend/api/debate/${debateId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       setAnswers(data.answers);
@@ -123,7 +123,7 @@ function Debate() {
           class="w-10 h-10 rounded-full "
           src={
             answer.anonymous == 0
-              ? `https://circle.net.in/upload/${answer.profile_pic}`
+              ? `https://4.240.73.133/upload/${answer.profile_pic}`
               : "https://sandstormit.com/wp-content/uploads/2021/06/incognito-2231825_960_720-1.png"
           }
           alt=""
@@ -144,7 +144,7 @@ function Debate() {
         ) : (
           <div className="flex items-center w-full max-w-lg left-1/2 transform -translate-x-1/2 px-2 fixed bottom-2 bg-white ">
             <img class="w-8 h-8 rounded-full mt-1 ml-3 bg-gray-300" src={anonymous == 0
-              ? `https://circle.net.in/upload/${img}`
+              ? `https://4.240.73.133/upload/${img}`
               : "https://sandstormit.com/wp-content/uploads/2021/06/incognito-2231825_960_720-1.png"} alt="" />
             <input value={message} onChange={(e)=>setMessage(e.target.value)}
              className="w-full px-6 p-3 focus:outline-none" placeholder="write your point" type="text"/>

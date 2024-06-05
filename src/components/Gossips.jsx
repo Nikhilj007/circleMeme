@@ -25,7 +25,7 @@ function Gossips() {
 
   useEffect(() => {
     if (!userId || userId==="undefined") {
-      window.location.href = "https://circle.net.in/signin.php";
+      window.location.href = "https://4.240.73.133/signin.php";
     }
 
     if(college){
@@ -33,7 +33,7 @@ function Gossips() {
     }
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/"+userId
+        "https://anonymously.link/backend/api/self_profile/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       setCollege(data[0].workplaceCollage);
@@ -54,14 +54,14 @@ function Gossips() {
     window.scrollTo(0, 0);
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/college_gossips/"+college+"/"+userId
+        "https://anonymously.link/backend/api/college_gossips/"+college+"/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       setGossips(data.posts);
     }
     async function fetchdata2() {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/allgossips"+"/"+userId)
+        "https://anonymously.link/backend/api/allgossips"+"/"+userId)
       const data = await res.json();
       setGossips(data.posts);
     }

@@ -25,12 +25,12 @@ function College() {
     window.scrollTo(0, 0);
     //redirect if no userId
     if (!userId || userId==="undefined") {
-      window.location.href = "https://circle.net.in/signin.php";
+      window.location.href = "https://4.240.73.133/signin.php";
     }
 
     async function fetchdata() {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/college_posts/"+userId
+        "https://anonymously.link/backend/api/college_posts/"+userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       // console.log(data);
@@ -45,7 +45,7 @@ function College() {
   return (
     <div {...handlers} className="flex relative pb-10 flex-col min-h-screen items-center mt-16  p-0">
       {/* <Question/> */}
-      <div className="border-[1px] m-2 mt-1 px-2 py-2 max-[330px]:px-0 max-[410px]:px-1 max-[410px]:text-sm rounded-lg text-black">Share your crush list from campus <Link className="px-3 border-[1px] py-1 rounded-lg font-semibold max-[410px]:text-sm max-[410px]:px-1 text-pink-700 bg-[#dedede] " to='/crushes'>Create List</Link></div>
+      {/* <div className="border-[1px] m-2 mt-1 px-2 py-2 max-[330px]:px-0 max-[410px]:px-1 max-[410px]:text-sm rounded-lg text-black">Share your crush list from campus <Link className="px-3 border-[1px] py-1 rounded-lg font-semibold max-[410px]:text-sm max-[410px]:px-1 text-pink-700 bg-[#dedede] " to='/crushes'>Create List</Link></div> */}
       {!arr? <div className={`relative ${width<500?'-top-[1rem]':'top-[2rem]'} ${width<500?'left-[7rem]':'left-[8rem]'}`}>
         <ClassicPostLoader />
         <ClassicPostLoader />

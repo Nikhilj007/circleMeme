@@ -32,14 +32,14 @@ const User = ({img,setImg}) => {
       //scroll to top
       window.scrollTo(0, 0);
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/${userId}`
+        `https://anonymously.link/backend/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
       setUserData(data[0]);
       console.log(data[0]);
       setPosts(data);
-      setImgLink(`https://circle.net.in/upload/${data[0].profile_image}`);
+      setImgLink(`https://4.240.73.133/upload/${data[0].profile_image}`);
     }
     if (!userData) {
       fetchdata();
@@ -48,7 +48,7 @@ const User = ({img,setImg}) => {
 
   async function fetchAllPosts() {
     const res = await fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/all_user_posts/${userId}`
+      `https://anonymously.link/backend/api/all_user_posts/${userId}`
     ).catch((err) => console.log(err));
     const data = await res.json();
     console.log(data);
@@ -61,7 +61,7 @@ const User = ({img,setImg}) => {
   const handleChange = async (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
     const res = await fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/edit_profile/${userId}`,
+      `https://anonymously.link/backend/api/edit_profile/${userId}`,
       {
         method: "POST",
         headers: {
@@ -227,7 +227,7 @@ const User = ({img,setImg}) => {
             onClick={() => inputRef.current.click()}
             className="flex justify-center items-center pb-1 gap-2"
           >Change Picture</div>
-          <a href="https://circle.net.in/logout.php"
+          <a href="https://4.240.73.133/logout.php"
           >Log out</a>
         </motion.div>
       </div>

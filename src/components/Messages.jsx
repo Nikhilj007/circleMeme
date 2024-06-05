@@ -30,7 +30,7 @@ function Messages() {
   const [showShare, setShowShare] = useState(false);
   useEffect(() => {
     fetch(
-      "https://circle-backend-ewrpf36y4q-el.a.run.app/api/messages/" + uniqueId
+      "https://anonymously.link/backend/api/messages/" + uniqueId
     )
       .then((res) => res.json())
       .then((data) => {
@@ -55,12 +55,12 @@ function Messages() {
           damping: 12,
         }}
       >
-        <div className={`relative rounded-3xl flex flex-col align-top justify-center content-center bg-white`} onClick={handleImageClick} >
+        <div className={`relative rounded-3xl flex flex-col align-top justify-center content-center bg-white`}  >
           <img className="bg-transparent relative cursor-pointer" src={msg} />
           <div className="font-semibold text-start pl-7">Send anonymous messages, confession and chat.</div>
           <div className="text-gray-500 text-start pl-7">note: copy link & paste on your story</div>
           <div className="flex justify-center items-center">
-          <div
+          <div onClick={handleImageClick}
             className=" cursor-pointer mb-3 px-10 py-2 bg-black text-white p-1 text-center w-fit rounded-full"
           >
             Copy Link
@@ -92,7 +92,7 @@ function Messages() {
             className="flex py-6 border-b  items-center gap-7 p-2"
           >
             <img
-              src={`https://circle.net.in/upload/${chat.profile_pic}`}
+              src={`https://4.240.73.133/upload/${chat.profile_pic}`}
               alt="profile"
               className="w-12 h-12 rounded-full"
             />

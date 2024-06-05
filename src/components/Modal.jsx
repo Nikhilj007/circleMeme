@@ -21,7 +21,7 @@ const Modal = ({ isOpen, onClose, college }) => {
       college: college
     });
     console.log(formData);
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/new_gossip`, {
+    fetch(`https://anonymously.link/backend/api/new_gossip`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

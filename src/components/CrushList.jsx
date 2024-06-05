@@ -55,7 +55,7 @@ const CrushList = () => {
       (crush) => crush.name !==""
     );
     const res = await fetch(
-      "https://circle-backend-ewrpf36y4q-el.a.run.app/api/crush_list",
+      "https://anonymously.link/backend/api/crush_list",
       {
         method: "POST",
         headers: {
@@ -83,7 +83,7 @@ const CrushList = () => {
             <p className="mb-4"> Create account to submit your crush list</p>
             <div className="flex justify-end">
               <button
-                onClick={()=>window.location.href="https://circle.net.in/signup.php?crushList"}
+                onClick={()=>window.location.href="https://4.240.73.133/signup.php?crushList"}
                 className="bg-green-600 text-white px-4 py-2 rounded mr-2"
               >
                 Create Account

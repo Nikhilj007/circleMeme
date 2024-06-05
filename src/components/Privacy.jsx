@@ -21,13 +21,13 @@ const Privacy = () => {
       </div>
       <div className='mt-4'>
         <div
-         onClick={()=>navigate('https://circle.net.in/change-password.php')}
+         onClick={()=>navigate('https://4.240.73.133/change-password.php')}
          className='px-4 py-4 bg-gray-100 text-start text-xl rounded-lg mb-2 mx-2 hover:bg-gray-300'><div className='ml-10'>Change Password</div></div>
         <div
-         onClick={()=>navigate('https://circle.net.in/help&support.php')}
+         onClick={()=>navigate('https://4.240.73.133/help&support.php')}
          className='px-4 py-4 bg-gray-100 text-start text-xl rounded-lg mb-2 mx-2 hover:bg-gray-300'><div className='ml-10'>Help and Support</div></div>
         <div
-         onClick={()=>navigate('https://circle.net.in/policy.php')}
+         onClick={()=>navigate('https://4.240.73.133/policy.php')}
          className='px-4 py-4 bg-gray-100 text-start text-xl rounded-lg mb-2 mx-2 hover:bg-gray-300'><div className='ml-10'>Policy and Terms of use</div></div>
         <div
          onClick={()=>setIsModalOpen(true)}
@@ -40,7 +40,7 @@ const Privacy = () => {
             <p className="mb-4">Are you sure you want to delete your account?</p>
             <div className="flex justify-end">
               <button
-                onClick={()=>navigate(`https://circle.net.in/delete-account.php?id=${userId}`)}
+                onClick={()=>navigate(`https://4.240.73.133/delete-account.php?id=${userId}`)}
                 className="bg-red-600 text-white px-4 py-2 rounded mr-2"
               >
                 Delete

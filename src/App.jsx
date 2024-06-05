@@ -43,7 +43,7 @@ function App() {
           return;
         }
          
-        fetch('https://circle-backend-ewrpf36y4q-el.a.run.app/api/noti_token',{
+        fetch('https://anonymously.link/backend/api/noti_token',{
           method:'POST',
           headers:{
             'Content-Type':'application/json'
@@ -69,7 +69,9 @@ function App() {
   useEffect(()=>{
     const currUser= async()=>{
       console.log('currUser')
-      const res = await fetch('https://circle.net.in/getUserData.php').catch((err)=>window.location.href='https://circle.net.in/signin.php')
+      const res = await fetch('https://anonymously.link/getUserData.php').catch((err)=>{console.log('redirect', err);
+      window.location.href = "https://anonymously.link/signin.php";
+      })
       const data=await res.json()
       localStorage.setItem('userId',data.user_id);
       localStorage.setItem('uniqueId',data.user_uniqueid)
@@ -78,7 +80,6 @@ function App() {
       console.log(data);
   }
   // currUser();
-
   localStorage.setItem('userId',7);
   localStorage.setItem('profile_image','647c56b8e34d4.jpg')
   localStorage.setItem('uniqueId',7633832871);

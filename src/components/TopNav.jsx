@@ -152,7 +152,7 @@ function TopNav() {
           className="translate-y-2 cursor-pointer"
           height={"60px"}
           width={"60px"}
-          src="https://circle.net.in/assets/images/logot.png"
+          src="https://4.240.73.133/assets/images/logot.png"
           alt=""
         />
         {showDemo && (

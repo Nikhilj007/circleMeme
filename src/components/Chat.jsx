@@ -44,7 +44,7 @@ function Chat() {
 
   const handleChatDelete = () => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/delete_chat/${senderId}/${receiverId}`,
+      `https://anonymously.link/backend/api/delete_chat/${senderId}/${receiverId}`,
       {
         method: "POST",
       }
@@ -58,7 +58,7 @@ function Chat() {
 
   const handleAnonymous = () => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/update_permission/${senderId}/${receiverId}/${
+      `https://anonymously.link/backend/api/update_permission/${senderId}/${receiverId}/${
         anonymous == 1 ? 1 : 0
       }`,
       {
@@ -73,7 +73,7 @@ function Chat() {
   };
 
   useEffect(() => {
-    let socket = io("https://circle-backend-ewrpf36y4q-el.a.run.app/api/chat");
+    let socket = io("https://anonymously.link/backend/api/chat");
     setSoc(socket);
     socket.on("message", (data) => {
       console.log(data);
@@ -87,7 +87,7 @@ function Chat() {
     });
 
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/load_chat/${senderId}/${receiverId}/${
+      `https://anonymously.link/backend/api/load_chat/${senderId}/${receiverId}/${
         profile == 1 ? 1 : 0
       }`
     )
@@ -147,7 +147,7 @@ function Chat() {
             to={`/description/${messageList?.id}`}
           >
             <img
-              src={`https://circle.net.in/upload/${messageList?.profile_pic}`}
+              src={`https://4.240.73.133/upload/${messageList?.profile_pic}`}
               alt="profile"
               className="w-10 h-10 rounded-full"
             />
@@ -181,7 +181,7 @@ function Chat() {
                   class="w-10 h-10 rounded-full bg-gray-300"
                   src={
                     anonymous == 0
-                      ? `https://circle.net.in/upload/${img}`
+                      ? `https://4.240.73.133/upload/${img}`
                       : "https://sandstormit.com/wp-content/uploads/2021/06/incognito-2231825_960_720-1.png"
                   }
                   alt=""
@@ -200,7 +200,7 @@ function Chat() {
                 >
                   <img
                     class="w-10 cursor-pointer h-10 rounded-full bg-gray-300"
-                    src={`https://circle.net.in/upload/${messageList?.profile_pic}`}
+                    src={`https://4.240.73.133/upload/${messageList?.profile_pic}`}
                     alt=""
                   />
                 </Link>

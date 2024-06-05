@@ -90,10 +90,10 @@ function Post({ meme, isCurrentUser }) {
   useEffect(() => {
     async function fetchdata() {
       const res = await fetch(
-        `https://circle-backend-ewrpf36y4q-el.a.run.app/api/self_profile/${userId}`
+        `https://anonymously.link/backend/api/self_profile/${userId}`
       ).catch((err) => console.log(err));
       const data = await res.json();
-      setUserImage(`https://circle.net.in/upload/${data[0]?.profile_image}`);
+      setUserImage(`https://4.240.73.133/upload/${data[0]?.profile_image}`);
     }
     if (!userImage) {
       fetchdata();
@@ -123,7 +123,7 @@ function Post({ meme, isCurrentUser }) {
 
   const deletePost = () => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/delete_post/${meme.id}`,
+      `https://anonymously.link/backend/api/delete_post/${meme.id}`,
       {
         method: "POST",
       }
@@ -150,7 +150,7 @@ function Post({ meme, isCurrentUser }) {
       user_id: userId,
     });
     console.log(formData);
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/${type=='poll'?'pollComment_post':'comment_post'}`, {
+    fetch(`https://anonymously.link/backend/api/${type=='poll'?'pollComment_post':'comment_post'}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -173,7 +173,7 @@ function Post({ meme, isCurrentUser }) {
       return;
     }
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/${type=='poll'?'commentsofpoll':'commentsofpost'}/${meme?.id}/${userId}`
+      `https://anonymously.link/backend/api/${type=='poll'?'commentsofpoll':'commentsofpost'}/${meme?.id}/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -186,7 +186,7 @@ function Post({ meme, isCurrentUser }) {
 
   const handleClicked = () => {
     if(type=='poll'){
-      fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/poll_like/${userId}/${meme?.id}/${like?0:1}`)
+      fetch(`https://anonymously.link/backend/api/poll_like/${userId}/${meme?.id}/${like?0:1}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -195,7 +195,7 @@ function Post({ meme, isCurrentUser }) {
       })
     }
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/${
+      `https://anonymously.link/backend/api/${
         like ? "dislike_post" : "like_post"
       }/${meme?.id}/${userId}`,
       {
@@ -213,7 +213,7 @@ function Post({ meme, isCurrentUser }) {
   const handleOption = (option) => {
     if(optionPercentage.op1Percent!=null) return;  
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/pollanswered/${userId}/${meme?.id}/${option}`
+      `https://anonymously.link/backend/api/pollanswered/${userId}/${meme?.id}/${option}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -274,7 +274,7 @@ function Post({ meme, isCurrentUser }) {
                 className="rounded-full"
                 width={"40px"}
                 height={"40px"}
-                src={`https://circle.net.in/upload/${meme?.profile_pic}`}
+                src={`https://4.240.73.133/upload/${meme?.profile_pic}`}
                 loading="lazy"
                 alt="fsdf"
               />
@@ -345,7 +345,7 @@ function Post({ meme, isCurrentUser }) {
                 <img
                   loading="lazy"
                   className="rounded-sm w-full "
-                  src={`https://circle.net.in/posts/${meme?.post}`}
+                  src={`https://4.240.73.133/posts/${meme?.post}`}
                   alt=""
                 />
               ) : (
@@ -356,7 +356,7 @@ function Post({ meme, isCurrentUser }) {
                   }}
                   ref={videoRef}
                   className="rounded-sm w-full "
-                  src={`https://circle.net.in/posts/${meme?.post}`}
+                  src={`https://4.240.73.133/posts/${meme?.post}`}
                 />
               )}
             </div>
@@ -379,7 +379,7 @@ function Post({ meme, isCurrentUser }) {
           class="w-10 h-10 rounded-full bg-gray-300"
           src={
             meme.anonymous == 0
-              ? `https://circle.net.in/upload/${meme.ans_profile_pic}`
+              ? `https://4.240.73.133/upload/${meme.ans_profile_pic}`
               : "https://sandstormit.com/wp-content/uploads/2021/06/incognito-2231825_960_720-1.png"
           }
           alt=""
@@ -479,7 +479,7 @@ function Post({ meme, isCurrentUser }) {
                     <img
                       width={"39px"}
                       height={"27px"}
-                      src={`https://circle.net.in/upload/${comment.profile_pic}`}
+                      src={`https://4.240.73.133/upload/${comment.profile_pic}`}
                       loading="lazy"
                       alt="fsdf"
                     />

@@ -11,7 +11,7 @@ const SIngleGossip = () => {
     async function fetchData() {
       try {
         const res = await fetch(
-          `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip/${post_id}/${userId}`
+          `https://anonymously.link/backend/api/gossip/${post_id}/${userId}`
         );
         const data = await res.json();
           console.log(data)

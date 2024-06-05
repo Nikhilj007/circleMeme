@@ -17,11 +17,11 @@ function ForYou() {
     useEffect(()=>{
         window.scrollTo(0, 0);
         if (!userId || userId==="undefined") {
-            window.location.href = "https://circle.net.in/signin.php";
+            window.location.href = "https://4.240.73.133/signin.php";
           }
       
         const fetchdata=async()=>{
-            const res=await fetch('https://circle-backend-ewrpf36y4q-el.a.run.app/api/users/'+userId).catch((err)=>console.log(err))
+            const res=await fetch('https://anonymously.link/backend/api/users/'+userId).catch((err)=>console.log(err))
             const data=await res.json()
             // console.log(data)
             setUsers(data.users)

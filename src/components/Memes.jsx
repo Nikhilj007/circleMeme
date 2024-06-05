@@ -29,7 +29,7 @@ function Memes() {
     }
     async function fetchData() {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/meme_posts/" +
+        "https://anonymously.link/backend/api/meme_posts/" +
           userId
       ).catch((err) => console.log(err));
       const data = await res.json();

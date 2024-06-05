@@ -16,7 +16,7 @@ const Notifications = () => {
 
   const onAccept = (sender_id, noti_id) => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/accept/${userId}/${sender_id}/${noti_id}`,
+      `https://anonymously.link/backend/api/accept/${userId}/${sender_id}/${noti_id}`,
       {
         method: "POST",
       }
@@ -31,7 +31,7 @@ const Notifications = () => {
 
   const onReject = (sender_id, noti_id) => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/decline/${userId}/${sender_id}/${noti_id}`,
+      `https://anonymously.link/backend/api/decline/${userId}/${sender_id}/${noti_id}`,
       {
         method: "POST",
       }
@@ -65,7 +65,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        "https://circle-backend-ewrpf36y4q-el.a.run.app/api/notification/" + userId
+        "https://anonymously.link/backend/api/notification/" + userId
       ).catch((err) => console.log(err));
       const data = await res.json();
       console.log(data);
@@ -142,7 +142,7 @@ const Notifications = () => {
               <div className="flex gap-3 items-center">
                 <img
                   onClick={() => notify.type!=5?navigate("/description/" + notify.sender_id):{}}
-                  src={`https://circle.net.in/upload/${
+                  src={`https://4.240.73.133/upload/${
                     notify.sender_profile_pic
                       ? notify.sender_profile_pic
                       : "defaultProfileImg.jpg"

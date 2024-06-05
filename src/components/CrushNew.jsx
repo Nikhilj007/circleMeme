@@ -28,7 +28,7 @@ const CrushLis = () => {
       (crush) => crush.name !==""
     );
     const res = await fetch(
-      "https://circle-backend-ewrpf36y4q-el.a.run.app/api/crush_list",
+      "https://anonymously.link/backend/api/crush_list",
       {
         method: "POST",
         headers: {

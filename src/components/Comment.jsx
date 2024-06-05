@@ -32,7 +32,7 @@ const Comment = ({ answer }) => {
 
   const handleAnswersLike = (answerId) => {
     fetch(
-      `https://circle-backend-ewrpf36y4q-el.a.run.app/api/gossip_ans_${
+      `https://anonymously.link/backend/api/gossip_ans_${
         upvoted ? "unvote" : "upvote"
       }/${answerId}/${userId}`,
       {
@@ -55,7 +55,7 @@ const Comment = ({ answer }) => {
         <img
           width={"36px"}
           height={"27px"}
-          src={`http://circle.net.in/upload/${answer.profile_pic}`}
+          src={`https://4.240.73.133/upload/${answer.profile_pic}`}
           alt="fsdf"
         />
       </div>

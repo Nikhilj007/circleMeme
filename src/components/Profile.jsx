@@ -20,7 +20,7 @@ function Profile({ user }) {
       rec_id:id,
     });
     console.log(formData);
-    fetch(`https://circle-backend-ewrpf36y4q-el.a.run.app/api/${liked?"pro_dislike":"pro_like"}`, {
+    fetch(`https://anonymously.link/backend/api/${liked?"pro_dislike":"pro_like"}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -40,7 +40,7 @@ function Profile({ user }) {
         <img
           loading="lazy"
           className="rounded-sm w-full"
-          src={`https://circle.net.in/upload/${profile_image}`}
+          src={`https://4.240.73.133/upload/${profile_image}`}
           alt=""
         />
       </div>

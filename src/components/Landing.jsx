@@ -2,7 +2,7 @@
 import lp1 from '../assets/lp1.jpg';
 import lp2 from '../assets/lp2.png';
 import lp3 from '../assets/lp3.png';
-import lp4 from '../assets/message.png'
+import lp4 from '../assets/lp4.jpg'
 import Carousel from 'react-elastic-carousel'
 let data = [
   {
@@ -54,17 +54,17 @@ function Landing() {
        showArrows={false}
        >
         <item><img style={{pointerEvents:'none'}} className='mt-16 h-80' src={lp1} alt="" /></item>
-        <item><img style={{pointerEvents:'none', height:'20rem'}} className='mt-16' src={lp2} alt="" /></item>
+        <item><img style={{pointerEvents:'none', height:'20rem'}} className='mt-10' src={lp2} alt="" /></item>
         <item><img className='h-80 mt-16' style={{pointerEvents:'none'}} src={lp3} alt="" /></item>
-        <item><img style={{pointerEvents:'none'}} className='mt-10' src={lp4} alt="" /></item>
+        <item><img style={{pointerEvents:'none'}} className='mt-16 h-80' src={lp4} alt="" /></item>
       </Carousel>
     </div>
-      <div className='absolute bottom-16 left-1/2 transform -translate-x-1/2'>
+      <div className='absolute bottom-12 left-1/2 transform -translate-x-1/2'>
       <button>
-        <a href='/gossip' className='bg-blue-600 mt-4 block px-6 py-3 text-white  rounded-2xl'>Get Started</a>
+        <a href='https://anonymously.link/signup.php' className='bg-blue-600 w-72 mt-4 block px-6 py-3 text-white  rounded-2xl'>Get Started</a>
       </button>
-      <div>
-        Already have an account? <a href='https://anonymously.link/signin.php' className='text-blue-600'>Sign In</a>
+      <div className='mt-3'>
+        Already have an account? <span><a  href='https://anonymously.link/signin.php' className='text-blue-600 inline'>Sign In</a></span>
       </div>
       </div>
     </div> );
